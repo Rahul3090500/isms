@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -10,7 +10,7 @@ import {
 
 import { useYoutubeContext } from "@/hooks/urlcontext";
 import axios from "axios";
-export default function FileModal({ isOpen, setIsOpen }) {
+export default function FileModal({ isOpen, setIsOpen }:any) {
   const { rowData,youtubeUrl,setCredentails,Credentails} = useYoutubeContext();
 
  
@@ -25,18 +25,27 @@ export default function FileModal({ isOpen, setIsOpen }) {
     });
      
 
-      
+         //@ts-ignore
+
       if (rowData.length > 0 && Credentails?.client_secret) {
         try {
          // await axios.post("/api/get-auth-url",{...authData}).then((response) => {console.log(response);}).catch((error) => {console.log(error);})
           const response = await axios.post('/api/get-auth-url', {
+               //@ts-ignore
+
             client_id: Credentails?.client_id,
+               //@ts-ignore
+
             client_secret: Credentails?.client_secret,
             redirect_uris: ['http://localhost:3000/'], // Update with your redirect URIs
           });
           localStorage.setItem('data',JSON.stringify({
             payload:payload,
+               //@ts-ignore
+
             client_id: Credentails?.client_id,
+               //@ts-ignore
+
             client_secret: Credentails?.client_secret,
             redirect_uris: ['http://localhost:3000/'],
             youtubeUrl:youtubeUrl

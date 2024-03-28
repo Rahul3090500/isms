@@ -9,9 +9,9 @@ interface YoutubeContextType {
   tokenFileName: string;
   setTokenFileName: any;
   rowData: any[]; // Change 'any' to the type of your row data if known
-  setRowData: React.Dispatch<React.SetStateAction<any[]>>; // Change 'any' to the type of your row data if known
+  setRowData:any; // Change 'any' to the type of your row data if known
   Credentails: Object;
-  setCredentails: React.Dispatch<React.SetStateAction<string>>;
+  setCredentails: any;
 }
 
 // Create the context

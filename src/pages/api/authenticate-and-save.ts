@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
-    const { client_id, client_secret, redirect_uris, code, youtubeUrl,payload } = req.body;
+    const { client_id, client_secret, redirect_uris, code} = req.body;
 
     const oauth2Client = new google.auth.OAuth2({
       clientId: client_id,

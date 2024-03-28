@@ -16,10 +16,11 @@ export default function FileInputModal({ IsOpen, setIsOpen }:any) {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     e.preventDefault();
-   
+   //@ts-ignore
     const file = e.target.files[0];
 
     const formData = new FormData();
+       //@ts-ignore
     formData.append('filename', file);
 
     try {
@@ -27,7 +28,7 @@ export default function FileInputModal({ IsOpen, setIsOpen }:any) {
             method: 'POST',
             body: formData
         });
-
+response
        setDataFileName(file?.name)
     } catch (error) {
         console.error('Error uploading file:', error);
