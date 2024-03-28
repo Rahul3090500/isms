@@ -25,10 +25,10 @@ const ISMS = () => {
   const [commentClassifications, setCommentClassifications] = useState();
   const [classifiactionComments, setClassificationComments] = useState();
   const [sentimentComments, setSentimentComments] = useState();
-  const [loadingVideoSummary, setLoadingVideoSummary] = useState(false);
-  const [loadingSentimentAnalysis, setLoadingSentimentAnalysis] =
+  const [, setLoadingVideoSummary] = useState(false);
+  const [, setLoadingSentimentAnalysis] =
     useState(false);
-  const [loadingCommentClassifications, setLoadingCommentClassifications] =
+  const [, setLoadingCommentClassifications] =
     useState(false);
 
   const router = useRouter();
@@ -434,9 +434,9 @@ const ISMS = () => {
         handleSentimentAnalysis,
         classificationChartData,
         classifiactionComments,
-        loadingCommentClassifications,
-        loadingSentimentAnalysis,
-        loadingVideoSummary,
+        // loadingCommentClassifications,
+        // loadingSentimentAnalysis,
+        // loadingVideoSummary,
         youtubeUrl,
         handleCommentClassifications
       )}
@@ -457,9 +457,9 @@ function GetYtURLComponent(
   handleSentimentAnalysis: any,
   classificationChartData: any,
   classificationComments: any,
-  loadingVideoSummary: any,
-  loadingSentimentAnalysis: any,
-  loadingCommentClassifications: any,
+  // loadingVideoSummary: any,
+  // loadingSentimentAnalysis: any,
+  // loadingCommentClassifications: any,
   handleCommentClassifications: any,
   youtubeUrl: any
 ) {
