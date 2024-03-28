@@ -3,7 +3,7 @@ import API from "./api.config";
 
 
 
-export const authenticateWithYouTube = async (credentials) => {
+export const authenticateWithYouTube = async (credentials:any) => {
   return credentials
  
 
