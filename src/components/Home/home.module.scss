@@ -1,0 +1,35 @@
+.home {
+  width: 80%;
+  margin: auto;
+
+  .header {
+    height: 120px;
+    color: #8a8a8a;
+    font-size: 40px;
+    font-weight: 600;
+    display: flex;
+    align-items: flex-end;
+    border-bottom: 1.5px solid #8a8a8a;
+  }
+  .sub_header {
+    font-style: italic;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 18px;
+  }
+  .dec_header {
+    height: 120px;
+    color: #8a8a8a;
+    font-size: 40px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dec {
+    font-size: 30px;
+    line-height: 170%;
+    margin-top: 80px;
+
+  }
+}

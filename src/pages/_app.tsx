@@ -1,6 +1,14 @@
-import "@/styles/globals.css";
+import { YoutubeContextProvider } from "@/hooks/urlcontext";
+import "../styles/global.css";
+import { NextUIProvider } from "@nextui-org/react";
 import type { AppProps } from "next/app";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
-}
+const MyApp = ({ Component, pageProps }: AppProps) => (
+  <NextUIProvider>
+    <YoutubeContextProvider>
+      <Component {...pageProps} />
+    </YoutubeContextProvider>
+  </NextUIProvider>
+);
+
+export default MyApp;

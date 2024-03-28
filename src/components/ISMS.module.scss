@@ -1,0 +1,16 @@
+.main {
+    display: flex;
+    width: 100%;
+    .rightSide {
+        width: calc(100vw - 440px);
+        position: absolute;
+        right: 0;
+    }
+}
+@media only screen and (max-width: 1640px) {
+    .main {
+        .rightSide {
+            width: 100%;
+        }
+    }
+}

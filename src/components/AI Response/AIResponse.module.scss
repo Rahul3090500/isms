@@ -1,0 +1,59 @@
+.AIResponse {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 70px;
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  
+    .header {
+      height: 120px;
+      color: #8a8a8a;
+      font-weight: 600;
+      display: flex;
+      align-items: flex-end;
+      border-bottom: 1.5px solid #8a8a8a;
+      display: flex;
+      justify-content: space-between;
+      .text {
+        font-size: 40px;
+      }
+      .refresh {
+        display: flex;
+        align-items: center;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        justify-content: space-between;
+        background-color: #fff;
+        border-radius: 21px;
+        margin-bottom: 10px;
+        box-shadow:
+          0 4px 6px rgba(0, 0, 0, 0.1),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+        span {
+          svg {
+            margin-right: 5px;
+          }
+          .refresh_animate {
+            animation: rotate 2s linear infinite;
+          }
+        }
+      }
+    }
+    .sub_header {
+      font-style: italic;
+      margin-top: 2px;
+      margin-bottom: 2px;
+      font-size: 18px;
+    }
+    
+  }
+  
