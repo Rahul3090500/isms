@@ -13,11 +13,11 @@
 
   .header {
     height: 120px;
-    color: #8a8a8a;
+    color: #070da1;
     font-weight: 600;
     display: flex;
     align-items: flex-end;
-    border-bottom: 1.5px solid #8a8a8a;
+    border-bottom: 1px solid #070da1;
     display: flex;
     justify-content: space-between;
     .text {
@@ -53,6 +53,8 @@
     margin-top: 2px;
     margin-bottom: 2px;
     font-size: 18px;
+    color: #070da1;
+
   }
   .dec {
     border-radius: 21px;
@@ -63,7 +65,7 @@
       0 4px 6px rgba(0, 0, 0, 0.1),
       0 1px 3px rgba(0, 0, 0, 0.08);
     .video {
-      width: 75%;
+      width: 95%;
       margin: auto;
       .YT_video {
         width: 100%;
@@ -71,9 +73,19 @@
         border-radius: 21px;
         overflow: hidden;
         margin: auto;
+        height: 500px;
+        position: relative;
         iframe {
             z-index: -11;
         }
+        a {
+          img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+          }
+        }
+    
       }
       .clannelDetails {
         margin-top: 20px;
@@ -84,7 +96,8 @@
         }
         .bottom {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
+          flex-direction: column;
           .leftSide {
             .channel_name {
               display: flex;
@@ -96,12 +109,13 @@
                 flex-direction: column;
                 .name {
                   font-size: 20px;
+                  color: #000;
 
                   font-weight: 700;
                 }
                 .subsciber_count {
                   font-size: 16px;
-                  color: #5b5b5b;
+                  color: #000;
                 }
               }
               .img {
@@ -125,9 +139,12 @@
 
           .rightSide {
             display: flex;
-            align-items: start;
-            justify-content: start;
-            margin-left: 20px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin-left: -10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 30px;
 
             .videoStat {
               padding-top: 6px;
@@ -135,10 +152,12 @@
               padding-right: 10px;
               padding-bottom: 6px;
               border-radius: 23px;
+              margin-right: 60px;
               cursor: default;
               display: flex;
               align-items: center;
-              scale: 0.8;
+              scale: 1.2;
+              color: #070da1;
               box-shadow:
                 0 4px 6px rgba(0, 0, 0, 0.1),
                 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -279,10 +298,12 @@
   .YTSummary {
     width: 95%;
     margin-bottom: 30px;
-    margin-top: 30px;
+    margin-top: 0px;
 
     .header {
       border-bottom: 1px solid #8a8a8a;
+      height: 80px;
+
       .text {
         font-size: 30px;
       }
@@ -316,8 +337,10 @@
         .YT_video {
           margin-top: 20px !important;
           border-radius: 17px;
-          iframe {
-            height: 300px;
+          height: 192px;
+
+          img {
+            height: 200px !important;
           }
         }
         .clannelDetails {
@@ -349,7 +372,7 @@
             .rightSide {
               display: flex;
               align-items: start;
-              justify-content: space-evenly;
+              justify-content: flex-start;
               margin-left: 0px;
               flex-wrap: wrap;
 
@@ -362,6 +385,7 @@
                 cursor: default;
                 display: flex;
                 align-items: center;
+                scale: 1;
                 box-shadow:
                   0 4px 6px rgba(0, 0, 0, 0.1),
                   0 1px 3px rgba(0, 0, 0, 0.08);

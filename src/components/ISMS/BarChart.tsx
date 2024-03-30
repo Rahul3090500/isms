@@ -1,15 +1,7 @@
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ChartData,
-} from 'chart.js';
 import React from 'react';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartData } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 interface BarChartProps {
@@ -17,17 +9,42 @@ interface BarChartProps {
 }
 
 const BarChart: React.FC<BarChartProps> = ({ chartData }) => {
-  const options = {
+  const options:any = {
     responsive: true,
+    indexAxis: 'y', 
     plugins: {
       legend: {
-        position: 'top' as const,
+        position:false,
       },
       title: {
-        display: true,
-        text: 'Comment Sentiments',
+        display: false,
+      },
+      // Adding a custom plugin to draw the data values on top of each bar
+      datalabels: {
+        display: false,
+        align: 'top',
+        anchor: 'top',
       },
     },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          display: true,
+        },
+      },
+    },
+
   };
 
   return <Bar options={options} data={chartData} />;

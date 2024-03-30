@@ -82,34 +82,36 @@ const ISMS = () => {
   }, [query]);
 
   const [chartData, setChartData] = useState<
-    ChartData<"bar", number[], string>
+    ChartData<"bar", any, any>
   >({
-    labels: ["Positive", "Neutral", "Negative", "Unknown"],
+    labels: ["Positive", "Negative","Neutral" , "Unknown"],
     datasets: [
       {
         label: "comments",
         data: [], // Data will be populated from API
         backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
+          "#04cadc",
+          "#5e91f4",
+          "#38b6ff",
+          "#070da1",
         ],
         borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
+          "#04cadc",
+          "#5e91f4",
+          "#38b6ff",
+          "#070da1",
         ],
+        borderRadius: {
+          topRight: 10, 
+          bottomRight: 10, 
+        },
         borderWidth: 1,
       },
     ],
   });
 
   const [classificationChartData, setclassificationChartData] = useState<
-    ChartData<"bar", number[], string>
+  ChartData<"bar", any, any>
   >({
     // labels: ["Positive", "Neutral", "Negative", "Unknown"],
     labels: [
@@ -124,18 +126,16 @@ const ISMS = () => {
         label: "classifiactions",
         data: [], // Data will be populated from API
         backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
+          "#04cadc",
+          "#5e91f4",
+          "#38b6ff",
+          "#070da1",
         ],
         borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
+          "#04cadc",
+          "#5e91f4",
+          "#38b6ff",
+          "#070da1",
         ],
         borderWidth: 1,
       },
@@ -183,34 +183,62 @@ const ISMS = () => {
     setSentimentComments(undefined);
   };
 
+  // const updateVideoSummary = async () => {
+  //   setLoadingVideoSummary(true);
+  //   const payload = {
+  //     url: youtubeUrl, // Make sure youtubeUrl is defined somewhere in your component
+  //   };
+  
+  //   try {
+  //     const response = await axios.post<any>("/get_video_summary", payload);
+  //     console.log("Video summary response:", response.data);
+  //     setVideoSummary(response.data); // This will now be strongly typed
+  //     await axios.post("/youtube_comment_extract", payload);
+  //   } catch (err: any) {
+  //     console.error("Error fetching video summary:", err);
+  //     // Fallback to dummy data on API failure
+  //     const dummyData: any = {
+  //       channel_name: "Success Is A Journey Not A Destination",
+  //       subscriber_count: 100,
+  //       total_comments: 83,
+  //       video_duration: "2 Minute 15 Second",
+  //       video_likes: 7,
+  //       video_thumbnail: "https://i.ytimg.com/vi/f5YdhPYsk3U/default.jpg",
+  //       video_title: "YouTube comments Sentimental Analysis using ChatGPT",
+  //       video_url: "https://www.youtube.com/watch?v=f5YdhPYsk3U",
+  //       video_views: 102
+  //     };
+  //     setVideoSummary();
+  //     console.log("Using dummy data due to API issue.");
+  
+  //     if (err.response) {
+  //       console.log(err.response.data);
+  //       console.log(err.response.status);
+  //       console.log(err.response.headers);
+  //     } else if (err.request) {
+  //       console.log(err.request);
+  //     } else {
+  //       console.log("Error", err.message);
+  //     }
+  //   } finally {
+  //     setLoadingVideoSummary(false);
+  //   }
+  // };
   const updateVideoSummary = async () => {
     setLoadingVideoSummary(true);
     const payload = {
-      url: youtubeUrl, // Make sure youtubeUrl is defined somewhere in your component
+      url: youtubeUrl, // Assuming ytURL is the YouTube URL input by the user
     };
-  
+
     try {
-      const response = await axios.post<any>("/get_video_summary", payload);
+      // Attempt to fetch video summary from the API
+      const response: any = await API.post("/get_video_summary", payload);
       console.log("Video summary response:", response.data);
-      setVideoSummary(response.data); // This will now be strongly typed
-      await axios.post("/youtube_comment_extract", payload);
+      setVideoSummary(response.data); // Assuming the API response structure matches your state
+      await API.post("/youtube_comment_extract", payload);
     } catch (err: any) {
       console.error("Error fetching video summary:", err);
-      // Fallback to dummy data on API failure
-      const dummyData: any = {
-        channel_name: "Success Is A Journey Not A Destination",
-        subscriber_count: 100,
-        total_comments: 83,
-        video_duration: "2 Minute 15 Second",
-        video_likes: 7,
-        video_thumbnail: "https://i.ytimg.com/vi/f5YdhPYsk3U/default.jpg",
-        video_title: "YouTube comments Sentimental Analysis using ChatGPT",
-        video_url: "https://www.youtube.com/watch?v=f5YdhPYsk3U",
-        video_views: 102
-      };
-      setVideoSummary(dummyData);
-      console.log("Using dummy data due to API issue.");
-  
+      // Log detailed error for debugging
       if (err.response) {
         console.log(err.response.data);
         console.log(err.response.status);
@@ -224,7 +252,6 @@ const ISMS = () => {
       setLoadingVideoSummary(false);
     }
   };
-  
 
   const updateSentimentChartData = async () => {
     setLoadingSentimentAnalysis(true);
@@ -407,7 +434,6 @@ const ISMS = () => {
   // Function to handle comment classifications
   const handleCommentClassifications = async () => {
     if (commentClassifications) {
-      // Note the correction of 'commentClassificatios' to 'commentClassifications'
       const {
         Declarative_comments,
         Exclamative_comments,
@@ -494,14 +520,14 @@ function GetYtURLComponent(
           <rect width="35" height="35" fill="" />
           <path
             d="M5 13.3333L17 4L29 13.3333V28C29 28.7072 28.719 29.3855 28.219 29.8856C27.7189 30.3857 27.0406 30.6667 26.3333 30.6667H7.66667C6.95942 30.6667 6.28115 30.3857 5.78105 29.8856C5.28095 29.3855 5 28.7072 5 28V13.3333Z"
-            stroke="#8A8A8A"
+            stroke="#070da1"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
           <path
             d="M13 30.3333V17H21V30.3333"
-            stroke="#8A8A8A"
+            stroke="#070da1"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -524,28 +550,28 @@ function GetYtURLComponent(
           <rect width="35" height="35" fill="" />
           <path
             d="M24.7778 15.2222H3"
-            stroke="#8A8A8A"
+            stroke="#070da1"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
           <path
             d="M31 9H3"
-            stroke="#8A8A8A"
+            stroke="#070da1"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
           <path
             d="M31 21.4443H3"
-            stroke="#8A8A8A"
+            stroke="#070da1"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
           <path
             d="M24.7778 27.6667H3"
-            stroke="#8A8A8A"
+            stroke="#070da1"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -575,7 +601,7 @@ function GetYtURLComponent(
           <rect width="35" height="35" fill="" />
           <path
             d="M29 18H24.2L20.6 29L13.4 7L9.8 18H5"
-            stroke="#8A8A8A"
+            stroke="#070da1"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -604,28 +630,28 @@ function GetYtURLComponent(
           <rect width="35" height="35" fill="" />
           <path
             d="M14.3333 6H5V15.3333H14.3333V6Z"
-            stroke="#8A8A8A"
+            stroke="#070da1"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
           <path
             d="M19.6667 10.6667C19.6667 13.244 21.7561 15.3333 24.3334 15.3333C26.9107 15.3333 29.0001 13.244 29.0001 10.6667C29.0001 8.08934 26.9107 6 24.3334 6C21.7561 6 19.6667 8.08934 19.6667 10.6667Z"
-            stroke="#8A8A8A"
+            stroke="#070da1"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
           <path
             d="M29.0001 20.6667H19.6667V30.0001H29.0001V20.6667Z"
-            stroke="#8A8A8A"
+            stroke="#070da1"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
           <path
             d="M14.3333 20.6667H5V30.0001H14.3333V20.6667Z"
-            stroke="#8A8A8A"
+            stroke="#070da1"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -653,7 +679,7 @@ function GetYtURLComponent(
           <rect width="35" height="35" fill="" />
           <path
             d="M25 6C23.9391 6 22.9217 6.42143 22.1716 7.17157C21.4214 7.92172 21 8.93913 21 10V26C21 27.0609 21.4214 28.0783 22.1716 28.8284C22.9217 29.5786 23.9391 30 25 30C26.0609 30 27.0783 29.5786 27.8284 28.8284C28.5786 28.0783 29 27.0609 29 26C29 24.9391 28.5786 23.9217 27.8284 23.1716C27.0783 22.4214 26.0609 22 25 22H9C7.93913 22 6.92172 22.4214 6.17157 23.1716C5.42143 23.9217 5 24.9391 5 26C5 27.0609 5.42143 28.0783 6.17157 28.8284C6.92172 29.5786 7.93913 30 9 30C10.0609 30 11.0783 29.5786 11.8284 28.8284C12.5786 28.0783 13 27.0609 13 26V10C13 8.93913 12.5786 7.92172 11.8284 7.17157C11.0783 6.42143 10.0609 6 9 6C7.93913 6 6.92172 6.42143 6.17157 7.17157C5.42143 7.92172 5 8.93913 5 10C5 11.0609 5.42143 12.0783 6.17157 12.8284C6.92172 13.5786 7.93913 14 9 14H25C26.0609 14 27.0783 13.5786 27.8284 12.8284C28.5786 12.0783 29 11.0609 29 10C29 8.93913 28.5786 7.92172 27.8284 7.17157C27.0783 6.42143 26.0609 6 25 6Z"
-            stroke="#8A8A8A"
+            stroke="#070da1"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -699,6 +725,7 @@ function GetYtURLComponent(
           clear={clear}
           youtubeUrl={youtubeUrl}
           handleOnChange={handleOnChange}
+          
         />
       ),
     },

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import classes from "./nav.module.scss";
 import Link from "next/link";
@@ -9,17 +10,26 @@ const Nav = ({
   setIsFileOpener,
   handleSentimentAnalysis,
   handleCommentClassifications,
+  selectedContent,
 }: any) => {
   const [navOpen, setNavOpen] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<string | null>(null);
 
   const handleItemClick = (item: any) => {
     if (
-      !["Summary", "Sentiments", "Classification", "AI Response"].includes(
+      !videoSummary &&
+      ["Summary", "Sentiments", "Classification", "AI Response"].includes(
         item.text
-      ) ||
-      videoSummary
+      )
     ) {
+      const settingsItem = navItems.find(
+        (navItem: any) => navItem.text === "Settings"
+      );
+      if (settingsItem) {
+        setActiveItem(settingsItem.text);
+        onItemSelect(settingsItem.content);
+      }
+    } else {
       setActiveItem(item.text); // Now using item.text to set the active state
       console.log(`Item selected: ${item.text}`); // This will log the text of the item
 
@@ -47,9 +57,29 @@ const Nav = ({
             className={classes.menu_toggle}
             onClick={() => setNavOpen(!navOpen)}
           >
-            <img src="/../images/humburger.svg" alt="" />
-            <p className={classes.ISMS}>ISMS</p>
-            <p className={classes.caze}>Caze Labs</p>
+            <img
+              className={classes.humburger}
+              src="/../images/humburger.svg"
+              alt=""
+            />
+            <p className={classes.ISMS}>
+              {" "}
+              <img src="/../images/3.png" alt="" />
+              iSMS
+            </p>
+            <p className={classes.caze}>
+              {" "}
+              <img width={230} src="/../images/4.png" alt="" />
+            </p>
+            <p className={classes.mobISMS}>
+              {" "}
+              
+              iSMS
+            </p>
+            <p className={classes.mobcaze}>
+              {" "}
+              <img width={40} src="/../images/3.png" alt="" />
+            </p>
           </div>
         </div>
 
@@ -71,16 +101,21 @@ const Nav = ({
                     opacity: navOpen ? "1" : "0",
                   }}
                 >
-                  ISMS
+                  <p className={classes.ISMS}>
+                    {" "}
+                    <img src="/../images/3.png" alt="" />
+                    iSMS
+                  </p>
+
                   <div className={classes.content}>
                     {navItems.slice(0, 4).map((item: any, index: any) => (
                       <div
                         key={index}
                         onClick={() => handleItemClick(item)}
-                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification", "AI Response"].includes(item.text) ? classes.disabled : ""}`}
+                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""} ${selectedContent === item.content ? classes.selectedItem : ""} `}
                       >
                         <span
-                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification", "AI Response"].includes(item.text) ? classes.iconDisabled : ""}`}
+                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}${selectedContent === item.content ? classes.iconSelect : ""} `}
                         >
                           {item.icon}
                         </span>
@@ -109,10 +144,10 @@ const Nav = ({
                       <div
                         key={index}
                         onClick={() => handleItemClick(item)}
-                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification", "AI Response"].includes(item.text) ? classes.disabled : ""}`}
+                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""} ${selectedContent === item.content ? classes.selectedItem : ""} `}
                       >
                         <span
-                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification", "AI Response"].includes(item.text) ? classes.iconDisabled : ""}`}
+                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}${selectedContent === item.content ? classes.iconSelect : ""} `}
                         >
                           {item.icon}
                         </span>
@@ -136,17 +171,22 @@ const Nav = ({
                     opacity: navOpen ? "1" : "",
                   }}
                 >
-                  ISMS
+                  <p className={classes.ISMS}>
+                    {" "}
+                    <img src="/../images/3.png" alt="" />
+                    iSMS
+                  </p>
+
                   <div className={classes.content}>
                     {navItems.map((item: any, index: any) => (
                       <div
                         key={index}
                         onClick={() => handleItemClick(item)}
-                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification", "AI Response"].includes(item.text) ? classes.disabled : ""}`}
+                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""} ${selectedContent === item.content ? classes.selectedItem : ""} `}
                       >
                         {" "}
                         <span
-                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification", "AI Response"].includes(item.text) ? classes.iconDisabled : ""}`}
+                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}${selectedContent === item.content ? classes.iconSelect : ""} `}
                         >
                           {" "}
                           {item.icon}

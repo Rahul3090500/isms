@@ -8,6 +8,7 @@ const SettingsItem = ({
   isButtonLoading,
 }: any) => (
   <div className={classes.singleItem}>
+    <p className={classes.text1}>{item.text}</p>
     <input
       onChange={ item.id === "videoLink" ? handleOnChange : false}
       placeholder={item.title}
@@ -38,18 +39,23 @@ const Settings = ({
       title: "Provide the video link",
       action: "Submit",
       value: youtubeUrl,
+      text:"YouTube Video Link"
     },
     {
       id: "channelCredentials",
       title: "Provide the channel credential file",
       action: "Upload",
       value: "",
+      text:"Channel Credentials"
+
     },
     {
       id: "infoDocument",
       title: "Provide the information document in pdf format",
       action: "Upload",
       value: "",
+      text:"Information Document"
+
     },
   ]);
 
