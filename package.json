@@ -18,6 +18,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
+    "@mui/x-data-grid": "^7.1.0",
     "@nextui-org/react": "^2.2.10",
     "@types/chart.js": "^2.9.41",
     "ag-grid-react": "^31.2.0",

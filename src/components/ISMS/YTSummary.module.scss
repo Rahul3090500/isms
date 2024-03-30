@@ -212,6 +212,7 @@
   .YTSummary {
     width: 90%;
     margin-top: 30px;
+    background-color: #2b2b2b;
 
     .dec {
       .video {
@@ -220,14 +221,48 @@
 
         .clannelDetails {
           margin-top: 20px;
+          .video_title {
+            color: #fff !important;
 
+          }
           .bottom {
             flex-direction: column;
             align-items: flex-start;
-
+            .leftSide {
+              .channel_name {
+                display: flex;
+                align-items: flex-start;
+                flex-direction: row;
+                margin-top: 20px;
+                .titles {
+      
+              
+                  .subsciber_count {
+                    color: #acacac !important;
+                  }
+                }
+                .img {
+                  width: 60px;
+                  height: 60px;
+                  border-radius: 100%;
+                  overflow: hidden;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  margin-right: 20px;
+                  box-shadow:
+                    0 4px 6px rgba(0, 0, 0, 0.1),
+                    0 1px 3px rgba(0, 0, 0, 0.08);
+                  img {
+                    scale: 1.2;
+                  }
+                }
+              }
+            }
             .rightSide {
               margin-left: -15px;
               margin-top: 15px;
+           
             }
           }
         }

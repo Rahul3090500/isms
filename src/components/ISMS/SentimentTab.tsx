@@ -1,100 +1,55 @@
 import React, { useState } from "react";
-import {
-  Tabs,
-  Tab,
-  Pagination,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  getKeyValue,
-  Table,
-} from "@nextui-org/react";
+import { DataGrid } from '@mui/x-data-grid';
 import BarChart from "./BarChart";
-import classes from "./SentimentTab.module.scss"
+import classes from "./SentimentTab.module.scss";
+
 interface SentimentTabProps {
   chartData: any;
   sentimentComments: any;
-  handleSentimentAnalysis:any;
+  handleSentimentAnalysis: any;
 }
 
 const SentimentTab: React.FC<SentimentTabProps> = ({
   chartData,
   sentimentComments = [],
   handleSentimentAnalysis,
-  
 }) => {
   const [selectedSentiment, setSelectedSentiment] = useState<string>("All");
-  // const [currentPage, setCurrentPage] = useState<number>(1);
-  // const commentsPerPage = 6;
 
-  const handleSelectionChange = (key: React.Key | null) => {
-    if (typeof key === "string") {
-      setSelectedSentiment(key);
-      setPage(1); // Reset to the first page upon changing the sentiment filter
-    }
+  const handleSelectionChange = (key: string) => {
+    setSelectedSentiment(key);
   };
-
-  const [page, setPage] = React.useState(1);
-  const rowsPerPage = 6;
+console.log('handleSelectionChange', handleSelectionChange)
   const filteredComments = sentimentComments.filter(
-    (comment:any) =>
+    (comment: any) =>
       selectedSentiment === "All" || comment.sentiment === selectedSentiment
   );
 
-
-
-  // const currentComments = filteredComments.slice(
-  //   indexOfFirstComment,
-  //   indexOfLastComment
-  // );
-
-  const pages = Math.ceil(filteredComments.length / rowsPerPage);
-
-  const items = React.useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-
-    return filteredComments.slice(start, end);
-  }, [page, filteredComments]);
-
-  console.log("currentComments===>", filteredComments)
-
-
-
   const columns = [
-    
-    {
-      key: "user_name",
-      label: "USER NAME",
-    },
-    {
-      key: "published_time",
-      label: "PUBLISHED TIME",
-    },
-    {
-      key: "updated_time",
-      label: "UPDATED TIME",
-    },
-    {
-      key: "comment",
-      label: "COMMENT",
-    },
+    { field: 'user_name', headerName: 'USER NAME', width: 150 },
+    { field: 'published_time', headerName: 'PUBLISHED TIME', width: 200 },
+    { field: 'updated_time', headerName: 'UPDATED TIME', width: 200 },
+    { field: 'comment', headerName: 'COMMENT', width: 400, },
   ];
+
+  const rows = filteredComments.map((comment: any, index: number) => ({
+    id: index, // Ensure each row has an id
+    ...comment,
+  }));
 
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const handleClick = () => {
     setIsButtonLoading(true);
     handleSentimentAnalysis();
-    // Set isButtonLoading to false after 2 seconds
+    // Simulate a network request delay
     setTimeout(() => {
       setIsButtonLoading(false);
     }, 2000);
   };
 
-  return (<>    
-   <div className={classes.Sentiment}>
+  return (
+    <>    
+      <div className={classes.Sentiment}>
     <div className={classes.header}>
       <span className={classes.text}>Sentiments</span>
       <span onClick={handleClick} className={classes.refresh}>
@@ -141,72 +96,30 @@ const SentimentTab: React.FC<SentimentTabProps> = ({
       </div>
       </div>
     
-      <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-   
-        <div className="w-full max-w-4xl mt-6">
-          <BarChart chartData={chartData} />
-        </div>
-        <div className="my-6">
-          <Tabs
-            selectedKey={selectedSentiment}
-            onSelectionChange={handleSelectionChange}
-          >
-            <Tab  key="All">
-              All
-            </Tab>
-            <Tab key="Positive">
-              Positive
-            </Tab>
-            <Tab key="Neutral">
-              Neutral
-            </Tab>
-            <Tab  key="Negative">
-              Negative
-            </Tab>
-            <Tab key="Unknown">
-              Unknown
-            </Tab>
-          </Tabs>
-        </div>
-        <Table
-          aria-label="Example table with client side pagination"
-          bottomContent={
-            <div className="flex w-full justify-center">
-              <Pagination
-                isCompact
-                showControls
-                showShadow
-                color="secondary"
-                page={page}
-                total={pages}
-                onChange={(page) => setPage(page)}
-              />
-            </div>
-          }
-          classNames={{
-            wrapper: "min-h-[222px] flex  justify-cente",
+      
+      <BarChart chartData={chartData} />
+      
+      {/* Selection tabs for sentiments */}
+      {/* Note: Implement your tabs according to your UI library or custom design. */}
+      
+      <div style={{ height: 400, width: '100%' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+          disableSelectionOnClick
+          // Enable filtering if you want
+          filterModel={{
+            items: [
+              //@ts-ignore
+              { columnField: 'sentiment', operatorValue: 'contains', value: selectedSentiment },
+            ],
           }}
-        >
-          <TableHeader columns={columns} >
-            {(column) => (
-              <TableColumn key={column.key}>{column.label}</TableColumn>
-            )}
-          </TableHeader>
-          <TableBody items={items}>
-            {(item:any) => (
-              <TableRow className="singleComment" key={item.commentId}>
-                {(columnKey) => (
-                  <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-                )}
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </main>
-    </div>
+        />
+      </div>
     </>
-  
   );
 };
 
