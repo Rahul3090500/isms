@@ -5,7 +5,6 @@ import Link from "next/link";
 const Nav = ({
   navItems,
   onItemSelect,
-  selectedContent,
   videoSummary,
   setIsFileOpener,
   handleSentimentAnalysis,
