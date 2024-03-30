@@ -166,7 +166,7 @@ display: none;
           position: fixed;
           // background-color: #000000;
           // background-color: #0000;
-          background-image: linear-gradient(147deg, #00ffd927, #55d3c019);
+          background-image: linear-gradient(147deg, #454545ba, #2b2b2bc4);
     
           backdrop-filter: blur(20px);
           z-index:22;
@@ -201,7 +201,7 @@ display: none;
               margin-top: 300px;
               span {
                 text-decoration: none;
-                color: #000;
+                color: #fff;
                 font-size: 45px;
                 position: relative;
                 top: 0;
@@ -217,7 +217,7 @@ display: none;
                     height: 70px;
                     display: flex;
                     align-items: center;
-                    color: #bebebe;
+                    color: #fff;
                     cursor: pointer;
                     border-radius: 10px;
                     margin-top: 3px;
@@ -226,6 +226,11 @@ display: none;
                 
                     .icon {
                       margin-left: 20px;
+                      svg {
+                        path {
+                          stroke: #fff !important;
+                        }
+                      }
                     }
                     .iconDisabled {
                       svg {
@@ -275,7 +280,7 @@ display: none;
           position: fixed;
           // background-color: #000000;
           // background-color: #0000;
-          background-image: linear-gradient(147deg, #00ffd927, #55d3c019);
+          background-image: linear-gradient(147deg, #454545ba, #2b2b2bc4);
     
           backdrop-filter: blur(20px);
           z-index:22;
@@ -311,7 +316,7 @@ display: none;
               margin-top: 300px;
               span {
                 text-decoration: none;
-                color: #000;
+                color: #fff;
                 font-size: 45px;
                 position: relative;
                 top: 0;
@@ -336,6 +341,11 @@ display: none;
                 
                     .icon {
                       margin-left: 20px;
+                      svg {
+                        path {
+                          stroke: #fff !important;
+                        }
+                      }
                     }
                     .iconDisabled {
                       svg {
