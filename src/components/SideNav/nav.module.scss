@@ -18,6 +18,8 @@ display: none;
       top: 0;
       left: 0;
       right: 0;
+      z-index: 999;
+
       .menu_toggle {
         background-color: #2b2b2b;
         backdrop-filter: blur(20px);
@@ -44,7 +46,7 @@ display: none;
       position: fixed;
       // background-color: #000000;
       // background-color: #0000;
-      background-image: linear-gradient(147deg, #454545ba, #2b2b2bc4);
+      background-image: linear-gradient(147deg, #2b2b2b, #2b2b2b);
 
       backdrop-filter: blur(40px);
       z-index:22;
@@ -54,9 +56,9 @@ display: none;
       height: 100vh;
       overflow: hidden;
       padding: 4em;
-      transition: transform 3s cubic-bezier(1, 0, 0, 6), all 1s,
+      transition: transform 1s cubic-bezier(1, 0, 0, 6), all 1s,
       -webkit-transform 1s cubic-bezier(0.77, 0, 0.175, 1);
-    transition-timing-function:3s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+    transition-timing-function:1.5s cubic-bezier(0.16, 1.08, 0.38, 0.98);
     display:flex ;
     .nav_linksMob {
         display: none;
@@ -82,7 +84,7 @@ display: none;
             font-size: 45px;
             position: relative;
             top: 0;
-            transition: all 6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 2s cubic-bezier(0.16, 1, 0.3, 1);
             text-transform: uppercase;
             .content {
               display: flex;
@@ -187,7 +189,7 @@ display: none;
           position: fixed;
           // background-color: #000000;
           // background-color: #0000;
-          background-image: linear-gradient(147deg, #454545ba, #2b2b2bc4);
+          background-image: linear-gradient(147deg, #2b2b2b, #2b2b2b);
     
           backdrop-filter: blur(20px);
           z-index:22;
@@ -197,9 +199,9 @@ display: none;
           height: 100vh;
           overflow: hidden;
           padding: 4em;
-          transition: transform 3s cubic-bezier(1, 0, 0, 6), all 1s,
+          transition: transform 1s cubic-bezier(1, 0, 0, 6), all 1s,
           -webkit-transform 1s cubic-bezier(0.77, 0, 0.175, 1);
-        transition-timing-function:3s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+        transition-timing-function:1.5s cubic-bezier(0.16, 1.08, 0.38, 0.98);
         display:flex ;
         flex-direction: column;
         .nav_links {
@@ -226,7 +228,7 @@ display: none;
                 font-size: 45px;
                 position: relative;
                 top: 0;
-                transition: all 6s cubic-bezier(0.16, 1, 0.3, 1);
+                transition: all 2s cubic-bezier(0.16, 1, 0.3, 1);
                 text-transform: uppercase;
                 .content {
                   display: flex;
@@ -309,7 +311,7 @@ display: none;
           position: fixed;
           // background-color: #000000;
           // background-color: #0000;
-          background-image: linear-gradient(147deg, #454545ba, #2b2b2bc4);
+          background-image: linear-gradient(147deg, #2b2b2b, #2b2b2b);
     
           backdrop-filter: blur(20px);
           z-index:22;
@@ -319,9 +321,9 @@ display: none;
           height: 100vh;
           overflow: hidden;
           padding: 4em;
-          transition: transform 3s cubic-bezier(1, 0, 0, 6), all 1s,
+          transition: transform 1s cubic-bezier(1, 0, 0, 6), all 1s,
           -webkit-transform 1s cubic-bezier(0.77, 0, 0.175, 1);
-        transition-timing-function:3s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+        transition-timing-function:1.5s cubic-bezier(0.16, 1.08, 0.38, 0.98);
         display:flex ;
         flex-direction: column;
         .nav_links {
@@ -349,7 +351,7 @@ display: none;
                 font-size: 45px;
                 position: relative;
                 top: 0;
-                transition: all 6s cubic-bezier(0.16, 1, 0.3, 1);
+                transition: all 2s cubic-bezier(0.16, 1, 0.3, 1);
                 text-transform: uppercase;
                 .content {
                   display: flex;

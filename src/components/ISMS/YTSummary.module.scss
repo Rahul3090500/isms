@@ -212,7 +212,6 @@
   .YTSummary {
     width: 90%;
     margin-top: 30px;
-    background-color: #2b2b2b;
 
     .dec {
       .video {
@@ -221,10 +220,7 @@
 
         .clannelDetails {
           margin-top: 20px;
-          .video_title {
-            color: #fff !important;
-
-          }
+    
           .bottom {
             flex-direction: column;
             align-items: flex-start;
@@ -234,13 +230,7 @@
                 align-items: flex-start;
                 flex-direction: row;
                 margin-top: 20px;
-                .titles {
-      
-              
-                  .subsciber_count {
-                    color: #acacac !important;
-                  }
-                }
+
                 .img {
                   width: 60px;
                   height: 60px;
