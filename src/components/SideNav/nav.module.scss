@@ -232,6 +232,13 @@ display: none;
                         }
                       }
                     }
+                    .iconSelect {
+                      svg {
+                        path {
+                          stroke: #fff !important;
+                        }
+                      }
+                    }
                     .iconDisabled {
                       svg {
                         path {
@@ -247,10 +254,11 @@ display: none;
                     }
                   }
                   .selectedItem {
+                    background-color: #55d3c0;
                     color: #fff;
                   }
                   .disabled {
-                    color: #626262;
+                    color: #626262 !important;
                     cursor: not-allowed;
                   }
              

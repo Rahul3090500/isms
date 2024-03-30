@@ -12,10 +12,37 @@ const Nav = ({
   handleCommentClassifications,
 }: any) => {
   const [navOpen, setNavOpen] = useState<boolean>(false);
+  const [activeItem, setActiveItem] = useState<string | null>(null);
 
+  const handleItemClick = (item: any) => {
+    if (
+      !["Summary", "Sentiments", "Classification", "AI Response"].includes(
+        item.text
+      ) ||
+      videoSummary
+    ) {
+      setActiveItem(item.text); // Now using item.text to set the active state
+      console.log(`Item selected: ${item.text}`); // This will log the text of the item
+
+      // Notify the parent component, if needed, possibly using a different property like item.content
+      onItemSelect(item.content);
+
+      // Additional logic based on the item text
+      if (item.text === "AI Response") {
+        setIsFileOpener(true);
+      } else if (item.text === "Sentiments") {
+        handleSentimentAnalysis();
+      } else if (item.text === "Classification") {
+        handleCommentClassifications();
+      }
+    }
+  };
   return (
     <div className={classes.nav}>
-      <div onClick={() => setNavOpen(!navOpen)} className={classes.navcontainer}>
+      <div
+        onClick={() => setNavOpen(!navOpen)}
+        className={classes.navcontainer}
+      >
         <div className={classes.navbar}>
           <div
             className={classes.menu_toggle}
@@ -48,31 +75,11 @@ const Nav = ({
                     {navItems.slice(0, 4).map((item: any, index: any) => (
                       <div
                         key={index}
-                        onClick={() => {
-                          if (
-                            ![
-                              "Summary",
-                              "Sentiments",
-                              "Classification",
-                            ].includes(item.text) ||
-                            videoSummary
-                          ) {
-                            onItemSelect(item.content);
-                            if (item.text === "AI Response") {
-                              setIsFileOpener(true);
-                            }
-                            if (item.text === "Sentiments") {
-                              handleSentimentAnalysis();
-                            }
-                            if (item.text === "Classification") {
-                              handleCommentClassifications();
-                            }
-                          }
-                        }}
-                        className={`${classes.singleItem} ${selectedContent === item.content ? classes.selectedItem : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification"].includes(item.text) ? classes.disabled : ""}`}
+                        onClick={() => handleItemClick(item)}
+                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification", "AI Response"].includes(item.text) ? classes.disabled : ""}`}
                       >
                         <span
-                          className={`${classes.icon} ${selectedContent === item.content ? classes.iconSelect : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification"].includes(item.text) ? classes.iconDisabled : ""}`}
+                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification", "AI Response"].includes(item.text) ? classes.iconDisabled : ""}`}
                         >
                           {item.icon}
                         </span>
@@ -100,31 +107,11 @@ const Nav = ({
                     {navItems.slice(4, 7).map((item: any, index: any) => (
                       <div
                         key={index}
-                        onClick={() => {
-                          if (
-                            ![
-                              "Summary",
-                              "Sentiments",
-                              "Classification",
-                            ].includes(item.text) ||
-                            videoSummary
-                          ) {
-                            onItemSelect(item.content);
-                            if (item.text === "AI Response") {
-                              setIsFileOpener(true);
-                            }
-                            if (item.text === "Sentiments") {
-                              handleSentimentAnalysis();
-                            }
-                            if (item.text === "Classification") {
-                              handleCommentClassifications();
-                            }
-                          }
-                        }}
-                        className={`${classes.singleItem} ${selectedContent === item.content ? classes.selectedItem : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification"].includes(item.text) ? classes.disabled : ""}`}
+                        onClick={() => handleItemClick(item)}
+                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification", "AI Response"].includes(item.text) ? classes.disabled : ""}`}
                       >
                         <span
-                          className={`${classes.icon} ${selectedContent === item.content ? classes.iconSelect : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification"].includes(item.text) ? classes.iconDisabled : ""}`}
+                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification", "AI Response"].includes(item.text) ? classes.iconDisabled : ""}`}
                         >
                           {item.icon}
                         </span>
@@ -148,38 +135,17 @@ const Nav = ({
                     opacity: navOpen ? "1" : "",
                   }}
                 >
-                                      ISMS
-
+                  ISMS
                   <div className={classes.content}>
-                  {navItems.map((item: any, index: any) => (
+                    {navItems.map((item: any, index: any) => (
                       <div
                         key={index}
-                        onClick={() => {
-                          if (
-                            ![
-                              "Summary",
-                              "Sentiments",
-                              "Classification",
-                            ].includes(item.text) ||
-                            videoSummary
-                          ) {
-                            onItemSelect(item.content);
-                            if (item.text === "AI Response") {
-                              setIsFileOpener(true);
-                            }
-                            if (item.text === "Sentiments") {
-                              handleSentimentAnalysis();
-                            }
-                            if (item.text === "Classification") {
-                              handleCommentClassifications();
-                            }
-                          }
-                        }}
-                        className={`${classes.singleItem}  ${selectedContent === item.content ? classes.selectedItem : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification"].includes(item.text) ? classes.disabled : ""}`}
+                        onClick={() => handleItemClick(item)}
+                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification", "AI Response"].includes(item.text) ? classes.disabled : ""}`}
                       >
                         {" "}
                         <span
-                          className={`${classes.icon}  ${selectedContent === item.content ? classes.iconSelect : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification"].includes(item.text) ? classes.iconDisabled : ""}`}
+                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} ${!videoSummary && ["Summary", "Sentiments", "Classification", "AI Response"].includes(item.text) ? classes.iconDisabled : ""}`}
                         >
                           {" "}
                           {item.icon}
@@ -192,7 +158,6 @@ const Nav = ({
               </Link>
             </li>
           </ul>
-
         </div>
       </div>
     </div>
