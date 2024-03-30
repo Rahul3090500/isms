@@ -186,13 +186,13 @@ const ISMS = () => {
   const updateVideoSummary = async () => {
     setLoadingVideoSummary(true);
     const payload = {
-      url: youtubeUrl,
+      url: youtubeUrl, // Make sure youtubeUrl is defined somewhere in your component
     };
-
+  
     try {
-      const response = await axios.post("/get_video_summary", payload);
+      const response = await axios.post<any>("/get_video_summary", payload);
       console.log("Video summary response:", response.data);
-      setVideoSummary(response.data as any);
+      setVideoSummary(response.data); // This will now be strongly typed
       await axios.post("/youtube_comment_extract", payload);
     } catch (err: any) {
       console.error("Error fetching video summary:", err);
@@ -210,7 +210,7 @@ const ISMS = () => {
       };
       setVideoSummary(dummyData);
       console.log("Using dummy data due to API issue.");
-
+  
       if (err.response) {
         console.log(err.response.data);
         console.log(err.response.status);
