@@ -33,6 +33,19 @@
 
   }
 }
+@media only screen and (max-width: 1640px) {
+  .home {
+margin-top:40px !important;
+width: 90%;
+color: #bdbdbd !important;
+
+.dec {
+
+  margin-top: 20px;
+
+}
+  }
+}
 @media only screen and (min-width: 320px) and (max-width: 600px) {
   .home {
     width: 95%;

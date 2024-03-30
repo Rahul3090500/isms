@@ -48,6 +48,8 @@ const Nav = ({
             onClick={() => setNavOpen(!navOpen)}
           >
             <img src="/../images/humburger.svg" alt="" />
+            <p className={classes.ISMS}>ISMS</p>
+            <p className={classes.caze}>Caze Labs</p>
           </div>
         </div>
 

@@ -1,30 +1,75 @@
-import SubmitButton from "../ISMS/SubmitButton";
-import YTURLInput from "../ISMS/YTURLInput";
+import React, { useState } from "react";
 import classes from "./Settings.module.scss";
-const Settings = ({
-  youtubeUrl,
+
+const SettingsItem = ({
+  item,
   handleOnChange,
-  clear,
+  handleSubmit,
+  isButtonLoading,
+}: any) => (
+  <div className={classes.singleItem}>
+    <input
+      onChange={ item.id === "videoLink" ? handleOnChange : false}
+      placeholder={item.title}
+      value={item.value}
+      className={classes.text}
+      disabled={item.id === "videoLink" ? isButtonLoading : false}
+    />
+    <button
+      disabled={item.id === "videoLink" ? isButtonLoading : false}
+      onClick={ item.id === "videoLink" ? handleSubmit : false}
+      className={classes.link}
+      role="button"
+    >
+      {item.action}
+    </button>
+  </div>
+);
+
+const Settings = ({
   isButtonLoading,
   handleSubmit,
+  handleOnChange,
+  youtubeUrl,
 }: any) => {
+  const [items] = useState([
+    {
+      id: "videoLink",
+      title: "Provide the video link",
+      action: "Submit",
+      value: youtubeUrl,
+    },
+    {
+      id: "channelCredentials",
+      title: "Provide the channel credential file",
+      action: "Upload",
+      value: "",
+    },
+    {
+      id: "infoDocument",
+      title: "Provide the information document in pdf format",
+      action: "Upload",
+      value: "",
+    },
+  ]);
+
   return (
     <div className={classes.Settings}>
       <div className={classes.header}>
         <span className={classes.text}>Settings</span>
       </div>
-      <div className={classes.sub_header}>Configuration and Inputs </div>
+      <div className={classes.sub_header}>Configuration and Inputs</div>
+
       <div className={classes.dec}>
-        <YTURLInput
-          youtubeUrl={youtubeUrl}
-          onChange={handleOnChange}
-          onClear={clear}
-        />
-        <SubmitButton
-          isLoading={isButtonLoading}
-          onSubmit={handleSubmit}
-          buttonText="Save"
-        />
+        {items.map((item) => (
+          <SettingsItem
+            key={item.id}
+            item={item}
+            handleOnChange={handleOnChange}
+            handleSubmit={handleSubmit}
+            isButtonLoading={isButtonLoading}
+          />
+        ))}
       </div>
     </div>
   );
