@@ -29,7 +29,9 @@ const YTSummary = ({
 
   const videoID = extractVideoID(videoSummary.video_url);
   const iframeSrc = videoID ? `https://www.youtube.com/embed/${videoID}` : "";
+  console.log('videoSummary.subsciber_count',videoSummary.subscriber_count )
   return (
+    
     <>
       <div className={classes.YTSummary}>
         <div className={classes.header}>
@@ -116,7 +118,7 @@ const YTSummary = ({
                         {videoSummary.channel_name}
                       </span>
                       <span className={classes.subsciber_count}>
-                        {videoSummary.subsciber_count}{" "}
+                        {videoSummary.subscriber_count}{" "}
                         <span style={{ marginRight: "10px" }}>
                           {" "}
                           Subscribers
