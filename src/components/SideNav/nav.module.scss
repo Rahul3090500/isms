@@ -32,9 +32,9 @@ display: none;
       position: fixed;
       // background-color: #000000;
       // background-color: #0000;
-      background-image: linear-gradient(147deg, #00ffd927, #55d3c019);
+      background-image: linear-gradient(147deg, #454545ba, #2b2b2bc4);
 
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(40px);
       z-index:22;
       top: -100%;
       left: 0;
@@ -66,7 +66,7 @@ display: none;
           margin-top: 300px;
           span {
             text-decoration: none;
-            color: #000;
+            color: #fff;
             font-size: 45px;
             position: relative;
             top: 0;
@@ -99,6 +99,11 @@ display: none;
                   }
                 .icon {
                   margin-left: 20px;
+                  svg {
+                    path {
+                      stroke: #fff !important;
+                    }
+                  }
                 }
                 .iconSelect {
                     svg {
