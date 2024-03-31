@@ -1,0 +1,77 @@
+.tableHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 24px;
+    color: #000;
+    margin-bottom: 60px;
+    font-weight: 600;
+
+}
+.mainTable {
+    display: flex;
+    align-items: baseline;
+
+.table {
+    width: 100%;
+    margin-left: 30px;
+    margin-bottom: 40px;
+
+    .top {
+       display: flex; 
+       justify-content: space-between;
+       background-color: #2f75b5;
+       padding: 15px;
+       color: #fff;
+       border-top-left-radius: 16px;
+       border-top-right-radius: 16px;
+
+       
+    }
+    .middle {
+        display: flex;
+        align-items: center;
+        border: 1px solid #000;
+        border-left: 2px solid #000;
+        border-right: 2px solid #000;
+        .firstText {
+            margin-right: 10px;
+            border-right: 1px solid #fff;
+            padding-right: 10px;
+            padding: 15px;
+            width: 150px;
+            color: #000;
+
+        }
+        .secondText {
+            color: #000;
+
+        }
+        textarea {
+            width: 80%;
+            outline: none;
+            border: none;
+            word-break: break-all;
+            resize: none;
+
+
+
+        }
+
+    }
+}
+}
+.submitButton {
+    background-color: #070da1;
+    color: #fff;
+    width: 150px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+
+}

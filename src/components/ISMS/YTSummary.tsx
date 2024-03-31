@@ -19,16 +19,7 @@ const YTSummary = ({
       setIsButtonLoading(false);
     }, 2000);
   };
-  // const extractVideoID = (url: string) => {
-  //   const regExp =
-  //     /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\\&v=)([^#\\&\\?]*).*/;
-  //   const match = url.match(regExp);
-  //   //@ts-ignore
-  //   return match && match[2].length === 11 ? match[2] : null;
-  // };
-
-  // const videoID = extractVideoID(videoSummary.video_url);
-  // const iframeSrc = videoID ? `https://www.youtube.com/embed/${videoID}` : "";
+  
   console.log('videoSummary.subsciber_count',videoSummary.subscriber_count )
   return (
     

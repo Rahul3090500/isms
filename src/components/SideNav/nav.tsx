@@ -7,7 +7,6 @@ const Nav = ({
   navItems,
   onItemSelect,
   videoSummary,
-  setIsFileOpener,
   handleSentimentAnalysis,
   handleCommentClassifications,
   selectedContent,
@@ -18,7 +17,9 @@ const Nav = ({
   const handleItemClick = (item: any) => {
     if (
       !videoSummary &&
-      ["Summary", "Sentiments", "Classification", "AI Response"].includes(
+      ["Summary", "Sentiments", "Classification",
+      //  "AI Response"
+      ].includes(
         item.text
       )
     ) {
@@ -37,9 +38,9 @@ const Nav = ({
       onItemSelect(item.content);
 
       // Additional logic based on the item text
-      if (item.text === "AI Response") {
-        setIsFileOpener(true);
-      } else if (item.text === "Sentiments") {
+      // if (item.text === "AI Response") {
+      // } 
+       if (item.text === "Sentiments") {
         handleSentimentAnalysis();
       } else if (item.text === "Classification") {
         handleCommentClassifications();

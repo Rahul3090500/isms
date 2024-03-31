@@ -3,7 +3,6 @@ import YTSummary from "./ISMS/YTSummary";
 import { ChartData } from "chart.js";
 import ClassificationCommentTab from "./ISMS/ClassificationCommentTab";
 import SentimentTab from "./ISMS/SentimentTab";
-import PdfUploader from "./table";
 import FileInputModal from "./file";
 import { useYoutubeContext } from "@/hooks/urlcontext";
 import API from "@/utils/api.config";
@@ -26,10 +25,8 @@ const ISMS = () => {
   const [classifiactionComments, setClassificationComments] = useState();
   const [sentimentComments, setSentimentComments] = useState();
   const [, setLoadingVideoSummary] = useState(false);
-  const [, setLoadingSentimentAnalysis] =
-    useState(false);
-  const [, setLoadingCommentClassifications] =
-    useState(false);
+  const [, setLoadingSentimentAnalysis] = useState(false);
+  const [, setLoadingCommentClassifications] = useState(false);
 
   const router = useRouter();
   const query = router.query;
@@ -81,29 +78,17 @@ const ISMS = () => {
     if (query?.code) getCredentials();
   }, [query]);
 
-  const [chartData, setChartData] = useState<
-    ChartData<"bar", any, any>
-  >({
-    labels: ["Positive", "Negative","Neutral" , "Unknown"],
+  const [chartData, setChartData] = useState<ChartData<"bar", any, any>>({
+    labels: ["Positive", "Negative", "Neutral", "Unknown"],
     datasets: [
       {
         label: "comments",
         data: [], // Data will be populated from API
-        backgroundColor: [
-          "#04cadc",
-          "#5e91f4",
-          "#38b6ff",
-          "#070da1",
-        ],
-        borderColor: [
-          "#04cadc",
-          "#5e91f4",
-          "#38b6ff",
-          "#070da1",
-        ],
+        backgroundColor: ["#04cadc", "#5e91f4", "#38b6ff", "#070da1"],
+        borderColor: ["#04cadc", "#5e91f4", "#38b6ff", "#070da1"],
         borderRadius: {
-          topRight: 10, 
-          bottomRight: 10, 
+          topRight: 10,
+          bottomRight: 10,
         },
         borderWidth: 1,
       },
@@ -111,7 +96,7 @@ const ISMS = () => {
   });
 
   const [classificationChartData, setclassificationChartData] = useState<
-  ChartData<"bar", any, any>
+    ChartData<"bar", any, any>
   >({
     // labels: ["Positive", "Neutral", "Negative", "Unknown"],
     labels: [
@@ -125,18 +110,8 @@ const ISMS = () => {
       {
         label: "classifiactions",
         data: [], // Data will be populated from API
-        backgroundColor: [
-          "#04cadc",
-          "#5e91f4",
-          "#38b6ff",
-          "#070da1",
-        ],
-        borderColor: [
-          "#04cadc",
-          "#5e91f4",
-          "#38b6ff",
-          "#070da1",
-        ],
+        backgroundColor: ["#04cadc", "#5e91f4", "#38b6ff", "#070da1"],
+        borderColor: ["#04cadc", "#5e91f4", "#38b6ff", "#070da1"],
         borderWidth: 1,
       },
     ],
@@ -146,6 +121,7 @@ const ISMS = () => {
     target: { value: React.SetStateAction<string> };
   }) => {
     setYoutubeUrl(event.target.value);
+    console.log("event tarhet.value===>", event.target.value);
     setChartData({
       labels: ["Positive", "Neutral", "Negative", "Unknown"],
       datasets: [
@@ -175,6 +151,7 @@ const ISMS = () => {
     setCommentClassifications(undefined);
     setSentimentComments(undefined);
   };
+
   const clear = () => {
     setYoutubeUrl("");
     setVideoSummary(undefined);
@@ -188,7 +165,7 @@ const ISMS = () => {
   //   const payload = {
   //     url: youtubeUrl, // Make sure youtubeUrl is defined somewhere in your component
   //   };
-  
+
   //   try {
   //     const response = await axios.post<any>("/get_video_summary", payload);
   //     console.log("Video summary response:", response.data);
@@ -210,7 +187,7 @@ const ISMS = () => {
   //     };
   //     setVideoSummary();
   //     console.log("Using dummy data due to API issue.");
-  
+
   //     if (err.response) {
   //       console.log(err.response.data);
   //       console.log(err.response.status);
@@ -224,10 +201,11 @@ const ISMS = () => {
   //     setLoadingVideoSummary(false);
   //   }
   // };
-  const updateVideoSummary = async () => {
+  const updateVideoSummary = async (url: any) => {
     setLoadingVideoSummary(true);
+    console.log("shshhdhdh=====>", url);
     const payload = {
-      url: youtubeUrl, // Assuming ytURL is the YouTube URL input by the user
+      url: url, // Assuming ytURL is the YouTube URL input by the user
     };
 
     try {
@@ -367,7 +345,8 @@ const ISMS = () => {
         "/fetch_all_sentiment_analysis_data",
         payload
       );
-      setSentimentComments(response.data);
+      //@ts-ignore
+      setSentimentComments([...response.data]);
       console.log("Fetching sentiment analysis data failed: ", response);
     } catch (error) {
       console.error("Fetching sentiment analysis data failed: ", error);
@@ -398,40 +377,46 @@ const ISMS = () => {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (url:any) => {
+    console.log("gdgdgdgdg=====>", youtubeUrl, url);
+    console.log("event===>");
+    setYoutubeUrl(url)
     setButtonLoading(true);
-    await updateVideoSummary();
+    await updateVideoSummary(url);
     setButtonLoading(false);
   };
+
   console.log("videoSummary===>", videoSummary);
   const handleSentimentAnalysis = async () => {
-    if (sentimentSummary) {
-      const {
-        positive_comments,
-        neutral_comments,
-        negative_comments,
-        unknown_comments,
-      } = sentimentSummary;
-
-      setChartData((prevState) => ({
-        ...prevState,
-        datasets: prevState.datasets.map((dataset) => ({
-          ...dataset,
-          data: [
-            positive_comments,
-            neutral_comments,
-            negative_comments,
-            unknown_comments,
-          ],
-        })),
-      }));
-    } else {
-      await updateSentimentChartData();
-      await fetchAllSentimentAnalysisData();
+    if(videoSummary){
+      if (sentimentSummary) {
+        const {
+          positive_comments,
+          neutral_comments,
+          negative_comments,
+          unknown_comments,
+        } = sentimentSummary;
+  
+        setChartData((prevState) => ({
+          ...prevState,
+          datasets: prevState.datasets.map((dataset) => ({
+            ...dataset,
+            data: [
+              positive_comments,
+              neutral_comments,
+              negative_comments,
+              unknown_comments,
+            ],
+          })),
+        }));
+      } else {
+        await updateSentimentChartData();
+        await fetchAllSentimentAnalysisData();
+      }
     }
+    
   };
 
-  // Function to handle comment classifications
   const handleCommentClassifications = async () => {
     if (commentClassifications) {
       const {
@@ -477,8 +462,8 @@ const ISMS = () => {
         // loadingCommentClassifications,
         // loadingSentimentAnalysis,
         // loadingVideoSummary,
-        youtubeUrl,
-        handleCommentClassifications
+        handleCommentClassifications,
+        // youtubeUrl
       )}
     </>
   );
@@ -490,7 +475,7 @@ function GetYtURLComponent(
   handleOnChange: any,
   clear: () => void,
   isButtonLoading: boolean,
-  handleSubmit: () => Promise<void>,
+  handleSubmit: any,
   videoSummary: any,
   chartData: any,
   sentimentComments: any,
@@ -501,8 +486,10 @@ function GetYtURLComponent(
   // loadingSentimentAnalysis: any,
   // loadingCommentClassifications: any,
   handleCommentClassifications: any,
-  youtubeUrl: any
+  // youtubeUrl: any
 ) {
+
+  console
   const { rowData } = useYoutubeContext();
   const [isFileOpener, setIsFileOpener] = useState(false);
 
@@ -688,7 +675,7 @@ function GetYtURLComponent(
       ),
       text: "AI Response",
       path: "/ai-response",
-      content: <AIResponse />,
+      content: <AIResponse rowData={rowData} />,
     },
     {
       icon: (
@@ -723,9 +710,8 @@ function GetYtURLComponent(
           handleSubmit={handleSubmit}
           isButtonLoading={isButtonLoading}
           clear={clear}
-          youtubeUrl={youtubeUrl}
+          setIsFileOpener={setIsFileOpener}
           handleOnChange={handleOnChange}
-          
         />
       ),
     },
@@ -771,10 +757,9 @@ function GetYtURLComponent(
   const [selectedContent, setSelectedContent] = useState(navItems[0].content);
   const handleItemClick = (content: any) => {
     setSelectedContent(content);
-    handleSentimentAnalysis();
+    // handleSentimentAnalysis();
   };
 
-  
   return (
     <>
       <div className={classes.main}>
@@ -783,7 +768,6 @@ function GetYtURLComponent(
           selectedContent={selectedContent}
           onItemSelect={handleItemClick}
           videoSummary={videoSummary}
-          setIsFileOpener={setIsFileOpener}
           handleSentimentAnalysis={handleSentimentAnalysis}
           handleCommentClassifications={handleCommentClassifications}
         />
@@ -792,18 +776,14 @@ function GetYtURLComponent(
           selectedContent={selectedContent}
           onItemSelect={handleItemClick}
           videoSummary={videoSummary}
-          setIsFileOpener={setIsFileOpener}
           handleSentimentAnalysis={handleSentimentAnalysis}
           handleCommentClassifications={handleCommentClassifications}
         />
-
         <div className={classes.rightSide}>{selectedContent}</div>
       </div>
-
       {isFileOpener && (
         <FileInputModal IsOpen={isFileOpener} setIsOpen={setIsFileOpener} />
       )}
-      {rowData.length > 0 && <PdfUploader />}
     </>
   );
 }

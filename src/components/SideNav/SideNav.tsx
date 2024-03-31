@@ -6,14 +6,13 @@ const SideNav = ({
   navItems,
   onItemSelect, // Assuming this is a prop to notify the parent component
   videoSummary,
-  setIsFileOpener,
   handleSentimentAnalysis,
   handleCommentClassifications,
   selectedContent
 }: any) => {
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const handleItemClick = (item:any) => {
-    if (!videoSummary && ['Summary', 'Sentiments', 'Classification', 'AI Response'].includes(item.text)) {
+    if (!videoSummary && ['Summary', 'Sentiments', 'Classification'].includes(item.text)) {
       const settingsItem = navItems.find((navItem:any) => navItem.text === 'Settings');
       if (settingsItem) {
         setActiveItem(settingsItem.text);
@@ -22,9 +21,8 @@ const SideNav = ({
     } else {
       setActiveItem(item.text);
       onItemSelect(item.content);
-      if (item.text === 'AI Response') {
-        setIsFileOpener(true);
-      } else if (item.text === 'Sentiments') {
+
+     if (item.text === 'Sentiments') {
         handleSentimentAnalysis();
       } else if (item.text === 'Classification') {
         handleCommentClassifications();

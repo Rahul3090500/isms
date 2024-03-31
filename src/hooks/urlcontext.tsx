@@ -19,7 +19,7 @@ const YoutubeContext = createContext<YoutubeContextType | undefined>(undefined);
 
 // Define the context provider component
 export const YoutubeContextProvider = ({ children }: { children: ReactNode }) => {
-  const [youtubeUrl, setYoutubeUrl] = useState("https://www.youtube.com/watch?v=f5YdhPYsk3U");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
   const [dataFileName, setDataFileName] = useState('');
   const [tokenFileName, setTokenFileName] = useState('');
   const [rowData, setRowData] = useState<any[]>([]);
