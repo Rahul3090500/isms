@@ -1,18 +1,7 @@
 import React, { useState } from "react";
-import {
-  Tabs,
-  Tab,
-  Pagination,
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  getKeyValue,
-} from "@nextui-org/react";
 import BarChart from "./BarChart";
 import classes from "./ClassificationCommentTab.module.scss";
+import { DataGrid } from "@mui/x-data-grid";
 interface CommentTabProps {
   classificationChartData: any;
   classifiactionComments: any;
@@ -22,53 +11,37 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
   classificationChartData,
   classifiactionComments = [],
 }) => {
-  const [selectedSentenceType, setSelectedSentenceType] = useState<
+  const [selectedSentenceType] = useState<
     string | number
   >("All");
-  const [page, setPage] = React.useState(1);
-  const rowsPerPage = 6;
+  // const [page, setPage] = React.useState(1);
+  // const rowsPerPage = 6;
 
-  const handleSelectionChange = (key: React.Key) => {
-    if (typeof key === "string" || typeof key === "number") {
-      setSelectedSentenceType(key);
-      setPage(1); // Reset to first page when changing filter
-    }
-  };
+  // const handleSelectionChange = (key: React.Key) => {
+  //   if (typeof key === "string" || typeof key === "number") {
+  //     setSelectedSentenceType(key);
+  //     setPage(1); // Reset to first page when changing filter
+  //   }
+  // };
+  // console.log('handleSelectionChange',handleSelectionChange )
 
-  const filteredComments = classifiactionComments.filter((comment: any) => {
-    return (
-      selectedSentenceType === "All" ||
-      comment.sentence_type === selectedSentenceType
-    );
-  });
+  // const filteredComments = classifiactionComments.filter((comment: any) => {
+  //   return (
+  //     selectedSentenceType === "All" ||
+  //     comment.sentence_type === selectedSentenceType
+  //   );
+  // });
 
-  const pages = Math.ceil(filteredComments.length / rowsPerPage);
+  // const pages = Math.ceil(filteredComments.length / rowsPerPage);
 
-  const items = React.useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
+  // const items = React.useMemo(() => {
+  //   const start = (page - 1) * rowsPerPage;
+  //   const end = start + rowsPerPage;
 
-    return filteredComments.slice(start, end);
-  }, [page, filteredComments]);
+  //   return filteredComments.slice(start, end);
+  // }, [page, filteredComments]);
 
-  const columns = [
-    {
-      key: "user_name",
-      label: "USER NAME",
-    },
-    {
-      key: "published_time",
-      label: "PUBLISHED TIME",
-    },
-    {
-      key: "updated_time",
-      label: "UPDATED TIME",
-    },
-    {
-      key: "comment",
-      label: "COMMENT",
-    },
-  ];
+ 
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const handleClick = () => {
     setIsButtonLoading(true);
@@ -76,6 +49,19 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
       setIsButtonLoading(false);
     }, 2000);
   };
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 90 },
+    { field: 'user_name', headerName: 'User Id', flex: 1, minWidth: 150 },
+    // { field: 'published_time', headerName: 'PUBLISHED TIME', flex: 1, minWidth: 200 },
+    { field: 'updated_time', headerName: 'Time Stamp', flex: 1, minWidth: 200 },
+    { field: 'comment', headerName: 'Comments', flex: 1, minWidth: 250 },
+    { field: 'sentence_type', headerName: 'sentence Type', width: 150 },
+  ];
+
+  const rows = classifiactionComments.map((comment: any, index: number) => ({
+    id: index + 1, // Ensure you have a unique ID for each row
+    ...comment,
+  }));
   return (
     <>
       {" "}
@@ -123,60 +109,40 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
           Provides the classification of the comments in different sentence
           types
         </div>
-        <div className={classes.dec}></div>
+        <div className={classes.dec}>
+      <div className={classes.barchart} >
+      <BarChart chartData={classificationChartData} />
+    </div>
+      <div className={classes.datagrid} style={{ height: 400, width: '100%' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          disableSelectionOnClick
+          // Enable filtering if you want
+          filterModel={{
+            items: [
+              //@ts-ignore
+              // eslint-disable-next-line no-undef
+              { columnField: 'sentiment', operatorValue: 'contains', value: selectedSentenceType },
+            ],
+          }}
+          sx={{
+            '& .MuiDataGrid-columnHeaders': {
+              background: '#070da1', // Example: a nice shade of blue
+              color: '#070da1', // Changing the text color to white for better contrast
+              '.MuiDataGrid-columnHeaderRow': {
+                background: '#070da1', /// Optional: making the header titles bold
+              },
+            },
+          }}
+       
+        />
       </div>
-      <div className="flex flex-col items-center justify-center min-h-screen py-2">
-        <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-          <div className="w-full max-w-4xl mt-6">
-            <BarChart chartData={classificationChartData} />
-          </div>
-          <Tabs
-            selectedKey={selectedSentenceType}
-            onSelectionChange={handleSelectionChange}
-            aria-label="Sentence type filter"
-          >
-            <Tab key="All">All</Tab>
-            <Tab key="Interrogative">Interrogative</Tab>
-            <Tab key="Declarative">Declarative</Tab>
-            <Tab key="Exclamatory">Exclamatory</Tab>{" "}
-            {/* Example addition if applicable */}
-          </Tabs>
-          <Table
-            aria-label="Example table with client side pagination"
-            bottomContent={
-              <div className="flex w-full justify-center">
-                <Pagination
-                  isCompact
-                  showControls
-                  showShadow
-                  color="secondary"
-                  page={page}
-                  total={pages}
-                  onChange={(page) => setPage(page)}
-                />
-              </div>
-            }
-            classNames={{
-              wrapper: "min-h-[222px] flex  justify-cente",
-            }}
-          >
-            <TableHeader columns={columns}>
-              {(column) => (
-                <TableColumn key={column.key}>{column.label}</TableColumn>
-              )}
-            </TableHeader>
-            <TableBody items={items}>
-              {(item: any) => (
-                <TableRow className="singleComment" key={item.commentId}>
-                  {(columnKey) => (
-                    <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-                  )}
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </main>
-      </div>
+      </div>    
+        </div>
+     
     </>
   );
 };

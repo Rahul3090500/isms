@@ -28,8 +28,8 @@ console.log('handleSelectionChange', handleSelectionChange)
   const columns = [
     { field: 'id', headerName: 'No', width: 90 },
     { field: 'user_name', headerName: 'User Id', flex: 1, minWidth: 150 }, // Using flex and minWidth for responsiveness
-    { field: 'published_time', headerName: 'Time Stamp (publish)', flex: 1, minWidth: 200 },
-    { field: 'updated_time', headerName: 'Time Stamp (updated)', flex: 1, minWidth: 200 },
+    // { field: 'published_time', headerName: 'Time Stamp (publish)', flex: 1, minWidth: 200 },
+    { field: 'updated_time', headerName: 'Time Stamp', flex: 1, minWidth: 200 },
     { field: 'comment', headerName: 'Comments', flex: 1, minWidth: 250 },
     { field: 'sentiment', headerName: 'Sentiment', width: 130 },
   ];

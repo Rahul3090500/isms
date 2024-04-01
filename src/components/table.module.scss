@@ -3,10 +3,30 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    font-size: 24px;
+    font-size: 20px;
     color: #000;
     margin-bottom: 60px;
     font-weight: 600;
+    margin-right: 20px;
+
+    button {
+        display: flex;
+        span {
+            width: 30px;
+            margin-right: 10px;
+        }
+        &:hover {
+            color: #070da1;
+            span {
+                svg {
+                    path {
+                        stroke:#070da1;
+                        fill: #070da1;
+                    }
+                }
+            }
+        }
+    }
 
 }
 .mainTable {
