@@ -86,6 +86,7 @@ const PdfUploader = () => {
                 </svg>
               </span>Time Stamp</button>
           </div>
+          <div className={classes.scrollabletable}>
           {rowData.map((item) => (
             <div className={classes.mainTable} key={item.commentId}>
               <Checkbox
@@ -145,6 +146,7 @@ const PdfUploader = () => {
               </div>
             </div>
           ))}
+          </div>
           <div
             style={{
               marginTop: "20px",
