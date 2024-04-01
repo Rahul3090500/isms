@@ -3,10 +3,12 @@
     width: 100%;
     .rightSide {
         width: calc(100vw - 440px);
-        position: absolute;
+        position: relative;
         right: 0;
         background-color: #f6f6ee;
         height:100vh;
+        right: 0;
+        position: absolute;
 
     }
 }
@@ -14,9 +16,8 @@
     .main {
 
         .rightSide {
-            width: 100%;
+            width: calc(100vw - 380px);
             height: -webkit-fill-available;
-            margin-top: 80px;
 
 
         }
