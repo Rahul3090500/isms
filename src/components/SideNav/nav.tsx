@@ -114,7 +114,7 @@ const Nav = ({
           <ul className={`container ${classes.nav_links}`}>
             <li className={classes.nav_item}>
               {/* Use Link from 'next/link' for navigation */}
-              <Link href="/">
+              
                 <span
                   onClick={() => setNavOpen(!navOpen)}
                   style={{
@@ -131,53 +131,46 @@ const Nav = ({
 
                   <div className={classes.content}>
                     {navItems.slice(0, 4).map((item: any, index: any) => (
-                      <Link
+                            <Link key={index} href={item.path === '/ai-response' 
+                            ? (rowData.length === 0 ? "/settings" : item.path)
+                            : item.path} passHref>
+                      <div
                         key={index}
-                        href={
-                          item.path === "/ai-response"
-                            ? rowData.length === 0
-                              ? "/settings"
-                              : item.path
-                            : item.path
+                        onClick={(event) =>
+                          loadingSentimentAnalysis ||
+                          loadingVideoSummary ||
+                          loadingCommentClassifications
+                            ? ""
+                            : handleItemClick(item, event)
                         }
-                        passHref
-                      >
-                        <div
-                          onClick={(event) =>
+                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}`}
+                        style={{
+                          cursor:
                             loadingSentimentAnalysis ||
                             loadingVideoSummary ||
                             loadingCommentClassifications
-                              ? ""
-                              : handleItemClick(item, event)
-                          }
-                          className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}`}
-                          style={{
-                            cursor:
-                              loadingSentimentAnalysis ||
-                              loadingVideoSummary ||
-                              loadingCommentClassifications
-                                ? "not-allowed"
-                                : "",
-                          }}
+                              ? "not-allowed"
+                              : "",
+                        }}
+                      >
+                        <span
+                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} `}
                         >
-                          <span
-                            className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}`}
-                          >
-                            {item.icon}
-                          </span>
-                          <span className={classes.text}>{item.text}</span>
-                        </div>
+                          {item.icon}
+                        </span>
+                        <span className={classes.text}>{item.text}</span>
+                      </div>
                       </Link>
                     ))}
                   </div>
                 </span>
-              </Link>
+              
             </li>
           </ul>
           <ul className={`container ${classes.nav_links}`}>
             <li className={classes.nav_item}>
               {/* Use Link from 'next/link' for navigation */}
-              <Link href="/">
+              
                 <span
                   onClick={() => setNavOpen(!navOpen)}
                   style={{
@@ -188,53 +181,46 @@ const Nav = ({
                 >
                   <div className={classes.content}>
                     {navItems.slice(4, 7).map((item: any, index: any) => (
-                      <Link
+                            <Link key={index} href={item.path === '/ai-response' 
+                            ? (rowData.length === 0 ? "/settings" : item.path)
+                            : item.path} passHref>
+                      <div
                         key={index}
-                        href={
-                          item.path === "/ai-response"
-                            ? rowData.length === 0
-                              ? "/settings"
-                              : item.path
-                            : item.path
+                        onClick={(event) =>
+                          loadingSentimentAnalysis ||
+                          loadingVideoSummary ||
+                          loadingCommentClassifications
+                            ? ""
+                            : handleItemClick(item, event)
                         }
-                        passHref
-                      >
-                        <div
-                          onClick={(event) =>
+                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}`}
+                        style={{
+                          cursor:
                             loadingSentimentAnalysis ||
                             loadingVideoSummary ||
                             loadingCommentClassifications
-                              ? ""
-                              : handleItemClick(item, event)
-                          }
-                          className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}`}
-                          style={{
-                            cursor:
-                              loadingSentimentAnalysis ||
-                              loadingVideoSummary ||
-                              loadingCommentClassifications
-                                ? "not-allowed"
-                                : "",
-                          }}
+                              ? "not-allowed"
+                              : "",
+                        }}
+                      >
+                        <span
+                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} `}
                         >
-                          <span
-                            className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}`}
-                          >
-                            {item.icon}
-                          </span>
-                          <span className={classes.text}>{item.text}</span>
-                        </div>
+                          {item.icon}
+                        </span>
+                        <span className={classes.text}>{item.text}</span>
+                      </div>
                       </Link>
                     ))}
                   </div>
                 </span>
-              </Link>
+              
             </li>
           </ul>
           <ul className={`container ${classes.nav_linksMob}`}>
             <li className={classes.nav_item}>
               {/* Use Link from 'next/link' for navigation */}
-              <Link href="/">
+          
                 <span
                   onClick={() => setNavOpen(!navOpen)}
                   style={{
@@ -251,49 +237,42 @@ const Nav = ({
 
                   <div className={classes.content}>
                     {navItems.map((item: any, index: any) => (
-                      <Link
+                            <Link key={index} href={item.path === '/ai-response' 
+                            ? (rowData.length === 0 ? "/settings" : item.path)
+                            : item.path} passHref>
+                      <div
                         key={index}
-                        href={
-                          item.path === "/ai-response"
-                            ? rowData.length === 0
-                              ? "/settings"
-                              : item.path
-                            : item.path
+                        onClick={(event) =>
+                          loadingSentimentAnalysis ||
+                          loadingVideoSummary ||
+                          loadingCommentClassifications
+                            ? ""
+                            : handleItemClick(item, event)
                         }
-                        passHref
-                      >
-                        <div
-                          onClick={(event) =>
+                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}`}
+                        style={{
+                          cursor:
                             loadingSentimentAnalysis ||
                             loadingVideoSummary ||
                             loadingCommentClassifications
-                              ? ""
-                              : handleItemClick(item, event)
-                          }
-                          className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}`}
-                          style={{
-                            cursor:
-                              loadingSentimentAnalysis ||
-                              loadingVideoSummary ||
-                              loadingCommentClassifications
-                                ? "not-allowed"
-                                : "",
-                          }}
+                              ? "not-allowed"
+                              : "",
+                        }}
+                      >
+                        {" "}
+                        <span
+                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} `}
                         >
                           {" "}
-                          <span
-                            className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}`}
-                          >
-                            {" "}
-                            {item.icon}
-                          </span>
-                          <span className={classes.text}>{item.text}</span>
-                        </div>
+                          {item.icon}
+                        </span>
+                        <span className={classes.text}>{item.text}</span>
+                      </div>
                       </Link>
                     ))}
                   </div>
                 </span>
-              </Link>
+           
             </li>
           </ul>
         </div>

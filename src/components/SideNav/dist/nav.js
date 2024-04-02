@@ -77,98 +77,89 @@ var Nav = function (_a) {
                 } },
                 react_1["default"].createElement("ul", { className: "container " + nav_module_scss_1["default"].nav_links },
                     react_1["default"].createElement("li", { className: nav_module_scss_1["default"].nav_item },
-                        react_1["default"].createElement(link_1["default"], { href: "/" },
-                            react_1["default"].createElement("span", { onClick: function () { return setNavOpen(!navOpen); }, style: {
-                                    top: navOpen ? "-300px" : "270px",
-                                    transitionDelay: navOpen ? "0.3s" : "0s",
-                                    opacity: navOpen ? "1" : "0"
-                                } },
-                                react_1["default"].createElement("p", { className: nav_module_scss_1["default"].ISMS },
-                                    " ",
-                                    react_1["default"].createElement("img", { src: "/./images/3.png", alt: "" }),
-                                    "iSMS"),
-                                react_1["default"].createElement("div", { className: nav_module_scss_1["default"].content }, navItems.slice(0, 4).map(function (item, index) { return (react_1["default"].createElement(link_1["default"], { key: index, href: item.path === "/ai-response"
-                                        ? rowData.length === 0
-                                            ? "/settings"
-                                            : item.path
-                                        : item.path, passHref: true },
-                                    react_1["default"].createElement("div", { onClick: function (event) {
-                                            return loadingSentimentAnalysis ||
-                                                loadingVideoSummary ||
-                                                loadingCommentClassifications
-                                                ? ""
-                                                : handleItemClick(item, event);
-                                        }, className: nav_module_scss_1["default"].singleItem + " " + (activeItem === item.text ? nav_module_scss_1["default"].selectedItem : ""), style: {
-                                            cursor: loadingSentimentAnalysis ||
-                                                loadingVideoSummary ||
-                                                loadingCommentClassifications
-                                                ? "not-allowed"
-                                                : ""
-                                        } },
-                                        react_1["default"].createElement("span", { className: nav_module_scss_1["default"].icon + " " + (activeItem === item.text ? nav_module_scss_1["default"].iconSelect : "") }, item.icon),
-                                        react_1["default"].createElement("span", { className: nav_module_scss_1["default"].text }, item.text)))); })))))),
+                        react_1["default"].createElement("span", { onClick: function () { return setNavOpen(!navOpen); }, style: {
+                                top: navOpen ? "-300px" : "270px",
+                                transitionDelay: navOpen ? "0.3s" : "0s",
+                                opacity: navOpen ? "1" : "0"
+                            } },
+                            react_1["default"].createElement("p", { className: nav_module_scss_1["default"].ISMS },
+                                " ",
+                                react_1["default"].createElement("img", { src: "/./images/3.png", alt: "" }),
+                                "iSMS"),
+                            react_1["default"].createElement("div", { className: nav_module_scss_1["default"].content }, navItems.slice(0, 4).map(function (item, index) { return (react_1["default"].createElement(link_1["default"], { key: index, href: item.path === '/ai-response'
+                                    ? (rowData.length === 0 ? "/settings" : item.path)
+                                    : item.path, passHref: true },
+                                react_1["default"].createElement("div", { key: index, onClick: function (event) {
+                                        return loadingSentimentAnalysis ||
+                                            loadingVideoSummary ||
+                                            loadingCommentClassifications
+                                            ? ""
+                                            : handleItemClick(item, event);
+                                    }, className: nav_module_scss_1["default"].singleItem + " " + (activeItem === item.text ? nav_module_scss_1["default"].selectedItem : ""), style: {
+                                        cursor: loadingSentimentAnalysis ||
+                                            loadingVideoSummary ||
+                                            loadingCommentClassifications
+                                            ? "not-allowed"
+                                            : ""
+                                    } },
+                                    react_1["default"].createElement("span", { className: nav_module_scss_1["default"].icon + " " + (activeItem === item.text ? nav_module_scss_1["default"].iconSelect : "") + " " }, item.icon),
+                                    react_1["default"].createElement("span", { className: nav_module_scss_1["default"].text }, item.text)))); }))))),
                 react_1["default"].createElement("ul", { className: "container " + nav_module_scss_1["default"].nav_links },
                     react_1["default"].createElement("li", { className: nav_module_scss_1["default"].nav_item },
-                        react_1["default"].createElement(link_1["default"], { href: "/" },
-                            react_1["default"].createElement("span", { onClick: function () { return setNavOpen(!navOpen); }, style: {
-                                    top: navOpen ? "-300px" : "270px",
-                                    transitionDelay: navOpen ? "0.3s" : "0s",
-                                    opacity: navOpen ? "1" : ""
-                                } },
-                                react_1["default"].createElement("div", { className: nav_module_scss_1["default"].content }, navItems.slice(4, 7).map(function (item, index) { return (react_1["default"].createElement(link_1["default"], { key: index, href: item.path === "/ai-response"
-                                        ? rowData.length === 0
-                                            ? "/settings"
-                                            : item.path
-                                        : item.path, passHref: true },
-                                    react_1["default"].createElement("div", { onClick: function (event) {
-                                            return loadingSentimentAnalysis ||
-                                                loadingVideoSummary ||
-                                                loadingCommentClassifications
-                                                ? ""
-                                                : handleItemClick(item, event);
-                                        }, className: nav_module_scss_1["default"].singleItem + " " + (activeItem === item.text ? nav_module_scss_1["default"].selectedItem : ""), style: {
-                                            cursor: loadingSentimentAnalysis ||
-                                                loadingVideoSummary ||
-                                                loadingCommentClassifications
-                                                ? "not-allowed"
-                                                : ""
-                                        } },
-                                        react_1["default"].createElement("span", { className: nav_module_scss_1["default"].icon + " " + (activeItem === item.text ? nav_module_scss_1["default"].iconSelect : "") }, item.icon),
-                                        react_1["default"].createElement("span", { className: nav_module_scss_1["default"].text }, item.text)))); })))))),
+                        react_1["default"].createElement("span", { onClick: function () { return setNavOpen(!navOpen); }, style: {
+                                top: navOpen ? "-300px" : "270px",
+                                transitionDelay: navOpen ? "0.3s" : "0s",
+                                opacity: navOpen ? "1" : ""
+                            } },
+                            react_1["default"].createElement("div", { className: nav_module_scss_1["default"].content }, navItems.slice(4, 7).map(function (item, index) { return (react_1["default"].createElement(link_1["default"], { key: index, href: item.path === '/ai-response'
+                                    ? (rowData.length === 0 ? "/settings" : item.path)
+                                    : item.path, passHref: true },
+                                react_1["default"].createElement("div", { key: index, onClick: function (event) {
+                                        return loadingSentimentAnalysis ||
+                                            loadingVideoSummary ||
+                                            loadingCommentClassifications
+                                            ? ""
+                                            : handleItemClick(item, event);
+                                    }, className: nav_module_scss_1["default"].singleItem + " " + (activeItem === item.text ? nav_module_scss_1["default"].selectedItem : ""), style: {
+                                        cursor: loadingSentimentAnalysis ||
+                                            loadingVideoSummary ||
+                                            loadingCommentClassifications
+                                            ? "not-allowed"
+                                            : ""
+                                    } },
+                                    react_1["default"].createElement("span", { className: nav_module_scss_1["default"].icon + " " + (activeItem === item.text ? nav_module_scss_1["default"].iconSelect : "") + " " }, item.icon),
+                                    react_1["default"].createElement("span", { className: nav_module_scss_1["default"].text }, item.text)))); }))))),
                 react_1["default"].createElement("ul", { className: "container " + nav_module_scss_1["default"].nav_linksMob },
                     react_1["default"].createElement("li", { className: nav_module_scss_1["default"].nav_item },
-                        react_1["default"].createElement(link_1["default"], { href: "/" },
-                            react_1["default"].createElement("span", { onClick: function () { return setNavOpen(!navOpen); }, style: {
-                                    top: navOpen ? "-300px" : "270px",
-                                    transitionDelay: navOpen ? "0.3s" : "0s",
-                                    opacity: navOpen ? "1" : ""
-                                } },
-                                react_1["default"].createElement("p", { className: nav_module_scss_1["default"].ISMS },
+                        react_1["default"].createElement("span", { onClick: function () { return setNavOpen(!navOpen); }, style: {
+                                top: navOpen ? "-300px" : "270px",
+                                transitionDelay: navOpen ? "0.3s" : "0s",
+                                opacity: navOpen ? "1" : ""
+                            } },
+                            react_1["default"].createElement("p", { className: nav_module_scss_1["default"].ISMS },
+                                " ",
+                                react_1["default"].createElement("img", { src: "/./images/3.png", alt: "" }),
+                                "iSMS"),
+                            react_1["default"].createElement("div", { className: nav_module_scss_1["default"].content }, navItems.map(function (item, index) { return (react_1["default"].createElement(link_1["default"], { key: index, href: item.path === '/ai-response'
+                                    ? (rowData.length === 0 ? "/settings" : item.path)
+                                    : item.path, passHref: true },
+                                react_1["default"].createElement("div", { key: index, onClick: function (event) {
+                                        return loadingSentimentAnalysis ||
+                                            loadingVideoSummary ||
+                                            loadingCommentClassifications
+                                            ? ""
+                                            : handleItemClick(item, event);
+                                    }, className: nav_module_scss_1["default"].singleItem + " " + (activeItem === item.text ? nav_module_scss_1["default"].selectedItem : ""), style: {
+                                        cursor: loadingSentimentAnalysis ||
+                                            loadingVideoSummary ||
+                                            loadingCommentClassifications
+                                            ? "not-allowed"
+                                            : ""
+                                    } },
                                     " ",
-                                    react_1["default"].createElement("img", { src: "/./images/3.png", alt: "" }),
-                                    "iSMS"),
-                                react_1["default"].createElement("div", { className: nav_module_scss_1["default"].content }, navItems.map(function (item, index) { return (react_1["default"].createElement(link_1["default"], { key: index, href: item.path === "/ai-response"
-                                        ? rowData.length === 0
-                                            ? "/settings"
-                                            : item.path
-                                        : item.path, passHref: true },
-                                    react_1["default"].createElement("div", { onClick: function (event) {
-                                            return loadingSentimentAnalysis ||
-                                                loadingVideoSummary ||
-                                                loadingCommentClassifications
-                                                ? ""
-                                                : handleItemClick(item, event);
-                                        }, className: nav_module_scss_1["default"].singleItem + " " + (activeItem === item.text ? nav_module_scss_1["default"].selectedItem : ""), style: {
-                                            cursor: loadingSentimentAnalysis ||
-                                                loadingVideoSummary ||
-                                                loadingCommentClassifications
-                                                ? "not-allowed"
-                                                : ""
-                                        } },
+                                    react_1["default"].createElement("span", { className: nav_module_scss_1["default"].icon + " " + (activeItem === item.text ? nav_module_scss_1["default"].iconSelect : "") + " " },
                                         " ",
-                                        react_1["default"].createElement("span", { className: nav_module_scss_1["default"].icon + " " + (activeItem === item.text ? nav_module_scss_1["default"].iconSelect : "") },
-                                            " ",
-                                            item.icon),
-                                        react_1["default"].createElement("span", { className: nav_module_scss_1["default"].text }, item.text)))); }))))))))));
+                                        item.icon),
+                                    react_1["default"].createElement("span", { className: nav_module_scss_1["default"].text }, item.text)))); })))))))));
 };
 exports["default"] = Nav;
