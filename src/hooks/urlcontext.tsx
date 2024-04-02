@@ -23,7 +23,7 @@ export const YoutubeContextProvider = ({ children }: { children: ReactNode }) =>
   const [dataFileName, setDataFileName] = useState('');
   const [tokenFileName, setTokenFileName] = useState('');
   const [rowData, setRowData] = useState<any[]>([]);
-  const [Credentails, setCredentails] = useState({}) // Change 'any' to the type of your row data if known
+  const [Credentails, setCredentails] = useState({})
 
   return (
     <YoutubeContext.Provider

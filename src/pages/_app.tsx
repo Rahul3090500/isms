@@ -1,14 +1,19 @@
-import { YoutubeContextProvider } from "@/hooks/urlcontext";
+import ISMS from "@/components/ISMS";
 import "../styles/global.css";
+import { YoutubeContextProvider } from "@/hooks/urlcontext";
 import { NextUIProvider } from "@nextui-org/react";
-import type { AppProps } from "next/app";
+import React from "react";
+import { AppProps } from "next/app";
 
-const MyApp = ({ Component, pageProps }: AppProps) => (
-  <NextUIProvider>
-    <YoutubeContextProvider>
-      <Component {...pageProps} />
-    </YoutubeContextProvider>
-  </NextUIProvider>
-);
+
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <NextUIProvider>
+      <YoutubeContextProvider>
+        <ISMS pageProps={pageProps} Component={Component} />
+      </YoutubeContextProvider>
+    </NextUIProvider>
+  );
+}
 
 export default MyApp;

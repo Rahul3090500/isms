@@ -1,0 +1,93 @@
+.sidenav {
+  width: 440px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  background: linear-gradient(to right, #040410, #312fbb);
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+.sidenav .header {
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sidenav .header img {
+  scale: 0.8;
+}
+.sidenav .content {
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-top: 30px;
+  overflow: auto;
+}
+.sidenav .content .singleItem {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease-in;
+}
+.sidenav .content .singleItem:hover {
+  background-color: #7c65ff;
+  color: #fff;
+}
+.sidenav .content .singleItem:hover .icon svg path {
+  stroke: #fff;
+}
+.sidenav .content .singleItem .icon {
+  margin-left: 20px;
+}
+.sidenav .content .singleItem .icon svg path {
+  stroke: #fff !important;
+}
+.sidenav .content .singleItem .iconSelect svg path {
+  stroke: #fff !important;
+}
+.sidenav .content .singleItem .text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  margin-left: 40px;
+}
+.sidenav .content .selectedItem {
+  background-color: #7c65ff;
+  color: #fff;
+}
+.sidenav .footer {
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #fff;
+  width: 100%;
+}
+.sidenav .footer .Powered {
+  position: absolute;
+  top: 5px;
+  left: 60px;
+  color: #fff;
+}
+.sidenav .footer img {
+  scale: 0.8;
+  margin-top: 20px;
+}
+
+@media only screen and (max-width: 1640px) {
+  .sidenav {
+    width: 380px;
+  }
+}
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  .sidenav {
+    display: none;
+  }
+}

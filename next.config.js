@@ -4,6 +4,15 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 module.exports = withBundleAnalyzer({
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/home',
+        permanent: false, // Set to true if you want this redirect to be permanent
+      },
+    ]
+  },
   eslint: {
     dirs: ['.'],
   },

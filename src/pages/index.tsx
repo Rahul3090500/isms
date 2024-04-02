@@ -1,4 +1,6 @@
-import { Base } from '../components/Base';
+
+import { Base } from "../components/Base";
+
 
 const Index = () => <Base />;
 

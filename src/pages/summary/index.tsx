@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import classes from "./YTSummary.module.scss";
-import YTURLInput from "./YTURLInput";
+import YTURLInput from "../../components/ISMS/YTURLInput";
 
-const Summary = ({
+const YTSummary = ({
   videoSummary,
   handleOnChange,
   clear,
@@ -11,6 +11,7 @@ const Summary = ({
 }: any) => {
   console.log("videoSummary123", videoSummary);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
+
   const handleClick = () => {
     setIsButtonLoading(true);
     handleSubmit();
@@ -19,8 +20,9 @@ const Summary = ({
       setIsButtonLoading(false);
     }, 2000);
   };
+
   
-  console.log('videoSummary.subsciber_count',videoSummary.subscriber_count )
+  // console.log('videoSummary.subsciber_count',videoSummary.subscriber_count )
   return (
     
     <>
@@ -234,4 +236,4 @@ const Summary = ({
   );
 };
 
-export default Summary;
+export default YTSummary;

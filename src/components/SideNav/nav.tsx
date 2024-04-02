@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./nav.module.scss";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Nav = ({
   navItems,
@@ -9,44 +10,59 @@ const Nav = ({
   videoSummary,
   handleSentimentAnalysis,
   handleCommentClassifications,
-  selectedContent,
 }: any) => {
   const [navOpen, setNavOpen] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<string | null>(null);
+  const router = useRouter();
 
-  const handleItemClick = (item: any) => {
-    if (
-      !videoSummary &&
-      ["Summary", "Sentiments", "Classification",
-      //  "AI Response"
-      ].includes(
-        item.text
-      )
-    ) {
-      const settingsItem = navItems.find(
-        (navItem: any) => navItem.text === "Settings"
-      );
+  useEffect(() => {
+    // Function to update active item based on the current route
+    const updateActiveItem = () => {
+      const currentPath = router.pathname;
+      //@ts-ignore
+      const activeNav = navItems.find((item:any) => item.path === currentPath);
+      if (activeNav) {
+        setActiveItem(activeNav.text);
+        onItemSelect(activeNav.content);
+      }
+    };
+
+    // Call updateActiveItem on mount and route change
+    updateActiveItem();
+    router.events.on("routeChangeComplete", updateActiveItem);
+
+    // Cleanup listener to prevent memory leaks
+    return () => {
+      router.events.off("routeChangeComplete", updateActiveItem);
+    };
+  }, [navItems, onItemSelect, router]);
+
+  const handleItemClick = (item: any, event: React.MouseEvent) => {
+    if (!videoSummary && ['Summary', 'Sentiments', 'Classification', 'AI Response'].includes(item.text)) {
+      event.preventDefault(); // Prevent default navigation if certain conditions are met
+      const settingsItem = navItems.find((navItem: any) => navItem.text === 'Settings');
       if (settingsItem) {
         setActiveItem(settingsItem.text);
         onItemSelect(settingsItem.content);
+        router.push(settingsItem.path);
       }
     } else {
-      setActiveItem(item.text); // Now using item.text to set the active state
-      console.log(`Item selected: ${item.text}`); // This will log the text of the item
-
-      // Notify the parent component, if needed, possibly using a different property like item.content
+      setActiveItem(item.text);
       onItemSelect(item.content);
-
-      // Additional logic based on the item text
-      // if (item.text === "AI Response") {
-      // } 
-       if (item.text === "Sentiments") {
+      if (item.text === 'Summary') {
         handleSentimentAnalysis();
-      } else if (item.text === "Classification") {
         handleCommentClassifications();
+      }
+      if (item.text === 'Sentiments') {
+        handleSentimentAnalysis();
+        handleCommentClassifications();
+      } else if (item.text === 'Classification') {
+        handleCommentClassifications();
+        handleSentimentAnalysis();
       }
     }
   };
+
   return (
     <div className={classes.nav}>
       <div
@@ -60,26 +76,22 @@ const Nav = ({
           >
             <img
               className={classes.humburger}
-              src="/../images/humburger.svg"
+              src="/./images/humburger.svg"
               alt=""
             />
             <p className={classes.ISMS}>
               {" "}
-              <img src="/../images/3.png" alt="" />
+              <img src="/./images/3.png" alt="" />
               iSMS
             </p>
             <p className={classes.caze}>
               {" "}
-              <img width={230} src="/../images/4.png" alt="" />
+              <img width={230} src="/./images/4.png" alt="" />
             </p>
-            <p className={classes.mobISMS}>
-              {" "}
-              
-              iSMS
-            </p>
+            <p className={classes.mobISMS}> iSMS</p>
             <p className={classes.mobcaze}>
               {" "}
-              <img width={40} src="/../images/3.png" alt="" />
+              <img width={40} src="/./images/3.png" alt="" />
             </p>
           </div>
         </div>
@@ -104,7 +116,7 @@ const Nav = ({
                 >
                   <p className={classes.ISMS}>
                     {" "}
-                    <img src="/../images/3.png" alt="" />
+                    <img src="/./images/3.png" alt="" />
                     iSMS
                   </p>
 
@@ -112,11 +124,11 @@ const Nav = ({
                     {navItems.slice(0, 4).map((item: any, index: any) => (
                       <div
                         key={index}
-                        onClick={() => handleItemClick(item)}
-                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""} ${selectedContent === item.content ? classes.selectedItem : ""} `}
+                        onClick={(event: any) => handleItemClick(item, event)}
+                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}  `}
                       >
                         <span
-                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}${selectedContent === item.content ? classes.iconSelect : ""} `}
+                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} `}
                         >
                           {item.icon}
                         </span>
@@ -144,11 +156,11 @@ const Nav = ({
                     {navItems.slice(4, 7).map((item: any, index: any) => (
                       <div
                         key={index}
-                        onClick={() => handleItemClick(item)}
-                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""} ${selectedContent === item.content ? classes.selectedItem : ""} `}
+                        onClick={(event) => handleItemClick(item, event)}
+                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}  `}
                       >
                         <span
-                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}${selectedContent === item.content ? classes.iconSelect : ""} `}
+                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} `}
                         >
                           {item.icon}
                         </span>
@@ -174,7 +186,7 @@ const Nav = ({
                 >
                   <p className={classes.ISMS}>
                     {" "}
-                    <img src="/../images/3.png" alt="" />
+                    <img src="/./images/3.png" alt="" />
                     iSMS
                   </p>
 
@@ -182,12 +194,12 @@ const Nav = ({
                     {navItems.map((item: any, index: any) => (
                       <div
                         key={index}
-                        onClick={() => handleItemClick(item)}
-                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""} ${selectedContent === item.content ? classes.selectedItem : ""} `}
+                        onClick={(event) => handleItemClick(item, event)}
+                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}  `}
                       >
                         {" "}
                         <span
-                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}${selectedContent === item.content ? classes.iconSelect : ""} `}
+                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} `}
                         >
                           {" "}
                           {item.icon}

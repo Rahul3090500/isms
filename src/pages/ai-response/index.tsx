@@ -1,9 +1,8 @@
-import PdfUploader from "../table";
+import PdfUploader from "../../components/table";
 import classes from "./AIResponse.module.scss";
 import React, { useState } from "react";
 
 const AIResponse = ({ rowData }: any) => {
-  
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const handleClick = () => {
     setIsButtonLoading(true);
@@ -13,7 +12,6 @@ const AIResponse = ({ rowData }: any) => {
       setIsButtonLoading(false);
     }, 2000);
   };
-  console.log('rowData123', rowData.length)
   return (
     <div className={classes.AIResponse}>
       <div className={classes.header}>
@@ -54,13 +52,12 @@ const AIResponse = ({ rowData }: any) => {
           </span>
           Refresh
         </span>{" "}
-      </div>     
-
+      </div>
       <div className={classes.sub_header}>
         Provides the automated Al (Artificial Intelligence) responses for all
         the query comments
       </div>
-      <div className={classes.dec}>{rowData.length > 0 && <PdfUploader />} </div>
+      <div className={classes.dec}>{rowData.length > 0 && <PdfUploader />}</div>
     </div>
   );
 };
