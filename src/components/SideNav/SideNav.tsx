@@ -12,7 +12,8 @@ const SideNav:any = ({
   handleCommentClassifications,
   loadingSentimentAnalysis,
   loadingCommentClassifications,
-  loadingVideoSummary
+  loadingVideoSummary,
+  rowData
 }:any) => {
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const router = useRouter();
@@ -37,7 +38,16 @@ const SideNav:any = ({
       router.events.off("routeChangeComplete", updateActiveItem);
     };
   }, [navItems, onItemSelect, router]);
+console.log('rowdata1224',navItems[4].path )
+useEffect(() => {
+  if (navItems[4].path  === '/ai-response') {
 
+  if (rowData === undefined) {
+    // If dataFileName is empty, redirect to /settings
+    router.push('/settings');
+  }
+}
+}, [rowData, router]);
   const handleItemClick = (item: any, event: React.MouseEvent) => {
     if (!videoSummary && ['Summary', 'Sentiments', 'Classification', 'AI Response'].includes(item.text)) {
       event.preventDefault(); // Prevent default navigation if certain conditions are met
