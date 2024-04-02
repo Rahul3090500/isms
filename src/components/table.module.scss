@@ -34,7 +34,7 @@
     overflow-y: auto;
 .mainTable {
     display: flex;
-    align-items: baseline;
+    align-items: center;
 
 .table {
     width: 100%;
@@ -45,10 +45,26 @@
        display: flex; 
        justify-content: space-between;
        background-color: #2f75b5;
-       padding: 15px;
+       padding-left: 15px;
+       padding-right: 15px;
        color: #fff;
+       height: 60px;
        border-top-left-radius: 16px;
        border-top-right-radius: 16px;
+       align-items: center;
+
+       .left {
+        width: 100%;
+       }
+       .right {
+        width: 100%;
+        text-align: end;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        border-left: 1.5px solid #000;
+       }
 
        
     }
@@ -65,6 +81,7 @@
             padding: 15px;
             width: 150px;
             color: #000;
+            font-weight: 600;
 
         }
         .secondText {
