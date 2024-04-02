@@ -17,7 +17,7 @@ const SideNav:any = ({
 }:any) => {
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const router = useRouter();
-
+  console.log(rowData.length,"rowdataaa")
   useEffect(() => {
     // Function to update active item based on the current route
     const updateActiveItem = () => {
@@ -38,16 +38,8 @@ const SideNav:any = ({
       router.events.off("routeChangeComplete", updateActiveItem);
     };
   }, [navItems, onItemSelect, router]);
-console.log('rowdata1224',navItems[4].path )
-useEffect(() => {
-  if (navItems[4].path  === '/ai-response') {
 
-  if (rowData === undefined) {
-    // If dataFileName is empty, redirect to /settings
-    router.push('/settings');
-  }
-}
-}, [rowData, router]);
+
   const handleItemClick = (item: any, event: React.MouseEvent) => {
     if (!videoSummary && ['Summary', 'Sentiments', 'Classification', 'AI Response'].includes(item.text)) {
       event.preventDefault(); // Prevent default navigation if certain conditions are met
@@ -78,7 +70,9 @@ useEffect(() => {
       <div className={classes.header}><img alt="logo" src="/images/1.png"/></div>
       <div className={classes.content}>
         {navItems.map((item: any, index: number) => (
-          <Link key={index} href={item.path} passHref>
+          <Link key={index} href={item.path === '/ai-response' 
+          ? (rowData.length === 0 ? "/settings" : item.path)
+          : item.path} passHref>
             <div
               onClick={(event) => loadingSentimentAnalysis ||loadingVideoSummary ||loadingCommentClassifications ? "" : handleItemClick(item, event)}
               className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ''}`}

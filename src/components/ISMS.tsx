@@ -718,6 +718,7 @@ function ISMS({ Component, pageProps }: any) {
         loadingSentimentAnalysis={loadingSentimentAnalysis}
         loadingCommentClassifications={loadingCommentClassifications}
         loadingVideoSummary={loadingVideoSummary}
+        rowData={rowData}
       />
       <Nav
         navItems={navItems}

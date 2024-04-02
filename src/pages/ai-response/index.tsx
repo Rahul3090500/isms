@@ -57,7 +57,7 @@ const AIResponse = ({ rowData }: any) => {
         Provides the automated Al (Artificial Intelligence) responses for all
         the query comments
       </div>
-      <div className={classes.dec}>{rowData.length > 0 && <PdfUploader />}</div>
+      <div className={classes.dec}>{rowData.length === 0 && "no data"}{rowData.length > 0 && <PdfUploader />}</div>
     </div>
   );
 };

@@ -9,6 +9,7 @@ var SideNav = function (_a) {
     var navItems = _a.navItems, onItemSelect = _a.onItemSelect, videoSummary = _a.videoSummary, handleSentimentAnalysis = _a.handleSentimentAnalysis, handleCommentClassifications = _a.handleCommentClassifications, loadingSentimentAnalysis = _a.loadingSentimentAnalysis, loadingCommentClassifications = _a.loadingCommentClassifications, loadingVideoSummary = _a.loadingVideoSummary, rowData = _a.rowData;
     var _b = react_1.useState(null), activeItem = _b[0], setActiveItem = _b[1];
     var router = router_1.useRouter();
+    console.log(rowData.length, "rowdataaa");
     react_1.useEffect(function () {
         // Function to update active item based on the current route
         var updateActiveItem = function () {
@@ -27,15 +28,6 @@ var SideNav = function (_a) {
             router.events.off("routeChangeComplete", updateActiveItem);
         };
     }, [navItems, onItemSelect, router]);
-    console.log('rowdata1224', navItems[4].path);
-    react_1.useEffect(function () {
-        if (navItems[4].path === '/ai-response') {
-            if (rowData === undefined) {
-                // If dataFileName is empty, redirect to /settings
-                router.push('/settings');
-            }
-        }
-    }, [rowData, router]);
     var handleItemClick = function (item, event) {
         if (!videoSummary && ['Summary', 'Sentiments', 'Classification', 'AI Response'].includes(item.text)) {
             event.preventDefault(); // Prevent default navigation if certain conditions are met
@@ -65,7 +57,9 @@ var SideNav = function (_a) {
     return (react_1["default"].createElement("div", { className: SideNav_module_scss_1["default"].sidenav },
         react_1["default"].createElement("div", { className: SideNav_module_scss_1["default"].header },
             react_1["default"].createElement("img", { alt: "logo", src: "/images/1.png" })),
-        react_1["default"].createElement("div", { className: SideNav_module_scss_1["default"].content }, navItems.map(function (item, index) { return (react_1["default"].createElement(link_1["default"], { key: index, href: item.path, passHref: true },
+        react_1["default"].createElement("div", { className: SideNav_module_scss_1["default"].content }, navItems.map(function (item, index) { return (react_1["default"].createElement(link_1["default"], { key: index, href: item.path === '/ai-response'
+                ? (rowData.length === 0 ? "/settings" : item.path)
+                : item.path, passHref: true },
             react_1["default"].createElement("div", { onClick: function (event) { return loadingSentimentAnalysis || loadingVideoSummary || loadingCommentClassifications ? "" : handleItemClick(item, event); }, className: SideNav_module_scss_1["default"].singleItem + " " + (activeItem === item.text ? SideNav_module_scss_1["default"].selectedItem : ''), style: { cursor: loadingSentimentAnalysis || loadingVideoSummary || loadingCommentClassifications ? "not-allowed" : "" } },
                 react_1["default"].createElement("span", { className: SideNav_module_scss_1["default"].icon + " " + (activeItem === item.text ? SideNav_module_scss_1["default"].iconSelect : '') }, item.icon),
                 react_1["default"].createElement("span", { className: SideNav_module_scss_1["default"].text }, item.text)))); })),
