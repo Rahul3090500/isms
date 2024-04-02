@@ -727,6 +727,10 @@ function ISMS({ Component, pageProps }: any) {
         videoSummary={videoSummary}
         handleSentimentAnalysis={handleSentimentAnalysis}
         handleCommentClassifications={handleCommentClassifications}
+        loadingSentimentAnalysis={loadingSentimentAnalysis}
+        loadingCommentClassifications={loadingCommentClassifications}
+        loadingVideoSummary={loadingVideoSummary}
+        rowData={rowData}
       />
       {/* <div className={classes.rightSide}>{selectedContent}</div> */}
       <div className={classes.rightSide}>

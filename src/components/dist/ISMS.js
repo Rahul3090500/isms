@@ -552,7 +552,7 @@ function ISMS(_a) {
     };
     return (react_1["default"].createElement("div", { className: ISMS_module_scss_1["default"].main },
         react_1["default"].createElement(SideNav_1["default"], { navItems: navItems, selectedContent: selectedContent, onItemSelect: handleItemClick, videoSummary: videoSummary, handleSentimentAnalysis: handleSentimentAnalysis, handleCommentClassifications: handleCommentClassifications, loadingSentimentAnalysis: loadingSentimentAnalysis, loadingCommentClassifications: loadingCommentClassifications, loadingVideoSummary: loadingVideoSummary, rowData: rowData }),
-        react_1["default"].createElement(nav_1["default"], { navItems: navItems, selectedContent: selectedContent, onItemSelect: handleItemClick, videoSummary: videoSummary, handleSentimentAnalysis: handleSentimentAnalysis, handleCommentClassifications: handleCommentClassifications }),
+        react_1["default"].createElement(nav_1["default"], { navItems: navItems, selectedContent: selectedContent, onItemSelect: handleItemClick, videoSummary: videoSummary, handleSentimentAnalysis: handleSentimentAnalysis, handleCommentClassifications: handleCommentClassifications, loadingSentimentAnalysis: loadingSentimentAnalysis, loadingCommentClassifications: loadingCommentClassifications, loadingVideoSummary: loadingVideoSummary, rowData: rowData }),
         react_1["default"].createElement("div", { className: ISMS_module_scss_1["default"].rightSide },
             react_1["default"].createElement(Component, __assign({}, pageProps, additionalProps))),
         isFileOpener && (react_1["default"].createElement(file_1["default"], { videoSummary: videoSummary, IsOpen: isFileOpener, setIsOpen: setIsFileOpener }))));

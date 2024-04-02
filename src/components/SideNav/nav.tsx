@@ -10,17 +10,20 @@ const Nav = ({
   videoSummary,
   handleSentimentAnalysis,
   handleCommentClassifications,
+  loadingSentimentAnalysis,
+  loadingCommentClassifications,
+  loadingVideoSummary,
+  rowData,
 }: any) => {
   const [navOpen, setNavOpen] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const router = useRouter();
-
+  console.log(rowData.length, "rowdataaa");
   useEffect(() => {
     // Function to update active item based on the current route
     const updateActiveItem = () => {
       const currentPath = router.pathname;
-      //@ts-ignore
-      const activeNav = navItems.find((item:any) => item.path === currentPath);
+      const activeNav = navItems.find((item: any) => item.path === currentPath);
       if (activeNav) {
         setActiveItem(activeNav.text);
         onItemSelect(activeNav.content);
@@ -38,9 +41,16 @@ const Nav = ({
   }, [navItems, onItemSelect, router]);
 
   const handleItemClick = (item: any, event: React.MouseEvent) => {
-    if (!videoSummary && ['Summary', 'Sentiments', 'Classification', 'AI Response'].includes(item.text)) {
+    if (
+      !videoSummary &&
+      ["Summary", "Sentiments", "Classification", "AI Response"].includes(
+        item.text
+      )
+    ) {
       event.preventDefault(); // Prevent default navigation if certain conditions are met
-      const settingsItem = navItems.find((navItem: any) => navItem.text === 'Settings');
+      const settingsItem = navItems.find(
+        (navItem: any) => navItem.text === "Settings"
+      );
       if (settingsItem) {
         setActiveItem(settingsItem.text);
         onItemSelect(settingsItem.content);
@@ -49,14 +59,13 @@ const Nav = ({
     } else {
       setActiveItem(item.text);
       onItemSelect(item.content);
-      if (item.text === 'Summary') {
+      if (item.path === "/summary") {
         handleSentimentAnalysis();
-        handleCommentClassifications();
       }
-      if (item.text === 'Sentiments') {
+      if (item.path === "/sentiments") {
         handleSentimentAnalysis();
         handleCommentClassifications();
-      } else if (item.text === 'Classification') {
+      } else if (item.text === "/classification") {
         handleCommentClassifications();
         handleSentimentAnalysis();
       }
@@ -122,18 +131,43 @@ const Nav = ({
 
                   <div className={classes.content}>
                     {navItems.slice(0, 4).map((item: any, index: any) => (
-                      <div
+                      <Link
                         key={index}
-                        onClick={(event: any) => handleItemClick(item, event)}
-                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}  `}
+                        href={
+                          item.path === "/ai-response"
+                            ? rowData.length === 0
+                              ? "/settings"
+                              : item.path
+                            : item.path
+                        }
+                        passHref
                       >
-                        <span
-                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} `}
+                        <div
+                          onClick={(event) =>
+                            loadingSentimentAnalysis ||
+                            loadingVideoSummary ||
+                            loadingCommentClassifications
+                              ? ""
+                              : handleItemClick(item, event)
+                          }
+                          className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}`}
+                          style={{
+                            cursor:
+                              loadingSentimentAnalysis ||
+                              loadingVideoSummary ||
+                              loadingCommentClassifications
+                                ? "not-allowed"
+                                : "",
+                          }}
                         >
-                          {item.icon}
-                        </span>
-                        <span className={classes.text}>{item.text}</span>
-                      </div>
+                          <span
+                            className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}`}
+                          >
+                            {item.icon}
+                          </span>
+                          <span className={classes.text}>{item.text}</span>
+                        </div>
+                      </Link>
                     ))}
                   </div>
                 </span>
@@ -154,18 +188,43 @@ const Nav = ({
                 >
                   <div className={classes.content}>
                     {navItems.slice(4, 7).map((item: any, index: any) => (
-                      <div
+                      <Link
                         key={index}
-                        onClick={(event) => handleItemClick(item, event)}
-                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}  `}
+                        href={
+                          item.path === "/ai-response"
+                            ? rowData.length === 0
+                              ? "/settings"
+                              : item.path
+                            : item.path
+                        }
+                        passHref
                       >
-                        <span
-                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} `}
+                        <div
+                          onClick={(event) =>
+                            loadingSentimentAnalysis ||
+                            loadingVideoSummary ||
+                            loadingCommentClassifications
+                              ? ""
+                              : handleItemClick(item, event)
+                          }
+                          className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}`}
+                          style={{
+                            cursor:
+                              loadingSentimentAnalysis ||
+                              loadingVideoSummary ||
+                              loadingCommentClassifications
+                                ? "not-allowed"
+                                : "",
+                          }}
                         >
-                          {item.icon}
-                        </span>
-                        <span className={classes.text}>{item.text}</span>
-                      </div>
+                          <span
+                            className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}`}
+                          >
+                            {item.icon}
+                          </span>
+                          <span className={classes.text}>{item.text}</span>
+                        </div>
+                      </Link>
                     ))}
                   </div>
                 </span>
@@ -192,20 +251,45 @@ const Nav = ({
 
                   <div className={classes.content}>
                     {navItems.map((item: any, index: any) => (
-                      <div
+                      <Link
                         key={index}
-                        onClick={(event) => handleItemClick(item, event)}
-                        className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}  `}
+                        href={
+                          item.path === "/ai-response"
+                            ? rowData.length === 0
+                              ? "/settings"
+                              : item.path
+                            : item.path
+                        }
+                        passHref
                       >
-                        {" "}
-                        <span
-                          className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""} `}
+                        <div
+                          onClick={(event) =>
+                            loadingSentimentAnalysis ||
+                            loadingVideoSummary ||
+                            loadingCommentClassifications
+                              ? ""
+                              : handleItemClick(item, event)
+                          }
+                          className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}`}
+                          style={{
+                            cursor:
+                              loadingSentimentAnalysis ||
+                              loadingVideoSummary ||
+                              loadingCommentClassifications
+                                ? "not-allowed"
+                                : "",
+                          }}
                         >
                           {" "}
-                          {item.icon}
-                        </span>
-                        <span className={classes.text}>{item.text}</span>
-                      </div>
+                          <span
+                            className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}`}
+                          >
+                            {" "}
+                            {item.icon}
+                          </span>
+                          <span className={classes.text}>{item.text}</span>
+                        </div>
+                      </Link>
                     ))}
                   </div>
                 </span>
