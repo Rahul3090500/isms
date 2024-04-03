@@ -22,7 +22,31 @@
     padding-left: 30px;
     padding-right: 30px;
     margin-top: 30px;
+    padding-bottom: 120px;
     overflow: auto;
+    ::-webkit-scrollbar {
+      width: 5px; /* Adjust the width of the scrollbar */
+    }
+  
+    ::-webkit-scrollbar-track {
+      background: transparent; /* Track color */
+      border-radius: 10px;
+    }
+  
+    ::-webkit-scrollbar-thumb {
+      background: #7c65ff; /* Handle color */
+      border-radius: 10px;
+    }
+  
+    ::-webkit-scrollbar-thumb:hover {
+      background: #7c65ff; /* Handle color on hover */
+    }
+  
+    /* Firefox scrollbar styles */
+    scrollbar-width: 5px; /* "auto" or "thin" */
+    scrollbar-color: #7c65ff transparent; /* thumb and track color */
+  
+  
     .singleItem {
       height: 70px;
       display: flex;
@@ -79,6 +103,8 @@
     align-items: center;
     position: absolute;
     bottom: 0;
+    background: linear-gradient(to right, #040410, #312fbb);
+
     border-top: 1px solid #fff;
     width: 100%;
     .Powered {

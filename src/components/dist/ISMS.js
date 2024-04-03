@@ -452,30 +452,12 @@ function ISMS(_a) {
             }
         });
     }); };
-    var handleSubmit = function (url) { return __awaiter(_this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    console.log("gdgdgdgdg=====>", youtubeUrl, url);
-                    console.log("event===>");
-                    setYoutubeUrl(url);
-                    setButtonLoading(true);
-                    return [4 /*yield*/, updateVideoSummary(url)];
-                case 1:
-                    _a.sent();
-                    router.push('/summary');
-                    setButtonLoading(false);
-                    return [2 /*return*/];
-            }
-        });
-    }); };
     console.log("videoSummary===>", videoSummary);
     var handleSentimentAnalysis = function () { return __awaiter(_this, void 0, void 0, function () {
         var positive_comments_2, neutral_comments_2, negative_comments_2, unknown_comments_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!videoSummary) return [3 /*break*/, 4];
                     if (!sentimentSummary) return [3 /*break*/, 1];
                     positive_comments_2 = sentimentSummary.positive_comments, neutral_comments_2 = sentimentSummary.neutral_comments, negative_comments_2 = sentimentSummary.negative_comments, unknown_comments_3 = sentimentSummary.unknown_comments;
                     setChartData(function (prevState) { return (__assign(__assign({}, prevState), { datasets: prevState.datasets.map(function (dataset) { return (__assign(__assign({}, dataset), { data: [
@@ -522,6 +504,48 @@ function ISMS(_a) {
             }
         });
     }); };
+    react_1.useEffect(function () {
+        setYoutubeUrl(youtubeUrl);
+    }, [youtubeUrl, setYoutubeUrl]);
+    var handleSubmit = function () { return __awaiter(_this, void 0, void 0, function () {
+        var url, error_4;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    url = localStorage.getItem('youtubeUrl');
+                    if (!url)
+                        return [2 /*return*/]; // Exit if no URL is found in localStorage
+                    console.log("Submitting URL:", url);
+                    setButtonLoading(true);
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, 4, 5]);
+                    return [4 /*yield*/, updateVideoSummary(url)];
+                case 2:
+                    _a.sent(); // Assume this function is correctly defined elsewhere
+                    return [3 /*break*/, 5];
+                case 3:
+                    error_4 = _a.sent();
+                    console.error("Error during submission:", error_4);
+                    return [3 /*break*/, 5];
+                case 4:
+                    setButtonLoading(false); // Ensure loading state is reset even if there's an error
+                    return [7 /*endfinally*/];
+                case 5: return [2 /*return*/];
+            }
+        });
+    }); };
+    react_1.useEffect(function () {
+        var storedUrl = localStorage.getItem('youtubeUrl');
+        if (storedUrl) {
+            setYoutubeUrl(storedUrl); // Update context or local state with the stored URL
+            handleSubmit(); // Now calling handleSubmit without passing the URL directly
+        }
+        // The dependency array is left empty to ensure this effect only runs once on mount
+    }, []);
+    react_1.useEffect(function () {
+        localStorage.setItem("youtubeUrl", youtubeUrl); // This might be redundant with handleSubmit doing the same thing
+    }, [youtubeUrl]);
     var rowData = urlcontext_1.useYoutubeContext().rowData;
     var _p = react_1.useState(false), isFileOpener = _p[0], setIsFileOpener = _p[1];
     console.log("isFileOpener", isFileOpener);
@@ -535,7 +559,6 @@ function ISMS(_a) {
         handleOnChange: handleOnChange,
         clear: clear,
         isButtonLoading: isButtonLoading,
-        handleSubmit: handleSubmit,
         videoSummary: videoSummary,
         chartData: chartData,
         sentimentComments: sentimentComments,
@@ -548,10 +571,11 @@ function ISMS(_a) {
         handleCommentClassifications: handleCommentClassifications,
         rowData: rowData,
         setIsFileOpener: setIsFileOpener,
-        isFileOpener: isFileOpener
+        isFileOpener: isFileOpener,
+        handleSubmit: handleSubmit
     };
     return (react_1["default"].createElement("div", { className: ISMS_module_scss_1["default"].main },
-        react_1["default"].createElement(SideNav_1["default"], { navItems: navItems, selectedContent: selectedContent, onItemSelect: handleItemClick, videoSummary: videoSummary, handleSentimentAnalysis: handleSentimentAnalysis, handleCommentClassifications: handleCommentClassifications, loadingSentimentAnalysis: loadingSentimentAnalysis, loadingCommentClassifications: loadingCommentClassifications, loadingVideoSummary: loadingVideoSummary, rowData: rowData }),
+        react_1["default"].createElement(SideNav_1["default"], { navItems: navItems, selectedContent: selectedContent, onItemSelect: handleItemClick, videoSummary: videoSummary, handleSentimentAnalysis: handleSentimentAnalysis, handleCommentClassifications: handleCommentClassifications, loadingSentimentAnalysis: loadingSentimentAnalysis, loadingCommentClassifications: loadingCommentClassifications, loadingVideoSummary: loadingVideoSummary, rowData: rowData, handleSubmit: handleSubmit }),
         react_1["default"].createElement(nav_1["default"], { navItems: navItems, selectedContent: selectedContent, onItemSelect: handleItemClick, videoSummary: videoSummary, handleSentimentAnalysis: handleSentimentAnalysis, handleCommentClassifications: handleCommentClassifications, loadingSentimentAnalysis: loadingSentimentAnalysis, loadingCommentClassifications: loadingCommentClassifications, loadingVideoSummary: loadingVideoSummary, rowData: rowData }),
         react_1["default"].createElement("div", { className: ISMS_module_scss_1["default"].rightSide },
             react_1["default"].createElement(Component, __assign({}, pageProps, additionalProps))),

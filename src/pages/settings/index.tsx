@@ -1,74 +1,77 @@
 import React, { useEffect, useState } from "react";
 import classes from "./Settings.module.scss";
 import { useYoutubeContext } from "@/hooks/urlcontext";
+import { useRouter } from "next/router";
 
 const SettingsItem = ({
   item,
   handleOnChange,
-  handleSubmit,
   isButtonLoading,
   setItems,
   videoSummary,
-  youtubeUrl,
+  // youtubeUrl,
   setIsFileOpener,
 }: any) => {
   const [isDisabled, setIsDisabled] = useState(false);
+  const router = useRouter();
+
+  const { dataFileName } = useYoutubeContext();
 
   useEffect(() => {
     const shouldDisable = () => {
       if (item.id === "videoLink") {
-        return isButtonLoading || !item.value; 
+        return isButtonLoading || !item.value;
       } else if (item.id === "infoDocument") {
-        return setIsDisabled(false); 
+        return setIsDisabled(false);
       } else {
         return !item.value;
       }
     };
-  
+
     setIsDisabled(shouldDisable());
-  }, [isButtonLoading, videoSummary, item.id, item.value]); 
-  
+  }, [isButtonLoading, videoSummary, item.id, item.value]);
+
   return (
     <div className={classes.singleItem}>
       <p className={classes.text1}>{item.text}</p>
-      <input
-        onChange={(event) => {
-          if (item.id === "videoLink") {
-            setItems((prev: any[]) =>
-              prev.map((item) =>
-                item.id === "videoLink"
-                  ? { ...item, value: event.target.value }
-                  : item
-              )
-            );
-            handleOnChange(event);
+      {item.id === "infoDocument" ? (
+        <p className={classes.text}>{dataFileName || item.title}</p>
+      ) : (
+        <input
+          type="text" // or 'file' based on your specific need
+          onChange={(event) => {
+            if (item.id === "videoLink") {
+              setItems((prev: any) =>
+                prev.map((itm: any) =>
+                  itm.id === "videoLink"
+                    ? { ...itm, value: event.target.value }
+                    : itm
+                )
+              );
+              handleOnChange(event);
+            }
+          }}
+          placeholder={item.title}
+          value={item.value}
+          className={classes.text}
+          disabled={
+            item.id === "infoDocument" || item.id === "channelCredentials"
           }
-        }}
-        placeholder={item.title}
-        value={item.value}
-        className={classes.text}
-        disabled={
-          
-          item.id === "infoDocument" ||
-          item.id === "channelCredentials"        }
-              />
+        />
+      )}
+
       <button
         disabled={isDisabled}
         onClick={() => {
-          if (item.id === "videoLink") handleSubmit(youtubeUrl)
-             ;
-          if (item.id === "infoDocument") {
-            setIsFileOpener(true);
+          if (item.id === "videoLink") {
+            router.push("/summary"); // Navigate to /summary
+          } else if (item.id === "infoDocument") {
+            setIsFileOpener(true); // Open the file opener for infoDocument
           }
+          // If you have other item IDs to handle, you can add more conditions here
         }}
         className={classes.link}
-        role="button"
-        style={{
-          cursor:
-            (item.id === "videoLink" && isButtonLoading) || isDisabled
-              ? "not-allowed"
-              : "",
-        }}
+        style={{ cursor: isDisabled ? "not-allowed" : "pointer" }}
       >
         {item.action}
       </button>
@@ -78,11 +81,12 @@ const SettingsItem = ({
 
 const Settings = ({
   isButtonLoading,
-  handleSubmit,
   handleOnChange,
   setIsFileOpener,
 }: any) => {
   const { youtubeUrl } = useYoutubeContext();
+
+  // Sync the local youtubeUrl state to the global context
 
   console.log("youtubeUrl====>", youtubeUrl);
   const [items, setItems] = useState([
@@ -124,7 +128,6 @@ const Settings = ({
             key={item.id}
             item={item}
             handleOnChange={handleOnChange}
-            handleSubmit={handleSubmit}
             isButtonLoading={isButtonLoading}
             setItems={setItems}
             youtubeUrl={youtubeUrl}

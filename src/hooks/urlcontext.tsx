@@ -1,6 +1,5 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-// Define the types for your context
 interface YoutubeContextType {
   youtubeUrl: string;
   setYoutubeUrl: any;
@@ -14,16 +13,28 @@ interface YoutubeContextType {
   setCredentails: any;
 }
 
-// Create the context
 const YoutubeContext = createContext<YoutubeContextType | undefined>(undefined);
 
-// Define the context provider component
 export const YoutubeContextProvider = ({ children }: { children: ReactNode }) => {
-  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [youtubeUrl, setYoutubeUrl] = useState<string>(() => {
+    // Attempt to get youtubeUrl from localStorage, or default to an empty string
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('youtubeUrl') || '';
+    }
+    return '';
+  });
+
   const [dataFileName, setDataFileName] = useState('');
   const [tokenFileName, setTokenFileName] = useState('');
   const [rowData, setRowData] = useState<any[]>([]);
-  const [Credentails, setCredentails] = useState({})
+  const [Credentails, setCredentails] = useState<Object>({});
+
+  // Effect to update localStorage whenever youtubeUrl changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('youtubeUrl', youtubeUrl);
+    }
+  }, [youtubeUrl]);
 
   return (
     <YoutubeContext.Provider
@@ -45,7 +56,6 @@ export const YoutubeContextProvider = ({ children }: { children: ReactNode }) =>
   );
 };
 
-// Custom hook to use the context
 export const useYoutubeContext = (): YoutubeContextType => {
   const context = useContext(YoutubeContext);
   if (!context) {

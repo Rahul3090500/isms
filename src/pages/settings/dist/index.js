@@ -14,9 +14,14 @@ exports.__esModule = true;
 var react_1 = require("react");
 var Settings_module_scss_1 = require("./Settings.module.scss");
 var urlcontext_1 = require("@/hooks/urlcontext");
+var router_1 = require("next/router");
 var SettingsItem = function (_a) {
-    var item = _a.item, handleOnChange = _a.handleOnChange, handleSubmit = _a.handleSubmit, isButtonLoading = _a.isButtonLoading, setItems = _a.setItems, videoSummary = _a.videoSummary, youtubeUrl = _a.youtubeUrl, setIsFileOpener = _a.setIsFileOpener;
+    var item = _a.item, handleOnChange = _a.handleOnChange, isButtonLoading = _a.isButtonLoading, setItems = _a.setItems, videoSummary = _a.videoSummary, 
+    // youtubeUrl,
+    setIsFileOpener = _a.setIsFileOpener;
     var _b = react_1.useState(false), isDisabled = _b[0], setIsDisabled = _b[1];
+    var router = router_1.useRouter();
+    var dataFileName = urlcontext_1.useYoutubeContext().dataFileName;
     react_1.useEffect(function () {
         var shouldDisable = function () {
             if (item.id === "videoLink") {
@@ -33,33 +38,32 @@ var SettingsItem = function (_a) {
     }, [isButtonLoading, videoSummary, item.id, item.value]);
     return (react_1["default"].createElement("div", { className: Settings_module_scss_1["default"].singleItem },
         react_1["default"].createElement("p", { className: Settings_module_scss_1["default"].text1 }, item.text),
-        react_1["default"].createElement("input", { onChange: function (event) {
+        item.id === "infoDocument" ? (react_1["default"].createElement("p", { className: Settings_module_scss_1["default"].text }, dataFileName || item.title)) : (react_1["default"].createElement("input", { type: "text" // or 'file' based on your specific need
+            , onChange: function (event) {
                 if (item.id === "videoLink") {
                     setItems(function (prev) {
-                        return prev.map(function (item) {
-                            return item.id === "videoLink"
-                                ? __assign(__assign({}, item), { value: event.target.value }) : item;
+                        return prev.map(function (itm) {
+                            return itm.id === "videoLink"
+                                ? __assign(__assign({}, itm), { value: event.target.value }) : itm;
                         });
                     });
                     handleOnChange(event);
                 }
-            }, placeholder: item.title, value: item.value, className: Settings_module_scss_1["default"].text, disabled: item.id === "infoDocument" ||
-                item.id === "channelCredentials" }),
+            }, placeholder: item.title, value: item.value, className: Settings_module_scss_1["default"].text, disabled: item.id === "infoDocument" || item.id === "channelCredentials" })),
         react_1["default"].createElement("button", { disabled: isDisabled, onClick: function () {
-                if (item.id === "videoLink")
-                    handleSubmit(youtubeUrl);
-                if (item.id === "infoDocument") {
-                    setIsFileOpener(true);
+                if (item.id === "videoLink") {
+                    router.push("/summary"); // Navigate to /summary
                 }
-            }, className: Settings_module_scss_1["default"].link, role: "button", style: {
-                cursor: (item.id === "videoLink" && isButtonLoading) || isDisabled
-                    ? "not-allowed"
-                    : ""
-            } }, item.action)));
+                else if (item.id === "infoDocument") {
+                    setIsFileOpener(true); // Open the file opener for infoDocument
+                }
+                // If you have other item IDs to handle, you can add more conditions here
+            }, className: Settings_module_scss_1["default"].link, style: { cursor: isDisabled ? "not-allowed" : "pointer" } }, item.action)));
 };
 var Settings = function (_a) {
-    var isButtonLoading = _a.isButtonLoading, handleSubmit = _a.handleSubmit, handleOnChange = _a.handleOnChange, setIsFileOpener = _a.setIsFileOpener;
+    var isButtonLoading = _a.isButtonLoading, handleOnChange = _a.handleOnChange, setIsFileOpener = _a.setIsFileOpener;
     var youtubeUrl = urlcontext_1.useYoutubeContext().youtubeUrl;
+    // Sync the local youtubeUrl state to the global context
     console.log("youtubeUrl====>", youtubeUrl);
     var _b = react_1.useState([
         {
@@ -89,6 +93,6 @@ var Settings = function (_a) {
         react_1["default"].createElement("div", { className: Settings_module_scss_1["default"].header },
             react_1["default"].createElement("span", { className: Settings_module_scss_1["default"].text }, "Settings")),
         react_1["default"].createElement("div", { className: Settings_module_scss_1["default"].sub_header }, "Configuration and Inputs"),
-        react_1["default"].createElement("div", { className: Settings_module_scss_1["default"].dec }, items.map(function (item) { return (react_1["default"].createElement(SettingsItem, { key: item.id, item: item, handleOnChange: handleOnChange, handleSubmit: handleSubmit, isButtonLoading: isButtonLoading, setItems: setItems, youtubeUrl: youtubeUrl, setIsFileOpener: setIsFileOpener })); }))));
+        react_1["default"].createElement("div", { className: Settings_module_scss_1["default"].dec }, items.map(function (item) { return (react_1["default"].createElement(SettingsItem, { key: item.id, item: item, handleOnChange: handleOnChange, isButtonLoading: isButtonLoading, setItems: setItems, youtubeUrl: youtubeUrl, setIsFileOpener: setIsFileOpener })); }))));
 };
 exports["default"] = Settings;

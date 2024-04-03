@@ -13,7 +13,6 @@ interface MyAppProps {
   handleOnChange?: any;
   clear?: () => void;
   isButtonLoading?: boolean;
-  handleSubmit?: any;
   videoSummary?: any; // Consider defining a more specific type
   chartData?: any; // Consider defining a more specific type
   sentimentComments?: any[]; // Consider defining a more specific type
@@ -27,6 +26,8 @@ interface MyAppProps {
   rowData?: any;
   setIsFileOpener?: any;
   isFileOpener?: any;
+  handleSubmit?: any;
+
 }
 
 const navItems: any = [
@@ -609,19 +610,9 @@ function ISMS({ Component, pageProps }: any) {
     }
   };
 
-  const handleSubmit = async (url: any) => {
-    console.log("gdgdgdgdg=====>", youtubeUrl, url);
-    console.log("event===>");
-    setYoutubeUrl(url);
-    setButtonLoading(true);
-    await updateVideoSummary(url);
-    router.push('/summary')
-    setButtonLoading(false);
-  };
 
   console.log("videoSummary===>", videoSummary);
   const handleSentimentAnalysis = async () => {
-    if (videoSummary) {
       if (sentimentSummary) {
         const {
           positive_comments,
@@ -646,7 +637,7 @@ function ISMS({ Component, pageProps }: any) {
         await updateSentimentChartData();
         await fetchAllSentimentAnalysisData();
       }
-    }
+    
   };
 
   const handleCommentClassifications = async () => {
@@ -677,6 +668,37 @@ function ISMS({ Component, pageProps }: any) {
       await fetchAllCommentClassificationsData();
     }
   };
+  useEffect(() => {
+    setYoutubeUrl(youtubeUrl);
+  }, [youtubeUrl, setYoutubeUrl]);
+
+  const handleSubmit = async () => {
+    const url = localStorage.getItem('youtubeUrl');
+    if (!url) return; // Exit if no URL is found in localStorage
+  
+    console.log("Submitting URL:", url);
+    setButtonLoading(true);
+  
+    try {
+      await updateVideoSummary(url); // Assume this function is correctly defined elsewhere
+    } catch (error) {
+      console.error("Error during submission:", error);
+      // Handle error appropriately
+    } finally {
+      setButtonLoading(false); // Ensure loading state is reset even if there's an error
+    }
+  };
+  useEffect(() => {
+  const storedUrl = localStorage.getItem('youtubeUrl');
+  if (storedUrl) {
+    setYoutubeUrl(storedUrl); // Update context or local state with the stored URL
+    handleSubmit(); // Now calling handleSubmit without passing the URL directly
+  }
+  // The dependency array is left empty to ensure this effect only runs once on mount
+}, []);
+  useEffect(() => {
+    localStorage.setItem("youtubeUrl", youtubeUrl); // This might be redundant with handleSubmit doing the same thing
+  }, [youtubeUrl]);
   const { rowData } = useYoutubeContext();
   const [isFileOpener, setIsFileOpener] = useState(false);
   console.log("isFileOpener", isFileOpener);
@@ -691,7 +713,6 @@ function ISMS({ Component, pageProps }: any) {
     handleOnChange,
     clear,
     isButtonLoading,
-    handleSubmit,
     videoSummary,
     chartData,
     sentimentComments,
@@ -705,6 +726,7 @@ function ISMS({ Component, pageProps }: any) {
     rowData,
     setIsFileOpener,
     isFileOpener,
+    handleSubmit
   };
   return (
     <div className={classes.main}>
@@ -719,6 +741,7 @@ function ISMS({ Component, pageProps }: any) {
         loadingCommentClassifications={loadingCommentClassifications}
         loadingVideoSummary={loadingVideoSummary}
         rowData={rowData}
+        handleSubmit={handleSubmit}
       />
       <Nav
         navItems={navItems}

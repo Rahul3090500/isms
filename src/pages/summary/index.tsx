@@ -73,13 +73,13 @@ const YTSummary = ({
           <div className={classes.video}>
             <div className={classes.videoUrl}>
               <YTURLInput
-                youtubeUrl={videoSummary.video_url}
+                youtubeUrl={videoSummary?.video_url}
                 onChange={handleOnChange}
                 onClear={clear}
               />
             </div>
             <div className={classes.YT_video}>
-            <a  target="_blank" rel="noopener noreferrer" href={videoSummary.video_url}>
+            <a  target="_blank" rel="noopener noreferrer" href={videoSummary?.video_url}>
               {/* {videoID && (
                 <iframe
                   width="100%"
@@ -91,14 +91,14 @@ const YTSummary = ({
                   allowFullScreen
                 ></iframe>
               )}         */}
-              <img  src={videoSummary.video_thumbnail} alt="" />
+              <img  src={videoSummary?.video_thumbnail} alt="" />
                       </a>
 
 
             </div>
 
             <div className={classes.clannelDetails}>
-              <p className={classes.video_title}>{videoSummary.video_title}</p>
+              <p className={classes.video_title}>{videoSummary?.video_title}</p>
               <div className={classes.bottom}>
                 <div className={classes.leftSide}>
                   <p className={classes.channel_name}>
@@ -106,17 +106,17 @@ const YTSummary = ({
                       <img
                         width={100}
                         height={100}
-                        src={videoSummary.video_thumbnail}
-                        alt={videoSummary.video_title}
+                        src={videoSummary?.video_thumbnail}
+                        alt={videoSummary?.video_title}
                       />
                     </span>
 
                     <span className={classes.titles}>
                       <span className={classes.name}>
-                        {videoSummary.channel_name}
+                        {videoSummary?.channel_name}
                       </span>
                       <span className={classes.subsciber_count}>
-                        {videoSummary.subsciber_count}{" "}
+                        {videoSummary?.subsciber_count}{" "}
                         <span style={{ marginRight: "10px" }}>
                           {" "}
                           Subscribers
@@ -152,7 +152,7 @@ const YTSummary = ({
                         />
                       </svg>
                     </span>
-                    {videoSummary.video_views} <span style={{marginLeft:"10px"}}>Views</span>
+                    {videoSummary?.video_views} <span style={{marginLeft:"10px"}}>Views</span>
                   </p>
                   <p className={`${classes.likes} ${classes.videoStat}`}>
                     <span className={classes.iconSpan}>
@@ -173,7 +173,7 @@ const YTSummary = ({
                         />
                       </svg>
                     </span>
-                    {videoSummary.video_likes} <span style={{marginLeft:"10px"}}>Likes</span>
+                    {videoSummary?.video_likes} <span style={{marginLeft:"10px"}}>Likes</span>
                   </p>
                   <p className={`${classes.duration} ${classes.videoStat}`}>
                     <span className={classes.iconSpan}>
@@ -201,7 +201,7 @@ const YTSummary = ({
                         />
                       </svg>
                     </span>
-                    Duration {videoSummary.video_duration}
+                    Duration {videoSummary?.video_duration}
                   </p>
                   <p
                     className={`${classes.total_comments} ${classes.videoStat}`}
@@ -224,7 +224,7 @@ const YTSummary = ({
                         />
                       </svg>
                     </span>
-                    Comments: {videoSummary.total_comments}
+                    Comments: {videoSummary?.total_comments}
                   </p>
                 </div>
               </div>
