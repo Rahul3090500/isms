@@ -39,10 +39,12 @@
                 height: 50px;
                 display: flex;
                 align-items: center;
-                width: 70%;
+                width: 100%;
                 color: #000;
                 padding-left: 15px;
                 border-radius: 13px;
+                transition: 0.5s ease-in;
+                cursor: pointer;
             }
             .link {
               background-color: #070da1;
@@ -56,6 +58,13 @@
               cursor: pointer;
               display: flex;
               margin-left: 20px;
+          }
+          &:hover {
+            .text {
+              background-color: #070ca1a9;
+              color: #ffff;
+
+            }
           }
 
         }

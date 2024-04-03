@@ -11,6 +11,7 @@ const YTURLInput: React.FC<YTURLInputProps> = ({ onChange, youtubeUrl }) => {
     <div className="input-wrapper">
       <input
         type="text"
+        disabled
         value={youtubeUrl}
         placeholder="Paste YouTube video URL here"
         onChange={onChange}

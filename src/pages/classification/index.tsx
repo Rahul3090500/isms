@@ -2,46 +2,24 @@ import React, { useState } from "react";
 import BarChart from "../../components/ISMS/BarChart";
 import classes from "./ClassificationCommentTab.module.scss";
 import { DataGrid } from "@mui/x-data-grid";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import { Button, Typography } from '@mui/material';
+import { useRouter } from "next/router";
 interface CommentTabProps {
   classificationChartData: any;
   classificationComments: any;
+  loadingCommentClassifications: any;
+  videoSummary: any;
 }
 
 const ClassificationCommentTab: React.FC<CommentTabProps> = ({
   classificationChartData,
   classificationComments = [],
+  loadingCommentClassifications,
+  videoSummary
+
 }) => {
-  const [selectedSentenceType] = useState<
-    string | number
-  >("All");
-  // const [page, setPage] = React.useState(1);
-  // const rowsPerPage = 6;
-
-  // const handleSelectionChange = (key: React.Key) => {
-  //   if (typeof key === "string" || typeof key === "number") {
-  //     setSelectedSentenceType(key);
-  //     setPage(1); // Reset to first page when changing filter
-  //   }
-  // };
-  // console.log('handleSelectionChange',handleSelectionChange )
-
-  // const filteredComments = classifiactionComments.filter((comment: any) => {
-  //   return (
-  //     selectedSentenceType === "All" ||
-  //     comment.sentence_type === selectedSentenceType
-  //   );
-  // });
-
-  // const pages = Math.ceil(filteredComments.length / rowsPerPage);
-
-  // const items = React.useMemo(() => {
-  //   const start = (page - 1) * rowsPerPage;
-  //   const end = start + rowsPerPage;
-
-  //   return filteredComments.slice(start, end);
-  // }, [page, filteredComments]);
-
- 
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const handleClick = () => {
     setIsButtonLoading(true);
@@ -50,15 +28,16 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
     }, 2000);
   };
   const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'user_name', headerName: 'User Id', flex: 1, minWidth: 150 },
+    { field: "id", headerName: "ID", width: 20  },
+    { field: "user_name", headerName: "User Id", flex: 0.55, minWidth: 100  },
     // { field: 'published_time', headerName: 'PUBLISHED TIME', flex: 1, minWidth: 200 },
-    { field: 'updated_time', headerName: 'Time Stamp', flex: 1, minWidth: 200 },
-    { field: 'comment', headerName: 'Comments', flex: 1, minWidth: 250 },
-    { field: 'sentence_type', headerName: 'sentence Type', width: 150 },
+    { field: "updated_time", headerName: "Time Stamp", flex: 0.35, minWidth: 100  },
+    { field: "comment", headerName: "Comments", flex: 1.3, minWidth: 250 },
+    { field: "sentence_type", headerName: "Sentence Type", width: 180 },
   ];
+  const router = useRouter();
 
-  const rows = classificationComments.map((comment: any, index: number) => ({
+  const rows = classificationComments?.map((comment: any, index: number) => ({
     id: index + 1, // Ensure you have a unique ID for each row
     ...comment,
   }));
@@ -109,42 +88,91 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
           Provides the classification of the comments in different sentence
           types
         </div>
-        <div className={classes.dec}>
-      <div className={classes.barchart} >
-      <BarChart chartData={classificationChartData} />
-    </div>
-      <div className={classes.datagrid} style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          disableSelectionOnClick
-          // Enable filtering if you want
-          filterModel={{
-            items: [
-              //@ts-ignore
-              // eslint-disable-next-line no-undef
-              { columnField: 'sentiment', operatorValue: 'contains', value: selectedSentenceType },
-            ],
-          }}
-          sx={{
-            '& .MuiDataGrid-columnHeaders': {
-              background: '#070da1', // Example: a nice shade of blue
-              color: '#070da1', // Changing the text color to white for better contrast
-              '.MuiDataGrid-columnHeaderRow': {
-                background: '#070da1', /// Optional: making the header titles bold
-              },
-            },
-          }}
-       
-        />
+        {loadingCommentClassifications ? (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+        <>
+          {!videoSummary ? (
+            <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              p: 4,
+              m: 2,
+              border: '1px dashed #1976d2',
+              borderRadius: '8px',
+              backgroundColor: '#f0f0f0',
+            }}
+          >
+            <Typography variant="h6" component="p" gutterBottom sx={{ textAlign: 'center', mb: 2 }}>
+              To unlock full insights, kindly add your YouTube video link in Settings.
+            </Typography>
+            <Typography variant="body1" component="p" gutterBottom sx={{ textAlign: 'center', mb: 3 }}>
+              Caze iSMS provides AI-driven analysis for your social media channels, offering sentiment analysis, comment classification, and more. Start optimizing your digital marketing by integrating your YouTube Video!
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => router.push("/settings")}
+              sx={{ mt: 1, fontWeight: 'bold' }}
+            >
+              Go to Settings
+            </Button>
+          </Box>):( 
+               <div className={classes.dec}>
+            <div className={classes.barchart}>
+              <BarChart chartData={classificationChartData} />
+            </div>
+            <div
+              className={classes.datagrid}
+              style={{ height: 400, width: "100%" }}
+            >
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                //@ts-ignore
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                disableSelectionOnClick
+                sx={{
+                  // Targeting the column headers
+                  "& .MuiDataGrid-columnHeaders": {
+                    background: "#070da1",
+                    color: "#070da1", // Adjusting color to white for contrast
+                    fontSize: "22px", // Increase the font size for column headers
+                  },
+                  // Targeting the column header titles
+                  "& .MuiDataGrid-columnHeaderTitle": {
+                    fontSize: "19px", // Increase the font size for column header titles
+                  },
+                  // Targeting the cell values
+                  "& .MuiDataGrid-cell": {
+                    fontSize: "19px", // Increase the font size for cells
+                  },
+                  // Targeting the pagination footer
+                  "& .MuiTablePagination-root": {
+                    fontSize: "19px", // Increase the font size for the pagination footer
+                  },
+                }}
+              />
+            </div>
+          </div> )}
+          </>
+        )}
       </div>
-      </div>    
-        </div>
-     
     </>
   );
-};
+}; 
 
 export default ClassificationCommentTab;

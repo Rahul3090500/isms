@@ -41,6 +41,9 @@ const BarChart: React.FC<BarChartProps> = ({ chartData }) => {
         },
         ticks: {
           display: true,
+          font: {
+            size: 24, 
+          },
         },
       },
     },

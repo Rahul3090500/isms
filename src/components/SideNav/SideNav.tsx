@@ -10,9 +10,6 @@ const SideNav: any = ({
   // videoSummary,
   handleSentimentAnalysis,
   handleCommentClassifications,
-  loadingSentimentAnalysis,
-  loadingCommentClassifications,
-  loadingVideoSummary,
   rowData,
   handleSubmit,
 }: any) => {
@@ -75,22 +72,8 @@ const SideNav: any = ({
             passHref
           >
             <div
-              onClick={() =>
-                loadingSentimentAnalysis ||
-                loadingVideoSummary ||
-                loadingCommentClassifications
-                  ? ""
-                  : handleItemClick(item)
-              }
+              onClick={() => handleItemClick(item)}
               className={`${classes.singleItem} ${activeItem === item.text ? classes.selectedItem : ""}`}
-              style={{
-                cursor:
-                  loadingSentimentAnalysis ||
-                  loadingVideoSummary ||
-                  loadingCommentClassifications
-                    ? "not-allowed"
-                    : "",
-              }}
             >
               <span
                 className={`${classes.icon} ${activeItem === item.text ? classes.iconSelect : ""}`}
