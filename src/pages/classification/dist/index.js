@@ -19,9 +19,20 @@ var CircularProgress_1 = require("@mui/material/CircularProgress");
 var Box_1 = require("@mui/material/Box");
 var material_1 = require("@mui/material");
 var router_1 = require("next/router");
+var Menu_1 = require("@mui/material/Menu");
+var MenuItem_1 = require("@mui/material/MenuItem");
+var XLSX = require("xlsx");
 var ClassificationCommentTab = function (_a) {
     var classificationChartData = _a.classificationChartData, _b = _a.classificationComments, classificationComments = _b === void 0 ? [] : _b, loadingCommentClassifications = _a.loadingCommentClassifications, videoSummary = _a.videoSummary;
     var _c = react_1.useState(false), isButtonLoading = _c[0], setIsButtonLoading = _c[1];
+    var _d = react_1.useState(null), anchorEl = _d[0], setAnchorEl = _d[1];
+    var open = Boolean(anchorEl);
+    var handleClicks = function (event) {
+        setAnchorEl(event.currentTarget);
+    };
+    var handleClose = function () {
+        setAnchorEl(null);
+    };
     var handleClick = function () {
         setIsButtonLoading(true);
         setTimeout(function () {
@@ -38,6 +49,36 @@ var ClassificationCommentTab = function (_a) {
     ];
     var router = router_1.useRouter();
     var rows = classificationComments === null || classificationComments === void 0 ? void 0 : classificationComments.map(function (comment, index) { return (__assign({ id: index + 1 }, comment)); });
+    var exportToExcel = function (data, fileName) {
+        var worksheet = XLSX.utils.json_to_sheet(data);
+        var workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+        XLSX.writeFile(workbook, fileName + ".xlsx");
+    };
+    var convertToCSV = function (data) {
+        var csvString = "";
+        // Generate CSV header
+        var headers = ["No", "User Id", "Time Stamp", "Comments", "Sentence Type"];
+        csvString += headers.join(",") + "\r\n";
+        // Generate CSV rows
+        data.forEach(function (row) {
+            var rowData = [row.id, row.user_name, row.updated_time, "\"" + row.comment.replace(/"/g, '""') + "\"", row.sentence_type];
+            csvString += rowData.join(",") + "\r\n";
+        });
+        return csvString;
+    };
+    var exportToCSV = function (rows) {
+        var csvData = convertToCSV(rows); // `rows` is your data array from the DataGrid
+        var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+        var link = document.createElement("a");
+        var url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "classification_analysis_data.csv");
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
     return (react_1["default"].createElement(react_1["default"].Fragment, null,
         " ",
         react_1["default"].createElement("div", { className: ClassificationCommentTab_module_scss_1["default"].Classification },
@@ -76,6 +117,12 @@ var ClassificationCommentTab = function (_a) {
                 react_1["default"].createElement("div", { className: ClassificationCommentTab_module_scss_1["default"].barchart },
                     react_1["default"].createElement(BarChart_1["default"], { chartData: classificationChartData })),
                 react_1["default"].createElement("div", { className: ClassificationCommentTab_module_scss_1["default"].datagrid, style: { height: 400, width: "100%" } },
+                    react_1["default"].createElement(material_1.Button, { id: "export-button", "aria-controls": open ? 'export-menu' : undefined, "aria-haspopup": "true", "aria-expanded": open ? 'true' : undefined, variant: "contained", onClick: handleClicks }, "Download"),
+                    react_1["default"].createElement(Menu_1["default"], { id: "export-menu", anchorEl: anchorEl, open: open, onClose: handleClose, MenuListProps: {
+                            'aria-labelledby': 'export-button'
+                        } },
+                        react_1["default"].createElement(MenuItem_1["default"], { onClick: function () { handleClose(); exportToCSV(rows); } }, "CSV"),
+                        react_1["default"].createElement(MenuItem_1["default"], { onClick: function () { handleClose(); exportToExcel(rows, 'sentiment_analysis_data'); } }, "Excel")),
                     react_1["default"].createElement(x_data_grid_1.DataGrid, { rows: rows, columns: columns, 
                         //@ts-ignore
                         pageSize: 5, rowsPerPageOptions: [5], disableSelectionOnClick: true, sx: {

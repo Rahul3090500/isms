@@ -6,6 +6,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { Button, Typography } from '@mui/material';
 import { useRouter } from "next/router";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import * as XLSX from 'xlsx';
+
+
 interface CommentTabProps {
   classificationChartData: any;
   classificationComments: any;
@@ -21,6 +26,17 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
 
 }) => {
   const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClicks = (event:any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const handleClick = () => {
     setIsButtonLoading(true);
     setTimeout(() => {
@@ -41,6 +57,39 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
     id: index + 1, // Ensure you have a unique ID for each row
     ...comment,
   }));
+  const exportToExcel = (data:any, fileName:any) => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    XLSX.writeFile(workbook, `${fileName}.xlsx`);
+  };
+
+  const convertToCSV = (data:any) => {
+    let csvString = "";
+    // Generate CSV header
+    const headers = ["No", "User Id", "Time Stamp", "Comments", "Sentence Type"];
+    csvString += headers.join(",") + "\r\n";
+  
+    // Generate CSV rows
+    data.forEach((row: { id: any; user_name: any; updated_time: any; comment: string; sentence_type: any; }) => {
+      const rowData = [row.id, row.user_name, row.updated_time, `"${row.comment.replace(/"/g, '""')}"`, row.sentence_type];
+      csvString += rowData.join(",") + "\r\n";
+    });
+  
+    return csvString;
+  };
+  const exportToCSV = (rows: any) => {
+    const csvData = convertToCSV(rows); // `rows` is your data array from the DataGrid
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "classification_analysis_data.csv");
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   return (
     <>
       {" "}
@@ -138,6 +187,29 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
               className={classes.datagrid}
               style={{ height: 400, width: "100%" }}
             >
+                 <Button
+        id="export-button"
+        aria-controls={open ? 'export-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        variant="contained"
+        onClick={handleClicks}
+      >
+        Download
+      </Button>
+      <Menu
+        id="export-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'export-button',
+        }}
+      >
+     
+        <MenuItem onClick={() => { handleClose(); exportToCSV(rows); }}>CSV</MenuItem>
+        <MenuItem onClick={() => { handleClose(); exportToExcel(rows, 'sentiment_analysis_data'); }}>Excel</MenuItem>
+      </Menu>
               <DataGrid
                 rows={rows}
                 columns={columns}

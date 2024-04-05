@@ -1,8 +1,9 @@
+import { useYoutubeContext } from "@/hooks/urlcontext";
 import PdfUploader from "../../components/table";
 import classes from "./AIResponse.module.scss";
 import React, { useState } from "react";
 
-const AIResponse = ({ rowData }: any) => {
+const AIResponse = () => {
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const handleClick = () => {
     setIsButtonLoading(true);
@@ -12,6 +13,8 @@ const AIResponse = ({ rowData }: any) => {
       setIsButtonLoading(false);
     }, 2000);
   };
+  const { rowData } = useYoutubeContext();
+  console.log('rowDataaaa123',rowData )
   return (
     <div className={classes.AIResponse}>
       <div className={classes.header}>
@@ -57,7 +60,10 @@ const AIResponse = ({ rowData }: any) => {
         Provides the automated Al (Artificial Intelligence) responses for all
         the query comments
       </div>
-      <div className={classes.dec}>{rowData.length === 0 && "no data"}{rowData.length > 0 && <PdfUploader />}</div>
+      <div className={classes.dec}>
+        {rowData.length === 0 && "no data"}
+        {rowData.length > 0 && <PdfUploader />}
+      </div>
     </div>
   );
 };

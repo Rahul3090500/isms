@@ -6,6 +6,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { Button, Typography } from '@mui/material';
 import { useRouter } from "next/router";
+import * as XLSX from 'xlsx';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 interface SentimentTabProps {
   chartData: any;
   sentimentComments: any;
@@ -22,6 +26,17 @@ const SentimentTab: React.FC<SentimentTabProps> = ({
   videoSummary
 }) => {
   const [selectedSentiment, setSelectedSentiment] = useState<string>("All");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClicks = (event:any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   console.log("sentimentComments", sentimentComments);
   const handleSelectionChange = (key: string) => {
     setSelectedSentiment(key);
@@ -57,7 +72,40 @@ const SentimentTab: React.FC<SentimentTabProps> = ({
       setIsButtonLoading(false);
     }, 2000);
   };
+  const exportToExcel = (data:any, fileName:any) => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    XLSX.writeFile(workbook, `${fileName}.xlsx`);
+  };
 
+  const convertToCSV = (data:any) => {
+    let csvString = "";
+    // Generate CSV header
+    const headers = ["No", "User Id", "Time Stamp", "Comments", "Sentiment"];
+    csvString += headers.join(",") + "\r\n";
+  
+    // Generate CSV rows
+    data.forEach((row: { id: any; user_name: any; updated_time: any; comment: string; sentiment: any; }) => {
+      const rowData = [row.id, row.user_name, row.updated_time, `"${row.comment.replace(/"/g, '""')}"`, row.sentiment];
+      csvString += rowData.join(",") + "\r\n";
+    });
+  
+    return csvString;
+  };
+  const exportToCSV = (rows: any) => {
+    const csvData = convertToCSV(rows); // `rows` is your data array from the DataGrid
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "sentiment_analysis_data.csv");
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  
   return (
     <>
       <div className={classes.Sentiment}>
@@ -151,6 +199,30 @@ const SentimentTab: React.FC<SentimentTabProps> = ({
               className={classes.datagrid}
               style={{ height: 400, width: "100%" }}
             >
+     <Button
+        id="export-button"
+        aria-controls={open ? 'export-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        variant="contained"
+        onClick={handleClicks}
+      >
+        Download
+      </Button>
+      <Menu
+        id="export-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'export-button',
+        }}
+      >
+     
+        <MenuItem onClick={() => { handleClose(); exportToCSV(rows); }}>CSV</MenuItem>
+        <MenuItem onClick={() => { handleClose(); exportToExcel(rows, 'sentiment_analysis_data'); }}>Excel</MenuItem>
+      </Menu>
+
               <DataGrid
                 rows={rows}
                 columns={columns}
