@@ -14,7 +14,6 @@ const AIResponse = () => {
     }, 2000);
   };
   const { rowData } = useYoutubeContext();
-  console.log('rowDataaaa123',rowData )
   return (
     <div className={classes.AIResponse}>
       <div className={classes.header}>

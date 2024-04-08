@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -12,9 +12,11 @@ import API from "@/utils/api.config";
 import { useRouter } from "next/router";
 
 export default function FileInputModal({ IsOpen, setIsOpen,videoSummary }: any) {
-  const { setRowData, setDataFileName, youtubeUrl, dataFileName } =
+  const {  setDataFileName, youtubeUrl, dataFileName } =
     useYoutubeContext();
-
+    const [rowData, setRowData] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     //@ts-ignore
@@ -40,31 +42,52 @@ export default function FileInputModal({ IsOpen, setIsOpen,videoSummary }: any) 
     }
   };
   const router = useRouter(); // Use the useRouter hook to get access to the router object
-
   const handleFileSubmit = async () => {
+    if (!dataFileName || !youtubeUrl) {
+      console.log("No file selected or YouTube URL missing.");
+      return; // Exit if no file is selected or if the YouTube URL is missing
+    }
+
+    setIsLoading(true);
+    setError('');
+
     try {
-      if (dataFileName) {
-        const response = await API.post(`query_answer`, {
+      const response = await fetch('http://20.244.47.51:8080/v1/query_answer', {
+        method: 'POST',
+        body: JSON.stringify({
           url: youtubeUrl,
           pdf_file: dataFileName,
           model_type: "advanced",
-        });
-        let res = response.data;
-        res = res.replace(/NaN/g, "0");
-        const data = JSON.parse(res);
-        setRowData(data);
-        
-        // Navigate to /ai-response after the response is successfully processed
-      }
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    } finally {
-      router.push('/ai-response');
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          // Include other headers as required, such as Authorization for Bearer tokens
+        },
+      });
 
-      setIsOpen(false); // Assuming this is to close a modal or similar
+      if (!response.ok) {
+        throw new Error(`API call failed with status: ${response.status}`);
+      }
+
+      const res = await response.text(); // Use .text() first to handle non-JSON responses
+      const processedResponse = res.replace(/NaN/g, "0");
+
+      const data = JSON.parse(processedResponse);
+      setRowData(data); // Update global state with the parsed data
+
+      console.log("Data successfully fetched and processed", data);
+    } catch (error:any) {
+      console.error("Error during file submission:", error);
+      setError(error.message || 'An unknown error occurred');
+    } finally {
+      setIsLoading(false);
+      setIsOpen(false); // Close the modal
+      router.push('/ai-response'); // Navigate after actions are complete
     }
   };
 
+  console.log(rowData,"rowDataaaaaa")
+  
   return (
     <>
       <Modal isOpen={IsOpen}>
@@ -89,7 +112,7 @@ export default function FileInputModal({ IsOpen, setIsOpen,videoSummary }: any) 
                 variant="light"
                 onPress={handleFileSubmit}
               >
-                Upload File
+            {isLoading ? 'Uploading...' : 'Upload File'}
               </Button>
             </ModalFooter></>: 
              <div>First add Youtube Link  <Button
@@ -98,7 +121,10 @@ export default function FileInputModal({ IsOpen, setIsOpen,videoSummary }: any) 
              onPress={() => setIsOpen(false)}
            >
              Cancel
-           </Button></div>
+           </Button>
+           {error && <p>Error: {error}</p>}
+</div>
+           
            }
       
           </>

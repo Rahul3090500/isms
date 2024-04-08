@@ -9,6 +9,18 @@ interface BarChartProps {
 }
 
 const BarChart: React.FC<BarChartProps> = ({ chartData }) => {
+  // Function to determine font size based on screen width
+  const getResponsiveFontSize = () => {
+    const screenWidth = window.innerWidth;
+    if (screenWidth < 600) { // Mobile
+      return 14;
+    } else if (screenWidth < 900) { // Tablet
+      return 18;
+    } else { // Desktop and larger devices
+      return 24;
+    }
+  };
+
   const options:any = {
     responsive: true,
     indexAxis: 'y', 
@@ -18,12 +30,6 @@ const BarChart: React.FC<BarChartProps> = ({ chartData }) => {
       },
       title: {
         display: false,
-      },
-      // Adding a custom plugin to draw the data values on top of each bar
-      datalabels: {
-        display: false,
-        align: 'top',
-        anchor: 'top',
       },
     },
     scales: {
@@ -42,12 +48,11 @@ const BarChart: React.FC<BarChartProps> = ({ chartData }) => {
         ticks: {
           display: true,
           font: {
-            size: 24, 
+            size: getResponsiveFontSize(), // Using the function to set the font size dynamically
           },
         },
       },
     },
-
   };
 
   return <Bar options={options} data={chartData} />;
