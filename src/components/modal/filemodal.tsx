@@ -23,6 +23,7 @@ export default function FileModal({ isOpen, setIsOpen }:any) {
         commentId: it?.commentId,
       };
     });
+
      
 
          //@ts-ignore
@@ -39,6 +40,7 @@ export default function FileModal({ isOpen, setIsOpen }:any) {
             client_secret: Credentails?.client_secret,
             redirect_uris: ['http://localhost:3000/'], // Update with your redirect URIs
           });
+          localStorage.setItem("Response", JSON.stringify(rowData))
           localStorage.setItem('data',JSON.stringify({
             payload:payload,
                //@ts-ignore

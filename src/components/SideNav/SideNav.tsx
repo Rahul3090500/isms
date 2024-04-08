@@ -63,11 +63,7 @@ const SideNav: any = ({
           <Link
             key={index}
             href={
-              item.path === "/ai-response"
-                ? rowData.length === 0
-                  ? "/settings"
-                  : item.path
-                : item.path
+              item.path  
             }
             passHref
           >

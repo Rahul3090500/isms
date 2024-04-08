@@ -11,6 +11,8 @@ interface YoutubeContextType {
   setRowData:any; // Change 'any' to the type of your row data if known
   Credentails: Object;
   setCredentails: any;
+  responseRowData:any;
+  setResponseRowData:any;
 }
 
 const YoutubeContext = createContext<YoutubeContextType | undefined>(undefined);
@@ -27,6 +29,7 @@ export const YoutubeContextProvider = ({ children }: { children: ReactNode }) =>
   const [dataFileName, setDataFileName] = useState('');
   const [tokenFileName, setTokenFileName] = useState('');
   const [rowData, setRowData] = useState<any[]>([]);
+  const [responseRowData, setResponseRowData] = useState<boolean>(false);
   const [Credentails, setCredentails] = useState<Object>({});
 
   // Effect to update localStorage whenever youtubeUrl changes
@@ -49,6 +52,8 @@ export const YoutubeContextProvider = ({ children }: { children: ReactNode }) =>
         setRowData,
         Credentails,
         setCredentails,
+        responseRowData,
+        setResponseRowData,
       }}
     >
       {children}

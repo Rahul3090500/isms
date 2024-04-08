@@ -134,12 +134,24 @@ const PdfUploader = () => {
                     value={item.Response}
                     disabled={item.Answered}
                     onChange={(event) => {
-                      const newItem = { ...item, Response: event.target.value };
-                      setRowData((prev: any[]) =>
-                        prev.map((it: { commentId: any }) =>
-                          it.commentId === newItem.commentId ? newItem : it
-                        )
-                      );
+                      
+                      if(!item?.AIAnswered){
+                        const newItem = { ...item,AIAnswered:item.Response, Response: event.target.value };
+                        setRowData((prev: any[]) =>
+                          prev.map((it: { commentId: any }) =>
+                            it.commentId === newItem.commentId ? newItem : it
+                          )
+                        );
+
+                      }
+                      else {
+                        const newItem = { ...item, Response: event.target.value };
+                        setRowData((prev: any[]) =>
+                          prev.map((it: { commentId: any }) =>
+                            it.commentId === newItem.commentId ? newItem : it
+                          )
+                        );
+                      }
                     }}
                   />
                 </div>

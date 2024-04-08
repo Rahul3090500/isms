@@ -1,7 +1,8 @@
 import { useYoutubeContext } from "@/hooks/urlcontext";
 import PdfUploader from "../../components/table";
 import classes from "./AIResponse.module.scss";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import PdfUploader2 from "@/components/PdfTable";
 
 const AIResponse = () => {
   const [isButtonLoading, setIsButtonLoading] = useState(false);
@@ -13,8 +14,13 @@ const AIResponse = () => {
       setIsButtonLoading(false);
     }, 2000);
   };
-  const { rowData } = useYoutubeContext();
+  const { rowData,responseRowData,setRowData } = useYoutubeContext();
   console.log('rowDataaaa123',rowData )
+  useEffect(() => {
+    const getRowData =localStorage.getItem('Response')
+    if(getRowData) setRowData(JSON.parse(getRowData))
+  }, [])
+  
   return (
     <div className={classes.AIResponse}>
       <div className={classes.header}>
@@ -64,6 +70,17 @@ const AIResponse = () => {
         {rowData.length === 0 && "no data"}
         {rowData.length > 0 && <PdfUploader />}
       </div>
+      {
+        <div >
+        <p>Quey Answered</p>
+        <div className={classes.dec}>
+        {rowData.length === 0 && "no data"}
+        {rowData.length > 0 && <PdfUploader2  />}
+      </div>
+      </div>
+      }
+
+      
     </div>
   );
 };

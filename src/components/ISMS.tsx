@@ -291,7 +291,7 @@ const navItems: any = [
 ];
 
 function ISMS({ Component, pageProps }: any) {
-  const { youtubeUrl, setYoutubeUrl } = useYoutubeContext();
+  const { youtubeUrl, setYoutubeUrl,setResponseRowData } = useYoutubeContext();
   // const [youtubeUrl, setYoutubeUrl] = useState("https://www.youtube.com/watch?v=f5YdhPYsk3U");
   const [isButtonLoading, setButtonLoading] = useState(false);
   const [videoSummary, setVideoSummary] = useState();
@@ -347,7 +347,10 @@ function ISMS({ Component, pageProps }: any) {
         model_type: "advanced",
         credential_file: "credentials_token.json",
         reply_list: data?.payload,
-      });
+      }).then((res)=>{
+        console.log(typeof res.data)
+        setResponseRowData(true)
+      })
     } catch (error) {
       ("");
     }
