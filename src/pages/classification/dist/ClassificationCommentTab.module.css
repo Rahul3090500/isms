@@ -1,0 +1,184 @@
+.Classification {
+  width: 85%;
+  margin: auto;
+  margin-bottom: 70px;
+  height: 100vh;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.Classification .header {
+  height: 120px;
+  color: #070da1;
+  font-weight: 600;
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 1.5px solid #070da1;
+  display: flex;
+  justify-content: space-between;
+}
+.Classification .header .text {
+  font-size: 40px;
+}
+.Classification .header .refresh {
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 21px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+.Classification .header .refresh span svg {
+  margin-right: 5px;
+}
+.Classification .header .refresh span .refresh_animate {
+  animation: rotate 2s linear infinite;
+}
+.Classification .sub_header {
+  font-style: italic;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-size: 18px;
+  color: #070da1;
+}
+.Classification .dec {
+  border-radius: 21px;
+  overflow: hidden;
+  margin-top: 40px;
+  padding: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+}
+.Classification .dec .barchart {
+  scale: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  .Classification {
+    width: 90%;
+    margin: auto;
+    margin-bottom: 0px;
+    margin-top: 70px;
+  }
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .Classification .header {
+    height: 100px;
+    color: #070da1;
+    font-weight: 600;
+    display: flex;
+    align-items: flex-end;
+    border-bottom: 1.5px solid #070da1;
+    display: flex;
+    justify-content: space-between;
+  }
+  .Classification .header .text {
+    font-size: 40px;
+  }
+  .Classification .header .refresh {
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 21px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+  }
+  .Classification .header .refresh span svg {
+    margin-right: 5px;
+  }
+  .Classification .header .refresh span .refresh_animate {
+    animation: rotate 2s linear infinite;
+  }
+  .Classification .sub_header {
+    font-style: italic;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 18px;
+    color: #070da1;
+  }
+  .Classification .dec {
+    border-radius: 21px;
+    overflow: hidden;
+    margin-top: 40px;
+    padding: 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+  }
+  .Classification .dec .barchart {
+    scale: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+}
+@media only screen and (min-width: 320px) and (max-width: 600px) {
+  .Classification {
+    width: 95%;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    height: 100%;
+  }
+  .Classification .header {
+    border-bottom: 1px solid #8a8a8a;
+    height: 80px;
+  }
+  .Classification .header .text {
+    font-size: 30px;
+  }
+  .Classification .header .refresh {
+    padding-left: 5px;
+    padding-right: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-radius: 21px;
+    margin-bottom: 5px;
+    font-size: 10px;
+  }
+  .Classification .header .refresh span svg {
+    margin-right: 5px;
+    scale: 0.7;
+  }
+  .Classification .sub_header {
+    margin-top: 1px;
+    font-size: 12px;
+  }
+  .Classification .dec {
+    margin-top: 15px;
+    padding: 10px;
+    padding-bottom: 25px;
+  }
+  .Classification .dec .barchart {
+    scale: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+  }
+}

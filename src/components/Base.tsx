@@ -9,12 +9,12 @@ import { AppConfig } from '../utils/AppConfig';
 // import YTComponent from './ISMS';
 import ISMS from './ISMS';
 
-const Base = () => (
+const Base = ({pageProps,Component}:any) => (
   <div className="text-gray-600 antialiased">
     <Meta title={AppConfig.title} description={AppConfig.description} />
     
     <div className="flex w-full flex-col">
-     <ISMS />
+     <ISMS pageProps={pageProps} Component={Component} />
      
     </div>  
     

@@ -43,7 +43,12 @@ var ClassificationCommentTab = function (_a) {
         { field: "id", headerName: "ID", width: 20 },
         { field: "user_name", headerName: "User Id", flex: 0.55, minWidth: 100 },
         // { field: 'published_time', headerName: 'PUBLISHED TIME', flex: 1, minWidth: 200 },
-        { field: "updated_time", headerName: "Time Stamp", flex: 0.35, minWidth: 100 },
+        {
+            field: "updated_time",
+            headerName: "Time Stamp",
+            flex: 0.35,
+            minWidth: 100
+        },
         { field: "comment", headerName: "Comments", flex: 1.3, minWidth: 250 },
         { field: "sentence_type", headerName: "Sentence Type", width: 180 },
     ];
@@ -58,23 +63,35 @@ var ClassificationCommentTab = function (_a) {
     var convertToCSV = function (data) {
         var csvString = "";
         // Generate CSV header
-        var headers = ["No", "User Id", "Time Stamp", "Comments", "Sentence Type"];
+        var headers = [
+            "No",
+            "User Id",
+            "Time Stamp",
+            "Comments",
+            "Sentence Type",
+        ];
         csvString += headers.join(",") + "\r\n";
         // Generate CSV rows
         data.forEach(function (row) {
-            var rowData = [row.id, row.user_name, row.updated_time, "\"" + row.comment.replace(/"/g, '""') + "\"", row.sentence_type];
+            var rowData = [
+                row.id,
+                row.user_name,
+                row.updated_time,
+                "\"" + row.comment.replace(/"/g, '""') + "\"",
+                row.sentence_type,
+            ];
             csvString += rowData.join(",") + "\r\n";
         });
         return csvString;
     };
     var exportToCSV = function (rows) {
         var csvData = convertToCSV(rows); // `rows` is your data array from the DataGrid
-        var blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+        var blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
         var link = document.createElement("a");
         var url = URL.createObjectURL(blob);
         link.setAttribute("href", url);
         link.setAttribute("download", "classification_analysis_data.csv");
-        link.style.visibility = 'hidden';
+        link.style.visibility = "hidden";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -101,48 +118,81 @@ var ClassificationCommentTab = function (_a) {
                     height: "100%"
                 } },
                 react_1["default"].createElement(CircularProgress_1["default"], null))) : (react_1["default"].createElement(react_1["default"].Fragment, null, !videoSummary ? (react_1["default"].createElement(Box_1["default"], { sx: {
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
                     p: 4,
                     m: 2,
-                    border: '1px dashed #1976d2',
-                    borderRadius: '8px',
-                    backgroundColor: '#f0f0f0'
+                    border: "1px dashed #1976d2",
+                    borderRadius: "8px",
+                    backgroundColor: "#f0f0f0"
                 } },
-                react_1["default"].createElement(material_1.Typography, { variant: "h6", component: "p", gutterBottom: true, sx: { textAlign: 'center', mb: 2 } }, "To unlock full insights, kindly add your YouTube video link in Settings."),
-                react_1["default"].createElement(material_1.Typography, { variant: "body1", component: "p", gutterBottom: true, sx: { textAlign: 'center', mb: 3 } }, "Caze iSMS provides AI-driven analysis for your social media channels, offering sentiment analysis, comment classification, and more. Start optimizing your digital marketing by integrating your YouTube Video!"),
-                react_1["default"].createElement(material_1.Button, { variant: "contained", color: "primary", onClick: function () { return router.push("/settings"); }, sx: { mt: 1, fontWeight: 'bold' } }, "Go to Settings"))) : (react_1["default"].createElement("div", { className: ClassificationCommentTab_module_scss_1["default"].dec },
+                react_1["default"].createElement(material_1.Typography, { variant: "h6", component: "p", gutterBottom: true, sx: { textAlign: "center", mb: 2 } }, "To unlock full insights, kindly add your YouTube video link in Settings."),
+                react_1["default"].createElement(material_1.Typography, { variant: "body1", component: "p", gutterBottom: true, sx: { textAlign: "center", mb: 3 } }, "Caze iSMS provides AI-driven analysis for your social media channels, offering sentiment analysis, comment classification, and more. Start optimizing your digital marketing by integrating your YouTube Video!"),
+                react_1["default"].createElement(material_1.Button, { variant: "outlined", color: "secondary", onClick: function () { return router.push("/settings"); }, sx: { mt: 1, fontWeight: "bold" } }, "Go to Settings"))) : (react_1["default"].createElement("div", { className: ClassificationCommentTab_module_scss_1["default"].dec },
                 react_1["default"].createElement("div", { className: ClassificationCommentTab_module_scss_1["default"].barchart },
                     react_1["default"].createElement(BarChart_1["default"], { chartData: classificationChartData })),
                 react_1["default"].createElement("div", { className: ClassificationCommentTab_module_scss_1["default"].datagrid, style: { height: 400, width: "100%" } },
-                    react_1["default"].createElement(material_1.Button, { id: "export-button", "aria-controls": open ? 'export-menu' : undefined, "aria-haspopup": "true", "aria-expanded": open ? 'true' : undefined, variant: "contained", onClick: handleClicks }, "Download"),
+                    react_1["default"].createElement(material_1.Button, { id: "export-button", "aria-controls": open ? "export-menu" : undefined, "aria-haspopup": "true", "aria-expanded": open ? "true" : undefined, variant: "outlined", onClick: handleClicks }, "Download"),
                     react_1["default"].createElement(Menu_1["default"], { id: "export-menu", anchorEl: anchorEl, open: open, onClose: handleClose, MenuListProps: {
-                            'aria-labelledby': 'export-button'
+                            "aria-labelledby": "export-button"
                         } },
-                        react_1["default"].createElement(MenuItem_1["default"], { onClick: function () { handleClose(); exportToCSV(rows); } }, "CSV"),
-                        react_1["default"].createElement(MenuItem_1["default"], { onClick: function () { handleClose(); exportToExcel(rows, 'sentiment_analysis_data'); } }, "Excel")),
+                        react_1["default"].createElement(MenuItem_1["default"], { onClick: function () {
+                                handleClose();
+                                exportToCSV(rows);
+                            } }, "CSV"),
+                        react_1["default"].createElement(MenuItem_1["default"], { onClick: function () {
+                                handleClose();
+                                exportToExcel(rows, "sentiment_analysis_data");
+                            } }, "Excel")),
                     react_1["default"].createElement(x_data_grid_1.DataGrid, { rows: rows, columns: columns, 
                         //@ts-ignore
                         pageSize: 5, rowsPerPageOptions: [5], disableSelectionOnClick: true, sx: {
-                            // Targeting the column headers
+                            // Default styles for larger screens
                             "& .MuiDataGrid-columnHeaders": {
                                 background: "#070da1",
-                                color: "#070da1",
+                                // color: "#fff", // Adjusted for better contrast and readability
                                 fontSize: "22px"
                             },
-                            // Targeting the column header titles
                             "& .MuiDataGrid-columnHeaderTitle": {
                                 fontSize: "19px"
                             },
-                            // Targeting the cell values
                             "& .MuiDataGrid-cell": {
                                 fontSize: "19px"
                             },
-                            // Targeting the pagination footer
                             "& .MuiTablePagination-root": {
                                 fontSize: "19px"
+                            },
+                            // Styles for medium screens (tablets)
+                            "@media (max-width:900px)": {
+                                "& .MuiDataGrid-columnHeaders": {
+                                    fontSize: "18px"
+                                },
+                                "& .MuiDataGrid-columnHeaderTitle": {
+                                    fontSize: "16px"
+                                },
+                                "& .MuiDataGrid-cell": {
+                                    fontSize: "16px"
+                                },
+                                "& .MuiTablePagination-root": {
+                                    fontSize: "16px"
+                                }
+                            },
+                            // Styles for small screens (mobiles)
+                            "@media (max-width:600px)": {
+                                "& .MuiDataGrid-columnHeaders": {
+                                    fontSize: "15px"
+                                },
+                                "& .MuiDataGrid-columnHeaderTitle": {
+                                    fontSize: "13px"
+                                },
+                                "& .MuiDataGrid-cell": {
+                                    fontSize: "13px"
+                                },
+                                "& .MuiTablePagination-root": {
+                                    fontSize: "13px"
+                                }
                             }
                         } })))))))));
 };

@@ -4,7 +4,7 @@ import classes from "./YTSummary.module.scss";
 import YTURLInput from "../../components/ISMS/YTURLInput";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import { Button, Typography } from '@mui/material';
+import { Button, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 
 const YTSummary = ({
@@ -17,8 +17,6 @@ const YTSummary = ({
   console.log("videoSummary123", videoSummary);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const router = useRouter();
-
-
 
   const handleClick = () => {
     setIsButtonLoading(true);
@@ -89,34 +87,48 @@ const YTSummary = ({
         ) : (
           <>
             {!videoSummary ? (
-             <Box
-             sx={{
-               display: 'flex',
-               flexDirection: 'column',
-               alignItems: 'center',
-               justifyContent: 'center',
-               p: 4,
-               m: 2,
-               border: '1px dashed #1976d2',
-               borderRadius: '8px',
-               backgroundColor: '#f0f0f0',
-             }}
-           >
-             <Typography variant="h6" component="p" gutterBottom sx={{ textAlign: 'center', mb: 2 }}>
-               To unlock full insights, kindly add your YouTube video link in Settings.
-             </Typography>
-             <Typography variant="body1" component="p" gutterBottom sx={{ textAlign: 'center', mb: 3 }}>
-               Caze iSMS provides AI-driven analysis for your social media channels, offering sentiment analysis, comment classification, and more. Start optimizing your digital marketing by integrating your YouTube Video!
-             </Typography>
-             <Button
-               variant="contained"
-               color="primary"
-               onClick={() => router.push("/settings")}
-               sx={{ mt: 1, fontWeight: 'bold' }}
-             >
-               Go to Settings
-             </Button>
-           </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  p: 4,
+                  m: 2,
+                  border: "1px dashed #1976d2",
+                  borderRadius: "8px",
+                  backgroundColor: "#f0f0f0",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  component="p"
+                  gutterBottom
+                  sx={{ textAlign: "center", mb: 2 }}
+                >
+                  To unlock full insights, kindly add your YouTube video link in
+                  Settings.
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="p"
+                  gutterBottom
+                  sx={{ textAlign: "center", mb: 3 }}
+                >
+                  Caze iSMS provides AI-driven analysis for your social media
+                  channels, offering sentiment analysis, comment classification,
+                  and more. Start optimizing your digital marketing by
+                  integrating your YouTube Video!
+                </Typography>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => router.push("/settings")}
+                  sx={{ mt: 1, fontWeight: "bold" }}
+                >
+                  Go to Settings
+                </Button>
+              </Box>
             ) : (
               <div className={classes.dec}>
                 <div className={classes.video}>

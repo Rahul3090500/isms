@@ -15,7 +15,6 @@ var AIResponse = function () {
         }, 2000);
     };
     var rowData = urlcontext_1.useYoutubeContext().rowData;
-    console.log('rowDataaaa123', rowData);
     return (react_1["default"].createElement("div", { className: AIResponse_module_scss_1["default"].AIResponse },
         react_1["default"].createElement("div", { className: AIResponse_module_scss_1["default"].header },
             react_1["default"].createElement("span", { className: AIResponse_module_scss_1["default"].text }, "Al Response"),

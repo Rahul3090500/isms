@@ -1,5 +1,5 @@
 .Classification {
-  width: 80%;
+  width: 85%;
   margin: auto;
   margin-bottom: 70px;
   height: 100vh;
@@ -78,8 +78,8 @@
   .Classification {
     width: 90%;
     margin: auto;
-    margin-bottom: 70px;
-          margin-top: 0px;
+    margin-bottom: 0px;
+          margin-top: 70px;
 
     @keyframes rotate {
       from {
@@ -157,8 +157,10 @@
 @media only screen and (min-width: 320px) and (max-width: 600px) {
   .Classification {
     width: 95%;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
   margin-top: 0px;
+  height: 100%;
+
 
   .header {
     border-bottom: 1px solid #8a8a8a;
@@ -190,6 +192,8 @@
     .dec {
       margin-top: 15px;
       padding: 10px;
+      padding-bottom: 25px;
+
      .barchart {
       scale: 1;
       display: flex;

@@ -16,6 +16,7 @@ exports.YoutubeContextProvider = function (_a) {
     var _d = react_1.useState(''), tokenFileName = _d[0], setTokenFileName = _d[1];
     var _e = react_1.useState([]), rowData = _e[0], setRowData = _e[1];
     var _f = react_1.useState({}), Credentails = _f[0], setCredentails = _f[1];
+    console.log('setRowData1111', rowData);
     // Effect to update localStorage whenever youtubeUrl changes
     react_1.useEffect(function () {
         if (typeof window !== 'undefined') {
