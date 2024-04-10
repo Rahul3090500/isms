@@ -37,6 +37,7 @@ export default function FileInputModal({ IsOpen, setIsOpen,videoSummary }: any) 
       response;
       setDataFileName(file?.name);
     } catch (error) {
+      
       console.error("Error uploading file:", error);
       // Handle error
     }
@@ -73,7 +74,8 @@ export default function FileInputModal({ IsOpen, setIsOpen,videoSummary }: any) 
       const processedResponse = res.replace(/NaN/g, "0");
 
       const data = JSON.parse(processedResponse);
-      setRowData(data); // Update global state with the parsed data
+      setRowData(data);
+      localStorage.setItem('Response',JSON.stringify(data)) // Update global state with the parsed data
 
       console.log("Data successfully fetched and processed", data);
     } catch (error:any) {
