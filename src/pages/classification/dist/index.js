@@ -152,8 +152,10 @@ var ClassificationCommentTab = function (_a) {
                             // Default styles for larger screens
                             "& .MuiDataGrid-columnHeaders": {
                                 background: "#070da1",
-                                // color: "#fff", // Adjusted for better contrast and readability
                                 fontSize: "22px"
+                            },
+                            "& .MuiDataGrid-main": {
+                                zIndex: "0"
                             },
                             "& .MuiDataGrid-columnHeaderTitle": {
                                 fontSize: "19px"
@@ -193,6 +195,13 @@ var ClassificationCommentTab = function (_a) {
                                 "& .MuiTablePagination-root": {
                                     fontSize: "13px"
                                 }
+                            },
+                            // Hiding the scrollbar (both Y and X axis)
+                            "& .MuiDataGrid-virtualScroller": {
+                                "&::-webkit-scrollbar": {
+                                    display: "none !important"
+                                },
+                                scrollbarWidth: "none"
                             }
                         } })))))))));
 };

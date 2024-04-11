@@ -118,7 +118,7 @@ const Nav = ({
                 <span
                   onClick={() => setNavOpen(!navOpen)}
                   style={{
-                    top: navOpen ? "-300px" : "270px",
+                    
                     transitionDelay: navOpen ? "0.3s" : "0s",
                     opacity: navOpen ? "1" : "0",
                   }}
@@ -174,7 +174,7 @@ const Nav = ({
                 <span
                   onClick={() => setNavOpen(!navOpen)}
                   style={{
-                    top: navOpen ? "-300px" : "270px",
+                    
                     transitionDelay: navOpen ? "0.3s" : "0s",
                     opacity: navOpen ? "1" : "",
                   }}
@@ -224,7 +224,7 @@ const Nav = ({
                 <span
                   onClick={() => setNavOpen(!navOpen)}
                   style={{
-                    top: navOpen ? "-300px" : "270px",
+                    
                     transitionDelay: navOpen ? "0.3s" : "0s",
                     opacity: navOpen ? "1" : "",
                   }}

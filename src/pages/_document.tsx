@@ -7,7 +7,7 @@ class MyDocument extends Document {
   // eslint-disable-next-line class-methods-use-this
   render() {
     return (
-      <Html lang={AppConfig.locale}>
+      <Html style={{backgroundColor:"#f6f6ee"}} lang={AppConfig.locale}>
         <Head />
         <body>
           <Main />

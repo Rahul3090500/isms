@@ -272,8 +272,10 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
                       // Default styles for larger screens
                       "& .MuiDataGrid-columnHeaders": {
                         background: "#070da1",
-                        // color: "#fff", // Adjusted for better contrast and readability
                         fontSize: "22px",
+                      },
+                      "& .MuiDataGrid-main": {
+                        zIndex:"0",
                       },
                       "& .MuiDataGrid-columnHeaderTitle": {
                         fontSize: "19px",
@@ -287,7 +289,7 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
                       // Styles for medium screens (tablets)
                       "@media (max-width:900px)": {
                         "& .MuiDataGrid-columnHeaders": {
-                          fontSize: "18px", // Slightly smaller for tablet
+                          fontSize: "18px",
                         },
                         "& .MuiDataGrid-columnHeaderTitle": {
                           fontSize: "16px",
@@ -302,7 +304,7 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
                       // Styles for small screens (mobiles)
                       "@media (max-width:600px)": {
                         "& .MuiDataGrid-columnHeaders": {
-                          fontSize: "15px", // Even smaller for mobile
+                          fontSize: "15px",
                         },
                         "& .MuiDataGrid-columnHeaderTitle": {
                           fontSize: "13px",
@@ -313,6 +315,13 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
                         "& .MuiTablePagination-root": {
                           fontSize: "13px",
                         },
+                      },
+                      // Hiding the scrollbar (both Y and X axis)
+                      "& .MuiDataGrid-virtualScroller": {
+                        "&::-webkit-scrollbar": {
+                          display: "none !important",
+                        },
+                        scrollbarWidth: "none", // For Firefox
                       },
                     }}
                   />

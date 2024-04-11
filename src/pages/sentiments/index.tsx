@@ -280,6 +280,9 @@ const SentimentTab: React.FC<SentimentTabProps> = ({
                     disableSelectionOnClick
                     sx={{
                       // Default styles for larger screens
+                      "& .MuiDataGrid-main": {
+                        zIndex:"0",
+                      },
                       "& .MuiDataGrid-columnHeaders": {
                         background: "#070da1",
                         // color: "#fff", // Adjusted for better contrast and readability

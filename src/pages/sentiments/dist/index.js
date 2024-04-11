@@ -153,6 +153,9 @@ var SentimentTab = function (_a) {
                         //@ts-ignore
                         pageSize: 5, rowsPerPageOptions: [5], disableSelectionOnClick: true, sx: {
                             // Default styles for larger screens
+                            "& .MuiDataGrid-main": {
+                                zIndex: "0"
+                            },
                             "& .MuiDataGrid-columnHeaders": {
                                 background: "#070da1",
                                 // color: "#fff", // Adjusted for better contrast and readability
