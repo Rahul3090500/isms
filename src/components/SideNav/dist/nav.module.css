@@ -94,6 +94,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    height: 100%;
   }
   .nav .nav_overlay .nav_linksMob .nav_item span {
     text-decoration: none;
@@ -233,13 +234,14 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    padding-top: 135%;
     text-align: center;
   }
   .nav .nav_overlay .nav_linksMob .nav_item {
     list-style: none;
     position: relative;
-    margin-top: 300px;
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
   .nav .nav_overlay .nav_linksMob .nav_item span {
     text-decoration: none;
