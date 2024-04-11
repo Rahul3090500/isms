@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var react_1 = require("react");
-var react_2 = require("@nextui-org/react");
+var material_1 = require("@mui/material");
 var urlcontext_1 = require("@/hooks/urlcontext");
 var router_1 = require("next/router");
 var react_toastify_1 = require("react-toastify");
@@ -48,7 +48,8 @@ function FileInputModal(_a) {
     var _b = urlcontext_1.useYoutubeContext(), setDataFileName = _b.setDataFileName, youtubeUrl = _b.youtubeUrl, dataFileName = _b.dataFileName;
     var _c = react_1.useState([]), rowData = _c[0], setRowData = _c[1];
     var _d = react_1.useState(false), isLoading = _d[0], setIsLoading = _d[1];
-    var _e = react_1.useState(''), error = _e[0], setError = _e[1];
+    var _e = react_1.useState(""), error = _e[0], setError = _e[1];
+    var fileInputRef = react_1.useRef(null);
     var handleFileChange = function (e) { return __awaiter(_this, void 0, void 0, function () {
         var file, formData, response, error_1;
         var _a;
@@ -102,19 +103,19 @@ function FileInputModal(_a) {
                         return [2 /*return*/]; // Exit if no file is selected or if the YouTube URL is missing
                     }
                     setIsLoading(true);
-                    setError('');
+                    setError("");
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 4, 5, 6]);
-                    return [4 /*yield*/, fetch('http://20.244.47.51:8080/v1/query_answer', {
-                            method: 'POST',
+                    return [4 /*yield*/, fetch("http://20.244.47.51:8080/v1/query_answer", {
+                            method: "POST",
                             body: JSON.stringify({
                                 url: youtubeUrl,
                                 pdf_file: dataFileName,
                                 model_type: "advanced"
                             }),
                             headers: {
-                                'Content-Type': 'application/json'
+                                "Content-Type": "application/json"
                             }
                         })];
                 case 2:
@@ -128,19 +129,19 @@ function FileInputModal(_a) {
                     processedResponse = res.replace(/NaN/g, "0");
                     data = JSON.parse(processedResponse);
                     setRowData(data);
-                    localStorage.setItem('Response', JSON.stringify(data)); // Update global state with the parsed data
+                    localStorage.setItem("Response", JSON.stringify(data)); // Update global state with the parsed data
                     console.log("Data successfully fetched and processed", data);
                     return [3 /*break*/, 6];
                 case 4:
                     error_2 = _a.sent();
                     console.error("Error during file submission:", error_2);
-                    setError(error_2.message || 'An unknown error occurred');
+                    setError(error_2.message || "An unknown error occurred");
                     react_toastify_1.toast.error("Error during file submission:", error_2);
                     return [3 /*break*/, 6];
                 case 5:
                     setIsLoading(false);
                     setIsOpen(false); // Close the modal
-                    router.push('/ai-response'); // Navigate after actions are complete
+                    router.push("/ai-response"); // Navigate after actions are complete
                     return [7 /*endfinally*/];
                 case 6: return [2 /*return*/];
             }
@@ -148,21 +149,27 @@ function FileInputModal(_a) {
     }); };
     console.log(rowData, "rowDataaaaaa");
     return (react_1["default"].createElement(react_1["default"].Fragment, null,
-        react_1["default"].createElement(react_2.Modal, { isOpen: IsOpen },
-            react_1["default"].createElement(react_2.ModalContent, null,
-                react_1["default"].createElement(react_1["default"].Fragment, null, videoSummary ? react_1["default"].createElement(react_1["default"].Fragment, null,
-                    "      ",
-                    react_1["default"].createElement(react_2.ModalHeader, { className: "flex flex-col gap-1" }, "Upload Your File"),
-                    react_1["default"].createElement(react_2.ModalBody, null,
-                        react_1["default"].createElement("input", { type: "file", onChange: handleFileChange })),
-                    react_1["default"].createElement(react_2.ModalFooter, null,
-                        react_1["default"].createElement(react_2.Button, { color: "danger", variant: "light", onPress: function () { return setIsOpen(false); } }, "Cancel"),
-                        react_1["default"].createElement(react_2.Button, { color: "primary", variant: "light", onPress: handleFileSubmit }, isLoading ? 'Uploading...' : 'Upload File'))) :
-                    react_1["default"].createElement("div", null,
-                        "First add Youtube Link  ",
-                        react_1["default"].createElement(react_2.Button, { color: "danger", variant: "light", onPress: function () { return setIsOpen(false); } }, "Cancel"),
-                        error && react_1["default"].createElement("p", null,
-                            "Error: ",
-                            error)))))));
+        react_1["default"].createElement(material_1.Dialog, { open: IsOpen, onClose: function () { return setIsOpen(false); }, "aria-labelledby": "responsive-dialog-title" }, videoSummary ? (react_1["default"].createElement(react_1["default"].Fragment, null,
+            react_1["default"].createElement(material_1.DialogTitle, { id: "responsive-dialog-title", sx: { fontWeight: 'bold', textAlign: 'center', width: "300px" } }, "Upload Your File"),
+            react_1["default"].createElement(material_1.DialogContent, { dividers: true },
+                react_1["default"].createElement(material_1.Box, { sx: {
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: 2
+                    } },
+                    react_1["default"].createElement("input", { ref: fileInputRef, type: "file", onChange: handleFileChange, style: { display: 'none' } }),
+                    react_1["default"].createElement(material_1.Button, { variant: "contained", color: "primary", onClick: handleFileChange }, "Choose File"),
+                    react_1["default"].createElement(material_1.Typography, { variant: "body2", color: "textSecondary" }, "No file chosen"))),
+            react_1["default"].createElement(material_1.DialogActions, { style: { width: "100%", justifyContent: "space-between", alignItems: "center", display: "flex" } },
+                react_1["default"].createElement(material_1.Button, { onClick: function () { return setIsOpen(false); }, color: "error", variant: "outlined" }, "Cancel"),
+                react_1["default"].createElement(material_1.Button, { onClick: handleFileSubmit, color: "primary", variant: "contained", disabled: isLoading, startIcon: isLoading ? react_1["default"].createElement(material_1.CircularProgress, { color: "inherit", size: 20 }) : null }, isLoading ? 'Uploading...' : 'Upload File')))) : (react_1["default"].createElement(react_1["default"].Fragment, null,
+            react_1["default"].createElement(material_1.DialogContent, null,
+                react_1["default"].createElement(material_1.Typography, null, "Please add a YouTube link first."),
+                error && (react_1["default"].createElement(material_1.Typography, { color: "error", sx: { mt: 2 } },
+                    "Error: ",
+                    error))),
+            react_1["default"].createElement(material_1.DialogActions, null,
+                react_1["default"].createElement(material_1.Button, { onClick: function () { return setIsOpen(false); }, color: "primary" }, "Close")))))));
 }
 exports["default"] = FileInputModal;
