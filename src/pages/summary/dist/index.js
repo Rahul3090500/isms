@@ -67,8 +67,6 @@ var YTSummary = function (_a) {
                         react_1["default"].createElement("div", { className: YTSummary_module_scss_1["default"].bottom },
                             react_1["default"].createElement("div", { className: YTSummary_module_scss_1["default"].leftSide },
                                 react_1["default"].createElement("p", { className: YTSummary_module_scss_1["default"].channel_name },
-                                    react_1["default"].createElement("span", { className: YTSummary_module_scss_1["default"].img },
-                                        react_1["default"].createElement("img", { width: 100, height: 100, src: videoSummary === null || videoSummary === void 0 ? void 0 : videoSummary.video_thumbnail, alt: videoSummary === null || videoSummary === void 0 ? void 0 : videoSummary.video_title })),
                                     react_1["default"].createElement("span", { className: YTSummary_module_scss_1["default"].titles },
                                         react_1["default"].createElement("span", { className: YTSummary_module_scss_1["default"].name }, videoSummary === null || videoSummary === void 0 ? void 0 : videoSummary.channel_name),
                                         react_1["default"].createElement("span", { className: YTSummary_module_scss_1["default"].subsciber_count }, videoSummary === null || videoSummary === void 0 ? void 0 :

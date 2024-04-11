@@ -167,14 +167,14 @@ const YTSummary = ({
                     <div className={classes.bottom}>
                       <div className={classes.leftSide}>
                         <p className={classes.channel_name}>
-                          <span className={classes.img}>
+                          {/* <span className={classes.img}>
                             <img
                               width={100}
                               height={100}
                               src={videoSummary?.video_thumbnail}
                               alt={videoSummary?.video_title}
                             />
-                          </span>
+                          </span> */}
 
                           <span className={classes.titles}>
                             <span className={classes.name}>
