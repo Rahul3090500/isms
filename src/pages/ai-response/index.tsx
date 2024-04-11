@@ -116,7 +116,7 @@ const AIResponse = () => {
         {rowData.length > 0 && <PdfUploader />}
       </div>
       {
-        <div>
+        <>
           {rowData.length === 0 ? (
             ""
           ) : (
@@ -129,7 +129,7 @@ const AIResponse = () => {
               {rowData.length > 0 && <PdfUploader2 />}
             </div>
           )}
-        </div>
+        </>
       }
     </div>
   );

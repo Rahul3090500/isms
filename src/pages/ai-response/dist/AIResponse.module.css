@@ -52,6 +52,11 @@
   font-size: 18px;
   color: #070da1;
 }
+.AIResponse .text {
+  font-size: 30px;
+  color: #070da1;
+  margin-top: 50px;
+}
 .AIResponse .dec {
   border-radius: 21px;
   overflow: hidden;
@@ -140,10 +145,12 @@
 }
 @media only screen and (min-width: 320px) and (max-width: 600px) {
   .AIResponse {
-    width: 95%;
+    width: 100%;
     margin-bottom: 0px;
     margin-top: 0px;
-    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
   }
   .AIResponse .header {
     border-bottom: 1px solid #8a8a8a;

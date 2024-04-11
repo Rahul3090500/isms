@@ -55,7 +55,7 @@ var AIResponse = function () {
                 react_1["default"].createElement(material_1.Typography, { variant: "body1", component: "p", gutterBottom: true, sx: { textAlign: "center", mb: 3 } }, "Caze iSMS provides AI-driven analysis for your social media channels, offering sentiment analysis, comment classification, and more. Start optimizing your digital marketing by integrating your YouTube Video!"),
                 react_1["default"].createElement(material_1.Button, { variant: "outlined", color: "secondary", onClick: function () { return router.push("/settings"); }, sx: { mt: 1, fontWeight: "bold" } }, "Go to Settings")),
             rowData.length > 0 && react_1["default"].createElement(table_1["default"], null)),
-        react_1["default"].createElement("div", null,
+        react_1["default"].createElement(react_1["default"].Fragment, null,
             rowData.length === 0 ? ("") : (react_1["default"].createElement("p", { className: AIResponse_module_scss_1["default"].text }, "Quey Answered")),
             rowData.length === 0 ? ("") : (react_1["default"].createElement("div", { className: AIResponse_module_scss_1["default"].dec }, rowData.length > 0 && react_1["default"].createElement(PdfTable_1["default"], null))))));
 };
