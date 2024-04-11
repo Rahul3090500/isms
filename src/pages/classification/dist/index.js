@@ -101,7 +101,7 @@ var ClassificationCommentTab = function (_a) {
         react_1["default"].createElement("div", { className: ClassificationCommentTab_module_scss_1["default"].Classification },
             react_1["default"].createElement("div", { className: ClassificationCommentTab_module_scss_1["default"].header },
                 react_1["default"].createElement("span", { className: ClassificationCommentTab_module_scss_1["default"].text }, "Classification"),
-                react_1["default"].createElement("span", { onClick: handleClick, className: ClassificationCommentTab_module_scss_1["default"].refresh },
+                react_1["default"].createElement("span", { onClick: videoSummary && handleClick, style: { opacity: !videoSummary ? .4 : 1, cursor: !videoSummary ? "default" : "pointer" }, className: ClassificationCommentTab_module_scss_1["default"].refresh },
                     react_1["default"].createElement("span", null,
                         react_1["default"].createElement("svg", { className: isButtonLoading ? ClassificationCommentTab_module_scss_1["default"].refresh_animate : "", width: "35", height: "35", viewBox: "0 0 35 35", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
                             react_1["default"].createElement("rect", { width: "35", height: "35", fill: "" }),

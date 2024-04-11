@@ -104,7 +104,7 @@ var SentimentTab = function (_a) {
         react_1["default"].createElement("div", { className: SentimentTab_module_scss_1["default"].Sentiment },
             react_1["default"].createElement("div", { className: SentimentTab_module_scss_1["default"].header },
                 react_1["default"].createElement("span", { className: SentimentTab_module_scss_1["default"].text }, "Sentiments"),
-                react_1["default"].createElement("span", { onClick: handleClick, className: SentimentTab_module_scss_1["default"].refresh },
+                react_1["default"].createElement("span", { onClick: videoSummary && handleClick, style: { opacity: !videoSummary ? .4 : 1, cursor: !videoSummary ? "default" : "pointer" }, className: SentimentTab_module_scss_1["default"].refresh },
                     react_1["default"].createElement("span", null,
                         react_1["default"].createElement("svg", { className: isButtonLoading ? SentimentTab_module_scss_1["default"].refresh_animate : "", width: "35", height: "35", viewBox: "0 0 35 35", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
                             react_1["default"].createElement("rect", { width: "35", height: "35", fill: "" }),

@@ -119,7 +119,7 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
       <div className={classes.Classification}>
         <div className={classes.header}>
           <span className={classes.text}>Classification</span>
-          <span onClick={handleClick} className={classes.refresh}>
+          <span onClick={videoSummary && handleClick} style={{opacity:!videoSummary ?.4:1, cursor:!videoSummary ? "default":"pointer" }} className={classes.refresh}>
             <span>
               <svg
                 className={isButtonLoading ? classes.refresh_animate : ""}

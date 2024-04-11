@@ -8,7 +8,7 @@ var PdfTable_1 = require("@/components/PdfTable");
 var Box_1 = require("@mui/material/Box");
 var material_1 = require("@mui/material");
 var router_1 = require("next/router");
-var AIResponse = function () {
+var AIResponse = function (videoSummary) {
     var _a = react_1.useState(false), isButtonLoading = _a[0], setIsButtonLoading = _a[1];
     var handleClick = function () {
         setIsButtonLoading(true);
@@ -29,7 +29,10 @@ var AIResponse = function () {
     return (react_1["default"].createElement("div", { className: AIResponse_module_scss_1["default"].AIResponse },
         react_1["default"].createElement("div", { className: AIResponse_module_scss_1["default"].header },
             react_1["default"].createElement("span", { className: AIResponse_module_scss_1["default"].text }, "Al Response"),
-            react_1["default"].createElement("span", { onClick: handleClick, className: AIResponse_module_scss_1["default"].refresh },
+            react_1["default"].createElement("span", { onClick: videoSummary && handleClick, style: {
+                    opacity: !videoSummary ? 0.4 : 1,
+                    cursor: !videoSummary ? "default" : "pointer"
+                }, className: AIResponse_module_scss_1["default"].refresh },
                 react_1["default"].createElement("span", null,
                     react_1["default"].createElement("svg", { className: isButtonLoading ? AIResponse_module_scss_1["default"].refresh_animate : "", width: "35", height: "35", viewBox: "0 0 35 35", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
                         react_1["default"].createElement("rect", { width: "35", height: "35", fill: "" }),
@@ -39,24 +42,23 @@ var AIResponse = function () {
                 "Refresh"),
             " "),
         react_1["default"].createElement("div", { className: AIResponse_module_scss_1["default"].sub_header }, "Provides the automated Al (Artificial Intelligence) responses for all the query comments"),
-        react_1["default"].createElement("div", { className: AIResponse_module_scss_1["default"].dec },
-            rowData.length === 0 && react_1["default"].createElement(Box_1["default"], { sx: {
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    p: 4,
-                    m: 2,
-                    border: "1px dashed #1976d2",
-                    borderRadius: "8px",
-                    backgroundColor: "#f0f0f0"
-                } },
-                react_1["default"].createElement(material_1.Typography, { variant: "h6", component: "p", gutterBottom: true, sx: { textAlign: "center", mb: 2 } }, "To unlock full insights, kindly add your YouTube video link in Settings."),
-                react_1["default"].createElement(material_1.Typography, { variant: "body1", component: "p", gutterBottom: true, sx: { textAlign: "center", mb: 3 } }, "Caze iSMS provides AI-driven analysis for your social media channels, offering sentiment analysis, comment classification, and more. Start optimizing your digital marketing by integrating your YouTube Video!"),
-                react_1["default"].createElement(material_1.Button, { variant: "outlined", color: "secondary", onClick: function () { return router.push("/settings"); }, sx: { mt: 1, fontWeight: "bold" } }, "Go to Settings")),
-            rowData.length > 0 && react_1["default"].createElement(table_1["default"], null)),
-        react_1["default"].createElement(react_1["default"].Fragment, null,
-            rowData.length === 0 ? ("") : (react_1["default"].createElement("p", { className: AIResponse_module_scss_1["default"].text }, "Quey Answered")),
-            rowData.length === 0 ? ("") : (react_1["default"].createElement("div", { className: AIResponse_module_scss_1["default"].dec }, rowData.length > 0 && react_1["default"].createElement(PdfTable_1["default"], null))))));
+        " ",
+        rowData.length === 0 ? (react_1["default"].createElement(Box_1["default"], { sx: {
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                p: 4,
+                m: 2,
+                border: "1px dashed #1976d2",
+                borderRadius: "8px",
+                backgroundColor: "#f0f0f0"
+            } },
+            react_1["default"].createElement(material_1.Typography, { variant: "h6", component: "p", gutterBottom: true, sx: { textAlign: "center", mb: 2 } }, "To unlock full insights, kindly add your YouTube video link in Settings."),
+            react_1["default"].createElement(material_1.Typography, { variant: "body1", component: "p", gutterBottom: true, sx: { textAlign: "center", mb: 3 } }, "Caze iSMS provides AI-driven analysis for your social media channels, offering sentiment analysis, comment classification, and more. Start optimizing your digital marketing by integrating your YouTube Video!"),
+            react_1["default"].createElement(material_1.Button, { variant: "outlined", color: "secondary", onClick: function () { return router.push("/settings"); }, sx: { mt: 1, fontWeight: "bold" } }, "Go to Settings"))) : (react_1["default"].createElement("div", { className: AIResponse_module_scss_1["default"].dec },
+            rowData.length > 0 && react_1["default"].createElement(table_1["default"], null),
+            react_1["default"].createElement("p", { className: AIResponse_module_scss_1["default"].text }, "Quey Answered"),
+            rowData.length > 0 && react_1["default"].createElement(PdfTable_1["default"], null)))));
 };
 exports["default"] = AIResponse;
