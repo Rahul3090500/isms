@@ -49,7 +49,6 @@ function FileInputModal(_a) {
     var _c = react_1.useState([]), rowData = _c[0], setRowData = _c[1];
     var _d = react_1.useState(false), isLoading = _d[0], setIsLoading = _d[1];
     var _e = react_1.useState(""), error = _e[0], setError = _e[1];
-    var fileInputRef = react_1.useRef(null);
     var handleFileChange = function (e) { return __awaiter(_this, void 0, void 0, function () {
         var file, formData, response, error_1;
         var _a;
@@ -150,20 +149,40 @@ function FileInputModal(_a) {
     console.log(rowData, "rowDataaaaaa");
     return (react_1["default"].createElement(react_1["default"].Fragment, null,
         react_1["default"].createElement(material_1.Dialog, { open: IsOpen, onClose: function () { return setIsOpen(false); }, "aria-labelledby": "responsive-dialog-title" }, videoSummary ? (react_1["default"].createElement(react_1["default"].Fragment, null,
-            react_1["default"].createElement(material_1.DialogTitle, { id: "responsive-dialog-title", sx: { fontWeight: 'bold', textAlign: 'center', width: "300px" } }, "Upload Your File"),
+            react_1["default"].createElement(material_1.DialogTitle, { id: "responsive-dialog-title", sx: { fontWeight: "bold", textAlign: "center", width: "300px" } }, "Upload Your File"),
             react_1["default"].createElement(material_1.DialogContent, { dividers: true },
-                react_1["default"].createElement(material_1.Box, { sx: {
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
+                react_1["default"].createElement(material_1.Box, { component: "form", sx: {
+                        display: "flex",
+                        flexDirection: "column",
                         gap: 2
                     } },
-                    react_1["default"].createElement("input", { ref: fileInputRef, type: "file", onChange: handleFileChange, style: { display: 'none' } }),
-                    react_1["default"].createElement(material_1.Button, { variant: "contained", color: "primary", onClick: handleFileChange }, "Choose File"),
-                    react_1["default"].createElement(material_1.Typography, { variant: "body2", color: "textSecondary" }, "No file chosen"))),
-            react_1["default"].createElement(material_1.DialogActions, { style: { width: "100%", justifyContent: "space-between", alignItems: "center", display: "flex" } },
+                    react_1["default"].createElement("div", { style: {
+                            position: "relative",
+                            display: "block",
+                            width: "100%",
+                            maxWidth: "300px",
+                            margin: "10px auto"
+                        } },
+                        react_1["default"].createElement("input", { type: "file", id: "file-input", onChange: handleFileChange, style: { display: "none" } }),
+                        react_1["default"].createElement("label", { htmlFor: "file-input", style: {
+                                display: "block",
+                                padding: "12px 20px",
+                                textAlign: "center",
+                                backgroundColor: "#007bff",
+                                color: "white",
+                                borderRadius: "8px",
+                                cursor: "pointer",
+                                boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
+                                transition: "background-color 0.2s"
+                            } }, "Choose File")))),
+            react_1["default"].createElement(material_1.DialogActions, { style: {
+                    width: "100%",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    display: "flex"
+                } },
                 react_1["default"].createElement(material_1.Button, { onClick: function () { return setIsOpen(false); }, color: "error", variant: "outlined" }, "Cancel"),
-                react_1["default"].createElement(material_1.Button, { onClick: handleFileSubmit, color: "primary", variant: "contained", disabled: isLoading, startIcon: isLoading ? react_1["default"].createElement(material_1.CircularProgress, { color: "inherit", size: 20 }) : null }, isLoading ? 'Uploading...' : 'Upload File')))) : (react_1["default"].createElement(react_1["default"].Fragment, null,
+                react_1["default"].createElement(material_1.Button, { onClick: handleFileSubmit, color: "secondary", variant: "outlined", disabled: isLoading, startIcon: isLoading ? (react_1["default"].createElement(material_1.CircularProgress, { color: "inherit", size: 20 })) : null }, isLoading ? "Uploading..." : "Upload File")))) : (react_1["default"].createElement(react_1["default"].Fragment, null,
             react_1["default"].createElement(material_1.DialogContent, null,
                 react_1["default"].createElement(material_1.Typography, null, "Please add a YouTube link first."),
                 error && (react_1["default"].createElement(material_1.Typography, { color: "error", sx: { mt: 2 } },

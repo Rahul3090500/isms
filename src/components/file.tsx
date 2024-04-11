@@ -1,5 +1,14 @@
-import React, { useRef, useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, CircularProgress, Box, Typography } from '@mui/material';
+import React, { useState } from "react";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  CircularProgress,
+  Box,
+  Typography,
+} from "@mui/material";
 
 import { useYoutubeContext } from "@/hooks/urlcontext";
 import { useRouter } from "next/router";
@@ -15,8 +24,6 @@ export default function FileInputModal({
   const [rowData, setRowData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const fileInputRef = useRef(null);
-
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const file = e.target.files?.[0];
@@ -103,81 +110,110 @@ export default function FileInputModal({
 
   return (
     <>
-<Dialog
-      open={IsOpen}
-      onClose={() => setIsOpen(false)}
-      aria-labelledby="responsive-dialog-title"
-    >
-      {videoSummary ? (
-        <>
-          <DialogTitle id="responsive-dialog-title" sx={{ fontWeight: 'bold', textAlign: 'center' ,width:"300px"}}>
-            Upload Your File
-          </DialogTitle>
-          <DialogContent dividers>
-          <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: 2,
-      }}
-    >
-      <input
-        ref={fileInputRef}
-        type="file"
-        onChange={handleFileChange}
-        style={{ display: 'none' }}
-      />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleFileChange}
+      <Dialog
+        open={IsOpen}
+        onClose={() => setIsOpen(false)}
+        aria-labelledby="responsive-dialog-title"
       >
-        Choose File
-      </Button>
-      <Typography variant="body2" color="textSecondary">
-        No file chosen
-      </Typography>
-    </Box>
-          </DialogContent>
-          <DialogActions style={{width:"100%",justifyContent:"space-between",alignItems:"center",display:"flex"}}>
-            <Button
-              onClick={() => setIsOpen(false)}
-              color="error"
-              variant="outlined"
+        {videoSummary ? (
+          <>
+            <DialogTitle
+              id="responsive-dialog-title"
+              sx={{ fontWeight: "bold", textAlign: "center", width: "300px" }}
             >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleFileSubmit}
-              color="primary"
-              variant="contained"
-              disabled={isLoading}
-              startIcon={isLoading ? <CircularProgress color="inherit" size={20} /> : null}
+              Upload Your File
+            </DialogTitle>
+            <DialogContent dividers>
+              <Box
+                component="form"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    display: "block",
+                    width: "100%",
+                    maxWidth: "300px",
+                    margin: "10px auto",
+                  }}
+                >
+                  <input
+                    type="file"
+                    id="file-input"
+                    onChange={handleFileChange}
+                    style={{ display: "none" }}
+                  />
+                  <label
+                    htmlFor="file-input"
+                    style={{
+                      display: "block",
+                      padding: "12px 20px",
+                      textAlign: "center",
+                      backgroundColor: "#007bff",
+                      color: "white",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
+                      transition: "background-color 0.2s",
+                    }}
+                  >
+                    Choose File
+                  </label>
+                </div>
+              </Box>
+            </DialogContent>
+            <DialogActions
+              style={{
+                width: "100%",
+                justifyContent: "space-between",
+                alignItems: "center",
+                display: "flex",
+              }}
             >
-              {isLoading ? 'Uploading...' : 'Upload File'}
-            </Button>
-          </DialogActions>
-        </>
-      ) : (
-        <>
-          <DialogContent>
-            <Typography>Please add a YouTube link first.</Typography>
-            {error && (
-              <Typography color="error" sx={{ mt: 2 }}>
-                Error: {error}
-              </Typography>
-            )}
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setIsOpen(false)} color="primary">
-              Close
-            </Button>
-          </DialogActions>
-        </>
-      )}
-    </Dialog>
-
+              <Button
+                onClick={() => setIsOpen(false)}
+                color="error"
+                variant="outlined"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleFileSubmit}
+                color="secondary"
+                variant="outlined"
+                disabled={isLoading}
+                startIcon={
+                  isLoading ? (
+                    <CircularProgress color="inherit" size={20} />
+                  ) : null
+                }
+              >
+                {isLoading ? "Uploading..." : "Upload File"}
+              </Button>
+            </DialogActions>
+          </>
+        ) : (
+          <>
+            <DialogContent>
+              <Typography>Please add a YouTube link first.</Typography>
+              {error && (
+                <Typography color="error" sx={{ mt: 2 }}>
+                  Error: {error}
+                </Typography>
+              )}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setIsOpen(false)} color="primary">
+                Close
+              </Button>
+            </DialogActions>
+          </>
+        )}
+      </Dialog>
     </>
   );
 }
