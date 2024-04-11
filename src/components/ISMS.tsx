@@ -27,6 +27,7 @@ interface MyAppProps {
   setIsFileOpener?: any;
   isFileOpener?: any;
   handleSubmit?: any;
+  errorMessage?: any;
 
 }
 
@@ -299,6 +300,8 @@ function ISMS({ Component, pageProps }: any) {
   const [commentClassifications, setCommentClassifications] = useState();
   const [classificationComments, setClassificationComments] = useState();
   const [sentimentComments, setSentimentComments] = useState();
+  const [errorMessage, setErrorMessage] = useState('');
+
   const [loadingCommentClassifications, setLoadingVideoSummary] =
     useState(false);
   const [loadingSentimentAnalysis, setLoadingSentimentAnalysis] =
@@ -437,35 +440,44 @@ function ISMS({ Component, pageProps }: any) {
     setCommentClassifications(undefined);
     setSentimentComments(undefined);
   };
-  const updateVideoSummary = async (url: any) => {
+
+  const updateVideoSummary = async (url:any) => {
     setLoadingVideoSummary(true);
-    console.log("shshhdhdh=====>", url);
+    setErrorMessage(''); // Reset error message on new request
     const payload = {
-      url: url, // Assuming ytURL is the YouTube URL input by the user
+      url: url,
     };
 
     try {
-      // Attempt to fetch video summary from the API
-      const response: any = await API.post("/get_video_summary", payload);
-      console.log("Video summary response:", response.data);
-      setVideoSummary(response.data); // Assuming the API response structure matches your state
+      const response = await API.post("/get_video_summary", payload);
+      setVideoSummary(response.data);
       await API.post("/youtube_comment_extract", payload);
-    } catch (err: any) {
-      console.error("Error fetching video summary:", err);
-      // Log detailed error for debugging
+    } catch (err:any) {
+      let userFriendlyMessage = 'An unexpected error occurred. Please try again later.';
       if (err.response) {
-        console.log(err.response.data);
-        console.log(err.response.status);
-        console.log(err.response.headers);
+        switch (err.response.status) {
+          case 400:
+            userFriendlyMessage = 'Invalid request. Please check the video URL.';
+            break;
+          case 401:
+            userFriendlyMessage = 'You are not authorized. Please log in and try again.';
+            break;
+          case 404:
+            userFriendlyMessage = 'Video not found. Please check the video URL.';
+            break;
+          case 500:
+            userFriendlyMessage = 'Check your YouTube link for accuracy and format.';
+            break;
+        }
       } else if (err.request) {
-        console.log(err.request);
-      } else {
-        console.log("Error", err.message);
+        userFriendlyMessage = 'Unable to connect. Please check your internet connection.';
       }
+      setErrorMessage(userFriendlyMessage);
     } finally {
       setLoadingVideoSummary(false);
     }
   };
+
 
   const updateSentimentChartData = async () => {
     setLoadingSentimentAnalysis(true);
@@ -729,7 +741,8 @@ function ISMS({ Component, pageProps }: any) {
     rowData,
     setIsFileOpener,
     isFileOpener,
-    handleSubmit
+    handleSubmit,
+    errorMessage
   };
   return (
     <div className={classes.main}>

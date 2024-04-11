@@ -11,6 +11,7 @@ const SettingsItem = ({
   videoSummary,
   // youtubeUrl,
   setIsFileOpener,
+  errorMessage
 }: any) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const router = useRouter();
@@ -36,7 +37,7 @@ const SettingsItem = ({
       <p className={classes.text1}>{item.text}</p>
       {item.id === "infoDocument" ? (
         <p className={classes.text}>{dataFileName || item.title}</p>
-      ) : (
+      ) : (<>
         <input
           type="text" // or 'file' based on your specific need
           onChange={(event) => {
@@ -54,10 +55,13 @@ const SettingsItem = ({
           placeholder={item.title}
           value={item.value}
           className={classes.text}
+          style={{border: errorMessage ?"1px solid red":""}}
           disabled={
             item.id === "infoDocument" || item.id === "channelCredentials"
           }
         />
+        {errorMessage && <p className={classes.error}>{errorMessage}</p>}
+        </>
       )}
 
       <button
@@ -83,6 +87,7 @@ const Settings = ({
   isButtonLoading,
   handleOnChange,
   setIsFileOpener,
+  errorMessage
 }: any) => {
   const { youtubeUrl } = useYoutubeContext();
 
@@ -97,13 +102,13 @@ const Settings = ({
       value: youtubeUrl,
       text: "YouTube Video Link",
     },
-    {
-      id: "channelCredentials",
-      title: "Provide the channel credential file",
-      action: "Upload",
-      value: "",
-      text: "Channel Credentials",
-    },
+    // {
+    //   id: "channelCredentials",
+    //   title: "Provide the channel credential file",
+    //   action: "Upload",
+    //   value: "",
+    //   text: "Channel Credentials",
+    // },
     {
       id: "infoDocument",
       title: "Provide the information document in pdf format",
@@ -132,6 +137,7 @@ const Settings = ({
             setItems={setItems}
             youtubeUrl={youtubeUrl}
             setIsFileOpener={setIsFileOpener}
+            errorMessage={errorMessage}
           />
         ))}
       </div>
