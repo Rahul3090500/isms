@@ -3,6 +3,9 @@ import PdfUploader from "../../components/table";
 import classes from "./AIResponse.module.scss";
 import React, { useEffect, useState } from "react";
 import PdfUploader2 from "@/components/PdfTable";
+import Box from "@mui/material/Box";
+import { Button, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 
 const AIResponse = () => {
   const [isButtonLoading, setIsButtonLoading] = useState(false);
@@ -14,13 +17,14 @@ const AIResponse = () => {
       setIsButtonLoading(false);
     }, 2000);
   };
-  const { rowData,responseRowData,setRowData } = useYoutubeContext();
-  console.log('rowDataaaa123',rowData )
+  const { rowData, responseRowData, setRowData } = useYoutubeContext();
+  console.log("rowDataaaa123", rowData);
   useEffect(() => {
-    const getRowData =localStorage.getItem('Response')
-    if(getRowData) setRowData(JSON.parse(getRowData))
-  }, [])
-  
+    const getRowData = localStorage.getItem("Response");
+    if (getRowData) setRowData(JSON.parse(getRowData));
+  }, []);
+  const router = useRouter();
+
   return (
     <div className={classes.AIResponse}>
       <div className={classes.header}>
@@ -67,20 +71,66 @@ const AIResponse = () => {
         the query comments
       </div>
       <div className={classes.dec}>
-        {rowData.length === 0 && "no data"}
+        {rowData.length === 0 &&    <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  p: 4,
+                  m: 2,
+                  border: "1px dashed #1976d2",
+                  borderRadius: "8px",
+                  backgroundColor: "#f0f0f0",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  component="p"
+                  gutterBottom
+                  sx={{ textAlign: "center", mb: 2 }}
+                >
+                  To unlock full insights, kindly add your YouTube video link in
+                  Settings.
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="p"
+                  gutterBottom
+                  sx={{ textAlign: "center", mb: 3 }}
+                >
+                  Caze iSMS provides AI-driven analysis for your social media
+                  channels, offering sentiment analysis, comment classification,
+                  and more. Start optimizing your digital marketing by
+                  integrating your YouTube Video!
+                </Typography>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => router.push("/settings")}
+                  sx={{ mt: 1, fontWeight: "bold" }}
+                >
+                  Go to Settings
+                </Button>
+              </Box>}
         {rowData.length > 0 && <PdfUploader />}
       </div>
       {
-        <div >
-        <p>Quey Answered</p>
-        <div className={classes.dec}>
-        {rowData.length === 0 && "no data"}
-        {rowData.length > 0 && <PdfUploader2  />}
-      </div>
-      </div>
+        <div>
+          {rowData.length === 0 ? (
+            ""
+          ) : (
+            <p className={classes.text}>Quey Answered</p>
+          )}
+          {rowData.length === 0 ? (
+            ""
+          ) : (
+            <div className={classes.dec}>
+              {rowData.length > 0 && <PdfUploader2 />}
+            </div>
+          )}
+        </div>
       }
-
-      
     </div>
   );
 };
