@@ -18,7 +18,7 @@ var AIResponse = function (videoSummary) {
             setIsButtonLoading(false);
         }, 2000);
     };
-    var _b = urlcontext_1.useYoutubeContext(), rowData = _b.rowData, responseRowData = _b.responseRowData, setRowData = _b.setRowData;
+    var _b = urlcontext_1.useYoutubeContext(), rowData = _b.rowData, setRowData = _b.setRowData;
     console.log("rowDataaaa123", rowData);
     react_1.useEffect(function () {
         var getRowData = localStorage.getItem("Response");

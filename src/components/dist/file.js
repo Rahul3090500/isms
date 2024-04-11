@@ -40,6 +40,8 @@ var react_1 = require("react");
 var react_2 = require("@nextui-org/react");
 var urlcontext_1 = require("@/hooks/urlcontext");
 var router_1 = require("next/router");
+var react_toastify_1 = require("react-toastify");
+require("react-toastify/dist/ReactToastify.css");
 function FileInputModal(_a) {
     var _this = this;
     var IsOpen = _a.IsOpen, setIsOpen = _a.setIsOpen, videoSummary = _a.videoSummary;
@@ -49,29 +51,40 @@ function FileInputModal(_a) {
     var _e = react_1.useState(''), error = _e[0], setError = _e[1];
     var handleFileChange = function (e) { return __awaiter(_this, void 0, void 0, function () {
         var file, formData, response, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
                     e.preventDefault();
-                    file = e.target.files[0];
+                    file = (_a = e.target.files) === null || _a === void 0 ? void 0 : _a[0];
+                    if (!file) {
+                        react_toastify_1.toast.error("No file selected");
+                        return [2 /*return*/];
+                    }
                     formData = new FormData();
-                    //@ts-ignore
                     formData.append("filename", file);
-                    _a.label = 1;
+                    _b.label = 1;
                 case 1:
-                    _a.trys.push([1, 3, , 4]);
+                    _b.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, fetch("http://20.244.47.51:8080/v1/upload_file?url=" + youtubeUrl, {
                             method: "POST",
                             body: formData
                         })];
                 case 2:
-                    response = _a.sent();
-                    response;
-                    setDataFileName(file === null || file === void 0 ? void 0 : file.name);
+                    response = _b.sent();
+                    if (response.ok) {
+                        setDataFileName(file.name);
+                        react_toastify_1.toast.success("File uploaded successfully!");
+                    }
+                    else {
+                        // You can customize this message based on the response status or message
+                        react_toastify_1.toast.error("Failed to upload file.");
+                    }
                     return [3 /*break*/, 4];
                 case 3:
-                    error_1 = _a.sent();
+                    error_1 = _b.sent();
                     console.error("Error uploading file:", error_1);
+                    react_toastify_1.toast.error("Error uploading file");
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }
@@ -85,6 +98,7 @@ function FileInputModal(_a) {
                 case 0:
                     if (!dataFileName || !youtubeUrl) {
                         console.log("No file selected or YouTube URL missing.");
+                        react_toastify_1.toast.error("No file selected or YouTube URL missing.");
                         return [2 /*return*/]; // Exit if no file is selected or if the YouTube URL is missing
                     }
                     setIsLoading(true);
@@ -113,13 +127,15 @@ function FileInputModal(_a) {
                     res = _a.sent();
                     processedResponse = res.replace(/NaN/g, "0");
                     data = JSON.parse(processedResponse);
-                    setRowData(data); // Update global state with the parsed data
+                    setRowData(data);
+                    localStorage.setItem('Response', JSON.stringify(data)); // Update global state with the parsed data
                     console.log("Data successfully fetched and processed", data);
                     return [3 /*break*/, 6];
                 case 4:
                     error_2 = _a.sent();
                     console.error("Error during file submission:", error_2);
                     setError(error_2.message || 'An unknown error occurred');
+                    react_toastify_1.toast.error("Error during file submission:", error_2);
                     return [3 /*break*/, 6];
                 case 5:
                     setIsLoading(false);

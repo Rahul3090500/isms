@@ -17,7 +17,7 @@ const AIResponse = (videoSummary: any) => {
       setIsButtonLoading(false);
     }, 2000);
   };
-  const { rowData, responseRowData, setRowData } = useYoutubeContext();
+  const { rowData, setRowData } = useYoutubeContext();
   console.log("rowDataaaa123", rowData);
   useEffect(() => {
     const getRowData = localStorage.getItem("Response");

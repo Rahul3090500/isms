@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -8,8 +8,10 @@ import {
   Button,
 } from "@nextui-org/react";
 import { useYoutubeContext } from "@/hooks/urlcontext";
-import API from "@/utils/api.config";
 import { useRouter } from "next/router";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function FileInputModal({ IsOpen, setIsOpen,videoSummary }: any) {
   const {  setDataFileName, youtubeUrl, dataFileName } =
@@ -17,35 +19,42 @@ export default function FileInputModal({ IsOpen, setIsOpen,videoSummary }: any) 
     const [rowData, setRowData] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    //@ts-ignore
-    const file = e.target.files[0];
-
-    const formData = new FormData();
-    //@ts-ignore
-    formData.append("filename", file);
-
-    try {
-      const response = await fetch(
-        `http://20.244.47.51:8080/v1/upload_file?url=${youtubeUrl}`,
-        {
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      const file = e.target.files?.[0];
+  
+      if (!file) {
+        toast.error("No file selected");
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append("filename", file);
+  
+      try {
+        const response = await fetch(`http://20.244.47.51:8080/v1/upload_file?url=${youtubeUrl}`, {
           method: "POST",
           body: formData,
+        });
+  
+        if (response.ok) {
+          setDataFileName(file.name);
+          toast.success("File uploaded successfully!");
+        } else {
+          // You can customize this message based on the response status or message
+          toast.error("Failed to upload file.");
         }
-      );
-      response;
-      setDataFileName(file?.name);
-    } catch (error) {
-      
-      console.error("Error uploading file:", error);
-      // Handle error
-    }
-  };
+      } catch (error) {
+        console.error("Error uploading file:", error);
+        toast.error("Error uploading file");
+      }
+    };
+  
   const router = useRouter(); // Use the useRouter hook to get access to the router object
   const handleFileSubmit = async () => {
     if (!dataFileName || !youtubeUrl) {
       console.log("No file selected or YouTube URL missing.");
+      toast.error("No file selected or YouTube URL missing.")
       return; // Exit if no file is selected or if the YouTube URL is missing
     }
 
@@ -81,6 +90,8 @@ export default function FileInputModal({ IsOpen, setIsOpen,videoSummary }: any) 
     } catch (error:any) {
       console.error("Error during file submission:", error);
       setError(error.message || 'An unknown error occurred');
+      toast.error("Error during file submission:",error)
+
     } finally {
       setIsLoading(false);
       setIsOpen(false); // Close the modal
