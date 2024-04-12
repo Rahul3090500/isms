@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FileModal from "./modal/filemodal";
+// import FileModal from "./modal/filemodal";
 import { useYoutubeContext } from "@/hooks/urlcontext";
 import classes from "./table.module.scss";
 import { Checkbox } from "@mui/material";
@@ -10,12 +10,11 @@ const PdfUploader = () => {
   const [sortDirection, setSortDirection] = useState("asc");
   const [sortField, setSortField] = useState("");
 
-  const [openCredentialsFile, setOpenCredentialsFile] = useState(false);
 
   const handleSelectAllChange = (event: { target: { checked: any } }) => {
     const newSelectAll = event.target.checked;
     setSelectAll(newSelectAll);
-    const newRows = rowData.map((row) => ({
+    const newRows = rowData.map((row:any) => ({
       ...row,
       selected: !row.Answered ? newSelectAll : row.selected,
     }));
@@ -46,7 +45,7 @@ const PdfUploader = () => {
             <Checkbox
               checked={selectAll}
               indeterminate={
-                !selectAll && rowData.some((item) => item.selected)
+                !selectAll && rowData.some((item:any) => item.selected)
               }
               onChange={handleSelectAllChange}
             />
@@ -87,7 +86,7 @@ const PdfUploader = () => {
               </span>Time Stamp</button>
           </div>
           <div className={classes.scrollabletable}>
-          {rowData.map((item) => (
+          {rowData.map((item:any) => (
             <div className={classes.mainTable} key={item.commentId}>
               <Checkbox
                 checked={item.selected ?? false}
@@ -168,17 +167,17 @@ const PdfUploader = () => {
           >
             <button
               className={classes.submitButton}
-              onClick={() => setOpenCredentialsFile(true)}
+              // onClick={() => setOpenCredentialsFile(true)}
             >
               Submit Response
             </button>
           </div>
         </>
       )}
-      <FileModal
+      {/* <FileModal
         setIsOpen={setOpenCredentialsFile}
         isOpen={openCredentialsFile}
-      />
+      /> */}
     </div>
   );
 };

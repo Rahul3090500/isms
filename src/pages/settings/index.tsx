@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import classes from "./Settings.module.scss";
 import { useYoutubeContext } from "@/hooks/urlcontext";
-import { useRouter } from "next/router";
 
 const SettingsItem = ({
   item,
@@ -11,10 +10,10 @@ const SettingsItem = ({
   videoSummary,
   // youtubeUrl,
   setIsFileOpener,
-  errorMessage
+  errorMessage,
+  setOpenCredentialsFile
 }: any) => {
   const [isDisabled, setIsDisabled] = useState(false);
-  const router = useRouter();
 
   const { dataFileName } = useYoutubeContext();
 
@@ -24,8 +23,8 @@ const SettingsItem = ({
         return isButtonLoading || !item.value;
       } else if (item.id === "infoDocument") {
         return setIsDisabled(false);
-      } else {
-        return !item.value;
+      } else if (item.id === "channelCredentials")  {
+        return setIsDisabled(false);
       }
     };
 
@@ -67,8 +66,8 @@ const SettingsItem = ({
       <button
         disabled={isDisabled}
         onClick={() => {
-          if (item.id === "videoLink") {
-            router.push("/summary"); // Navigate to /summary
+          if (item.id === "channelCredentials") {
+            setOpenCredentialsFile(true)
           } else if (item.id === "infoDocument") {
             setIsFileOpener(true); // Open the file opener for infoDocument
           }
@@ -87,7 +86,8 @@ const Settings = ({
   isButtonLoading,
   handleOnChange,
   setIsFileOpener,
-  errorMessage
+  errorMessage,
+  setOpenCredentialsFile
 }: any) => {
   const { youtubeUrl } = useYoutubeContext();
 
@@ -102,13 +102,13 @@ const Settings = ({
       value: youtubeUrl,
       text: "YouTube Video Link",
     },
-    // {
-    //   id: "channelCredentials",
-    //   title: "Provide the channel credential file",
-    //   action: "Upload",
-    //   value: "",
-    //   text: "Channel Credentials",
-    // },
+    {
+      id: "channelCredentials",
+      title: "Provide the channel credential file",
+      action: "Upload",
+      value: "",
+      text: "Channel Credentials",
+    },
     {
       id: "infoDocument",
       title: "Provide the information document in pdf format",
@@ -138,6 +138,7 @@ const Settings = ({
             youtubeUrl={youtubeUrl}
             setIsFileOpener={setIsFileOpener}
             errorMessage={errorMessage}
+            setOpenCredentialsFile={setOpenCredentialsFile}
           />
         ))}
       </div>

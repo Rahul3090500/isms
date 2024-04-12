@@ -19,8 +19,13 @@ const YoutubeContext = createContext<YoutubeContextType | undefined>(undefined);
 
 export const YoutubeContextProvider = ({ children }: { children: ReactNode }) => {
   const [youtubeUrl, setYoutubeUrl] = useState<string>(() => {
-    // Attempt to get youtubeUrl from localStorage, or default to an empty string
+    // Check if it's a new session to potentially clear data
     if (typeof window !== 'undefined') {
+      const isNewSession = !sessionStorage.getItem('isNewSession');
+      sessionStorage.setItem('isNewSession', 'false');
+      if (isNewSession) {
+        localStorage.removeItem('youtubeUrl'); // Clear specific local storage data when new tab opens
+      }
       return localStorage.getItem('youtubeUrl') || '';
     }
     return '';
@@ -29,13 +34,16 @@ export const YoutubeContextProvider = ({ children }: { children: ReactNode }) =>
   const [dataFileName, setDataFileName] = useState('');
   const [tokenFileName, setTokenFileName] = useState('');
   const [rowData, setRowData] = useState<any[]>([]);
-  const [responseRowData, setResponseRowData] = useState<boolean>(false);
+  const [responseRowData, setResponseRowData] = useState<any>(false);
   const [Credentails, setCredentails] = useState<Object>({});
-console.log('setRowData1111',rowData)
-  // Effect to update localStorage whenever youtubeUrl changes
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('youtubeUrl', youtubeUrl);
+      if (youtubeUrl === '') {
+        localStorage.removeItem('youtubeUrl'); // Clear when youtubeUrl is empty
+      } else {
+        localStorage.setItem('youtubeUrl', youtubeUrl);
+      }
     }
   }, [youtubeUrl]);
 

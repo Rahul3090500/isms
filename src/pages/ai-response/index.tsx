@@ -122,7 +122,7 @@ const AIResponse = (videoSummary: any) => {
         </Box>
       ) : (
         <div className={classes.dec}>
-          {rowData.length > 0 && <PdfUploader />}
+          {rowData.length > 0 && <PdfUploader  />}
           <p className={classes.text}>Quey Answered</p>
           {rowData.length > 0 && <PdfUploader2 />}
         </div>

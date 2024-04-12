@@ -6,8 +6,13 @@ var YoutubeContext = react_1.createContext(undefined);
 exports.YoutubeContextProvider = function (_a) {
     var children = _a.children;
     var _b = react_1.useState(function () {
-        // Attempt to get youtubeUrl from localStorage, or default to an empty string
+        // Check if it's a new session to potentially clear data
         if (typeof window !== 'undefined') {
+            var isNewSession = !sessionStorage.getItem('isNewSession');
+            sessionStorage.setItem('isNewSession', 'false');
+            if (isNewSession) {
+                localStorage.removeItem('youtubeUrl'); // Clear specific local storage data when new tab opens
+            }
             return localStorage.getItem('youtubeUrl') || '';
         }
         return '';
@@ -15,12 +20,16 @@ exports.YoutubeContextProvider = function (_a) {
     var _c = react_1.useState(''), dataFileName = _c[0], setDataFileName = _c[1];
     var _d = react_1.useState(''), tokenFileName = _d[0], setTokenFileName = _d[1];
     var _e = react_1.useState([]), rowData = _e[0], setRowData = _e[1];
-    var _f = react_1.useState({}), Credentails = _f[0], setCredentails = _f[1];
-    console.log('setRowData1111', rowData);
-    // Effect to update localStorage whenever youtubeUrl changes
+    var _f = react_1.useState(false), responseRowData = _f[0], setResponseRowData = _f[1];
+    var _g = react_1.useState({}), Credentails = _g[0], setCredentails = _g[1];
     react_1.useEffect(function () {
         if (typeof window !== 'undefined') {
-            localStorage.setItem('youtubeUrl', youtubeUrl);
+            if (youtubeUrl === '') {
+                localStorage.removeItem('youtubeUrl'); // Clear when youtubeUrl is empty
+            }
+            else {
+                localStorage.setItem('youtubeUrl', youtubeUrl);
+            }
         }
     }, [youtubeUrl]);
     return (react_1["default"].createElement(YoutubeContext.Provider, { value: {
@@ -33,7 +42,9 @@ exports.YoutubeContextProvider = function (_a) {
             rowData: rowData,
             setRowData: setRowData,
             Credentails: Credentails,
-            setCredentails: setCredentails
+            setCredentails: setCredentails,
+            responseRowData: responseRowData,
+            setResponseRowData: setResponseRowData
         } }, children));
 };
 exports.useYoutubeContext = function () {

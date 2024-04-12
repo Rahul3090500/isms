@@ -8,6 +8,7 @@ import axios from "axios";
 import { ChartData } from "chart.js";
 import { useRouter } from "next/router";
 import FileInputModal from "./file";
+import FileModal from "./modal/filemodal";
 
 interface MyAppProps {
   handleOnChange?: any;
@@ -28,6 +29,8 @@ interface MyAppProps {
   isFileOpener?: any;
   handleSubmit?: any;
   errorMessage?: any;
+  openCredentialsFile?: any;
+  setOpenCredentialsFile?: any;
 
 }
 
@@ -293,6 +296,8 @@ const navItems: any = [
 
 function ISMS({ Component, pageProps }: any) {
   const { youtubeUrl, setYoutubeUrl,setResponseRowData } = useYoutubeContext();
+  const [openCredentialsFile, setOpenCredentialsFile] = useState(false);
+
   // const [youtubeUrl, setYoutubeUrl] = useState("https://www.youtube.com/watch?v=f5YdhPYsk3U");
   const [isButtonLoading, setButtonLoading] = useState(false);
   const [videoSummary, setVideoSummary] = useState();
@@ -302,11 +307,11 @@ function ISMS({ Component, pageProps }: any) {
   const [sentimentComments, setSentimentComments] = useState();
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [loadingCommentClassifications, setLoadingVideoSummary] =
+  const [ loadingVideoSummary, setLoadingVideoSummary] =
     useState(false);
   const [loadingSentimentAnalysis, setLoadingSentimentAnalysis] =
     useState(false);
-  const [loadingVideoSummary, setLoadingCommentClassifications] =
+  const [loadingCommentClassifications, setLoadingCommentClassifications] =
     useState(false);
 
   const router = useRouter();
@@ -742,7 +747,9 @@ function ISMS({ Component, pageProps }: any) {
     setIsFileOpener,
     isFileOpener,
     handleSubmit,
-    errorMessage
+    errorMessage,
+    openCredentialsFile,
+    setOpenCredentialsFile
   };
   return (
     <div className={classes.main}>
@@ -779,7 +786,10 @@ function ISMS({ Component, pageProps }: any) {
           {isFileOpener && (
             <FileInputModal videoSummary={videoSummary} IsOpen={isFileOpener} setIsOpen={setIsFileOpener} />
           )}
-      
+    <FileModal
+        setIsOpen={setOpenCredentialsFile}
+        isOpen={openCredentialsFile}
+      />
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import classes from "./home.module.scss";
 
 const Home = () => {
@@ -17,7 +18,7 @@ const Home = () => {
         customer engagements. Currently it supports youtube based analysis. We
         are adding more social media platforms along with intuitive features to
         empower your digital marketing!<br></br> <br></br> Add your youtube channel links and
-        information documents under &quot;Settings&quot; to start your journey
+        information documents under &quot;<Link style={{fontWeight:"bold",textDecoration:"underline"}} href="/settings">Settings</Link>&quot; to start your journey
         with iSMS!
       </div>
     </div>

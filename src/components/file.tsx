@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 
 import { useYoutubeContext } from "@/hooks/urlcontext";
-import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -44,7 +43,6 @@ export default function FileInputModal({
           body: formData,
         }
       );
-
       if (response.ok) {
         setDataFileName(file.name);
         toast.success("File uploaded successfully!");
@@ -58,7 +56,6 @@ export default function FileInputModal({
     }
   };
 
-  const router = useRouter(); // Use the useRouter hook to get access to the router object
   const handleFileSubmit = async () => {
     if (!dataFileName || !youtubeUrl) {
       console.log("No file selected or YouTube URL missing.");
@@ -102,7 +99,7 @@ export default function FileInputModal({
     } finally {
       setIsLoading(false);
       setIsOpen(false); // Close the modal
-      router.push("/ai-response"); // Navigate after actions are complete
+      // router.push("/ai-response"); // Navigate after actions are complete
     }
   };
 
@@ -119,9 +116,9 @@ export default function FileInputModal({
           <>
             <DialogTitle
               id="responsive-dialog-title"
-              sx={{ fontWeight: "bold", textAlign: "center", width: "300px" }}
+              sx={{ fontWeight: "bold", textAlign: "center", width: "500px" }}
             >
-              Upload Your File
+              To unlock AI response, Kindly add YouTube URL, Credential File and Information File.
             </DialogTitle>
             <DialogContent dividers>
               <Box
@@ -165,6 +162,7 @@ export default function FileInputModal({
                   </label>
                 </div>
               </Box>
+              <Typography style={{width:"100%",textAlign:"center"}}>{dataFileName}</Typography>
             </DialogContent>
             <DialogActions
               style={{
@@ -199,7 +197,7 @@ export default function FileInputModal({
         ) : (
           <>
             <DialogContent>
-              <Typography>Please add a YouTube link first.</Typography>
+              <Typography>Please add a Youtube Link and Submit.</Typography>
               {error && (
                 <Typography color="error" sx={{ mt: 2 }}>
                   Error: {error}

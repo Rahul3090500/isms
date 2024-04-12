@@ -15,6 +15,7 @@ interface CommentTabProps {
   classificationComments: any;
   loadingCommentClassifications: any;
   videoSummary: any;
+  handleCommentClassifications: any;
 }
 
 const ClassificationCommentTab: React.FC<CommentTabProps> = ({
@@ -22,6 +23,7 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
   classificationComments = [],
   loadingCommentClassifications,
   videoSummary,
+  handleCommentClassifications
 }) => {
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -35,12 +37,12 @@ const ClassificationCommentTab: React.FC<CommentTabProps> = ({
     setAnchorEl(null);
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setIsButtonLoading(true);
-    setTimeout(() => {
-      setIsButtonLoading(false);
-    }, 2000);
+    await handleCommentClassifications(); 
+    setIsButtonLoading(false);
   };
+
   const columns = [
     { field: "id", headerName: "ID", width: 20 },
     { field: "user_name", headerName: "User Id", flex: 0.55, minWidth: 100 },

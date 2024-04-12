@@ -39,7 +39,6 @@ exports.__esModule = true;
 var react_1 = require("react");
 var material_1 = require("@mui/material");
 var urlcontext_1 = require("@/hooks/urlcontext");
-var router_1 = require("next/router");
 var react_toastify_1 = require("react-toastify");
 require("react-toastify/dist/ReactToastify.css");
 function FileInputModal(_a) {
@@ -90,7 +89,6 @@ function FileInputModal(_a) {
             }
         });
     }); };
-    var router = router_1.useRouter(); // Use the useRouter hook to get access to the router object
     var handleFileSubmit = function () { return __awaiter(_this, void 0, void 0, function () {
         var response, res, processedResponse, data, error_2;
         return __generator(this, function (_a) {
@@ -140,7 +138,6 @@ function FileInputModal(_a) {
                 case 5:
                     setIsLoading(false);
                     setIsOpen(false); // Close the modal
-                    router.push("/ai-response"); // Navigate after actions are complete
                     return [7 /*endfinally*/];
                 case 6: return [2 /*return*/];
             }
@@ -149,7 +146,7 @@ function FileInputModal(_a) {
     console.log(rowData, "rowDataaaaaa");
     return (react_1["default"].createElement(react_1["default"].Fragment, null,
         react_1["default"].createElement(material_1.Dialog, { open: IsOpen, onClose: function () { return setIsOpen(false); }, "aria-labelledby": "responsive-dialog-title" }, videoSummary ? (react_1["default"].createElement(react_1["default"].Fragment, null,
-            react_1["default"].createElement(material_1.DialogTitle, { id: "responsive-dialog-title", sx: { fontWeight: "bold", textAlign: "center", width: "300px" } }, "Upload Your File"),
+            react_1["default"].createElement(material_1.DialogTitle, { id: "responsive-dialog-title", sx: { fontWeight: "bold", textAlign: "center", width: "500px" } }, "To unlock AI response, Kindly add YouTube URL, Credential File and Information File."),
             react_1["default"].createElement(material_1.DialogContent, { dividers: true },
                 react_1["default"].createElement(material_1.Box, { component: "form", sx: {
                         display: "flex",
@@ -174,7 +171,8 @@ function FileInputModal(_a) {
                                 cursor: "pointer",
                                 boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
                                 transition: "background-color 0.2s"
-                            } }, "Choose File")))),
+                            } }, "Choose File"))),
+                react_1["default"].createElement(material_1.Typography, { style: { width: "100%", textAlign: "center" } }, dataFileName)),
             react_1["default"].createElement(material_1.DialogActions, { style: {
                     width: "100%",
                     justifyContent: "space-between",
@@ -184,7 +182,7 @@ function FileInputModal(_a) {
                 react_1["default"].createElement(material_1.Button, { onClick: function () { return setIsOpen(false); }, color: "error", variant: "outlined" }, "Cancel"),
                 react_1["default"].createElement(material_1.Button, { onClick: handleFileSubmit, color: "secondary", variant: "outlined", disabled: isLoading, startIcon: isLoading ? (react_1["default"].createElement(material_1.CircularProgress, { color: "inherit", size: 20 })) : null }, isLoading ? "Uploading..." : "Upload File")))) : (react_1["default"].createElement(react_1["default"].Fragment, null,
             react_1["default"].createElement(material_1.DialogContent, null,
-                react_1["default"].createElement(material_1.Typography, null, "Please add a YouTube link first."),
+                react_1["default"].createElement(material_1.Typography, null, "Please add a Youtube Link and Submit."),
                 error && (react_1["default"].createElement(material_1.Typography, { color: "error", sx: { mt: 2 } },
                     "Error: ",
                     error))),

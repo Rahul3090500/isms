@@ -63,6 +63,7 @@ var urlcontext_1 = require("@/hooks/urlcontext");
 var axios_1 = require("axios");
 var router_1 = require("next/router");
 var file_1 = require("./file");
+var filemodal_1 = require("./modal/filemodal");
 var navItems = [
     {
         icon: (react_1["default"].createElement("svg", { width: "35", height: "35", viewBox: "0 0 35 35", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
@@ -128,17 +129,18 @@ function ISMS(_a) {
     var _this = this;
     var Component = _a.Component, pageProps = _a.pageProps;
     var _b = urlcontext_1.useYoutubeContext(), youtubeUrl = _b.youtubeUrl, setYoutubeUrl = _b.setYoutubeUrl, setResponseRowData = _b.setResponseRowData;
+    var _c = react_1.useState(false), openCredentialsFile = _c[0], setOpenCredentialsFile = _c[1];
     // const [youtubeUrl, setYoutubeUrl] = useState("https://www.youtube.com/watch?v=f5YdhPYsk3U");
-    var _c = react_1.useState(false), isButtonLoading = _c[0], setButtonLoading = _c[1];
-    var _d = react_1.useState(), videoSummary = _d[0], setVideoSummary = _d[1];
-    var _e = react_1.useState(), sentimentSummary = _e[0], setSentimentSummary = _e[1];
-    var _f = react_1.useState(), commentClassifications = _f[0], setCommentClassifications = _f[1];
-    var _g = react_1.useState(), classificationComments = _g[0], setClassificationComments = _g[1];
-    var _h = react_1.useState(), sentimentComments = _h[0], setSentimentComments = _h[1];
-    var _j = react_1.useState(''), errorMessage = _j[0], setErrorMessage = _j[1];
-    var _k = react_1.useState(false), loadingCommentClassifications = _k[0], setLoadingVideoSummary = _k[1];
-    var _l = react_1.useState(false), loadingSentimentAnalysis = _l[0], setLoadingSentimentAnalysis = _l[1];
-    var _m = react_1.useState(false), loadingVideoSummary = _m[0], setLoadingCommentClassifications = _m[1];
+    var _d = react_1.useState(false), isButtonLoading = _d[0], setButtonLoading = _d[1];
+    var _e = react_1.useState(), videoSummary = _e[0], setVideoSummary = _e[1];
+    var _f = react_1.useState(), sentimentSummary = _f[0], setSentimentSummary = _f[1];
+    var _g = react_1.useState(), commentClassifications = _g[0], setCommentClassifications = _g[1];
+    var _h = react_1.useState(), classificationComments = _h[0], setClassificationComments = _h[1];
+    var _j = react_1.useState(), sentimentComments = _j[0], setSentimentComments = _j[1];
+    var _k = react_1.useState(''), errorMessage = _k[0], setErrorMessage = _k[1];
+    var _l = react_1.useState(false), loadingVideoSummary = _l[0], setLoadingVideoSummary = _l[1];
+    var _m = react_1.useState(false), loadingSentimentAnalysis = _m[0], setLoadingSentimentAnalysis = _m[1];
+    var _o = react_1.useState(false), loadingCommentClassifications = _o[0], setLoadingCommentClassifications = _o[1];
     var router = router_1.useRouter();
     var query = router.query;
     console.log(query);
@@ -204,7 +206,7 @@ function ISMS(_a) {
         if (query === null || query === void 0 ? void 0 : query.code)
             getCredentials();
     }, [query]);
-    var _o = react_1.useState({
+    var _p = react_1.useState({
         labels: ["Positive", "Negative", "Neutral", "Unknown"],
         datasets: [
             {
@@ -219,8 +221,8 @@ function ISMS(_a) {
                 borderWidth: 1
             },
         ]
-    }), chartData = _o[0], setChartData = _o[1];
-    var _p = react_1.useState({
+    }), chartData = _p[0], setChartData = _p[1];
+    var _q = react_1.useState({
         // labels: ["Positive", "Neutral", "Negative", "Unknown"],
         labels: [
             "Declarative",
@@ -242,7 +244,7 @@ function ISMS(_a) {
                 borderWidth: 1
             },
         ]
-    }), classificationChartData = _p[0], setclassificationChartData = _p[1];
+    }), classificationChartData = _q[0], setclassificationChartData = _q[1];
     var handleOnChange = function (event) {
         setYoutubeUrl(event.target.value);
         console.log("event tarhet.value===>", event.target.value);
@@ -558,10 +560,10 @@ function ISMS(_a) {
         localStorage.setItem("youtubeUrl", youtubeUrl); // This might be redundant with handleSubmit doing the same thing
     }, [youtubeUrl]);
     var rowData = urlcontext_1.useYoutubeContext().rowData;
-    var _q = react_1.useState(false), isFileOpener = _q[0], setIsFileOpener = _q[1];
+    var _r = react_1.useState(false), isFileOpener = _r[0], setIsFileOpener = _r[1];
     console.log("isFileOpener", isFileOpener);
     //@ts-ignore
-    var _r = react_1.useState(navItems[0].text), selectedContent = _r[0], setSelectedContent = _r[1];
+    var _s = react_1.useState(navItems[0].text), selectedContent = _s[0], setSelectedContent = _s[1];
     var handleItemClick = function (content) {
         setSelectedContent(content);
         // handleSentimentAnalysis();
@@ -584,13 +586,16 @@ function ISMS(_a) {
         setIsFileOpener: setIsFileOpener,
         isFileOpener: isFileOpener,
         handleSubmit: handleSubmit,
-        errorMessage: errorMessage
+        errorMessage: errorMessage,
+        openCredentialsFile: openCredentialsFile,
+        setOpenCredentialsFile: setOpenCredentialsFile
     };
     return (react_1["default"].createElement("div", { className: ISMS_module_scss_1["default"].main },
         react_1["default"].createElement(SideNav_1["default"], { navItems: navItems, selectedContent: selectedContent, onItemSelect: handleItemClick, videoSummary: videoSummary, handleSentimentAnalysis: handleSentimentAnalysis, handleCommentClassifications: handleCommentClassifications, loadingSentimentAnalysis: loadingSentimentAnalysis, loadingCommentClassifications: loadingCommentClassifications, loadingVideoSummary: loadingVideoSummary, rowData: rowData, handleSubmit: handleSubmit }),
         react_1["default"].createElement(nav_1["default"], { navItems: navItems, selectedContent: selectedContent, onItemSelect: handleItemClick, videoSummary: videoSummary, handleSentimentAnalysis: handleSentimentAnalysis, handleCommentClassifications: handleCommentClassifications, loadingSentimentAnalysis: loadingSentimentAnalysis, loadingCommentClassifications: loadingCommentClassifications, loadingVideoSummary: loadingVideoSummary, rowData: rowData }),
         react_1["default"].createElement("div", { className: ISMS_module_scss_1["default"].rightSide },
             react_1["default"].createElement(Component, __assign({}, pageProps, additionalProps))),
-        isFileOpener && (react_1["default"].createElement(file_1["default"], { videoSummary: videoSummary, IsOpen: isFileOpener, setIsOpen: setIsFileOpener }))));
+        isFileOpener && (react_1["default"].createElement(file_1["default"], { videoSummary: videoSummary, IsOpen: isFileOpener, setIsOpen: setIsFileOpener })),
+        react_1["default"].createElement(filemodal_1["default"], { setIsOpen: setOpenCredentialsFile, isOpen: openCredentialsFile })));
 }
 exports["default"] = ISMS;

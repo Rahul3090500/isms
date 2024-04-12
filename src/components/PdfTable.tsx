@@ -12,7 +12,7 @@ const PdfUploader2 = () => {
         <>
           
           <div className={classes.scrollabletable}>
-          {rowData.filter((it)=>it.selected == true && it.hasOwnProperty("AIAnswered")).map((item) => (
+          {rowData.filter((it)=>it.selected == true && it.hasOwnProperty("AIAnswered")).map((item:any) => (
             <div className={classes.mainTable} key={item.commentId}>
               
               <div className={classes.table}>
