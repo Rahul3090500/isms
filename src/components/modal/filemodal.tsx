@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -12,64 +12,11 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useYoutubeContext } from "@/hooks/urlcontext";
-import axios from "axios";
 
 export default function FileModal({ isOpen, setIsOpen, videoSummary }: any) {
-  const { rowData, youtubeUrl, setCredentails, Credentails } =
-    useYoutubeContext();
+  const { setCredentails,setUploadedFileName,uploadedFileName } = useYoutubeContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [uploadedFileName, setUploadedFileName] = useState("");
-
-  useEffect(() => {
-    const auth = async () => {
-      const data = rowData.filter((it: any) => it.selected === true);
-      const payload = data.map((it: any) => ({
-        answer: it?.Response,
-        commentId: it?.commentId,
-      }));
-      //@ts-ignore
-
-      if (rowData.length > 0 && Credentails?.client_secret) {
-        try {
-          //@ts-ignore
-
-          const response = await axios.post("/api/get-auth-url", {
-            //@ts-ignore
-
-            client_id: Credentails?.client_id,
-            //@ts-ignore
-
-            client_secret: Credentails?.client_secret,
-            redirect_uris: ["http://localhost:3000/"], // Update with your redirect URIs
-          });
-          localStorage.setItem("Response", JSON.stringify(rowData));
-          localStorage.setItem(
-            "data",
-            JSON.stringify({
-              payload: payload,
-              //@ts-ignore
-
-              client_id: Credentails?.client_id,
-              //@ts-ignore
-
-              client_secret: Credentails?.client_secret,
-              redirect_uris: ["http://localhost:3000/"],
-              youtubeUrl: youtubeUrl,
-            })
-          );
-          const authUrl = response.data.authUrl;
-          window.location.href = authUrl;
-        } catch (error) {
-          console.error("Error uploading file:", error);
-          setError("Failed to upload file.");
-          toast.error("Failed to upload file.");
-        }
-      }
-    };
-
-    auth();
-  }, [Credentails, rowData, youtubeUrl]);
 
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
@@ -81,10 +28,11 @@ export default function FileModal({ isOpen, setIsOpen, videoSummary }: any) {
     reader.onload = (event) => {
       try {
         //@ts-ignore
-        const jsonData = JSON.parse(event.target.result);
+        const jsonData = JSON.parse(event.target.result as string);
         setCredentails(jsonData?.installed);
         setUploadedFileName(file.name);
         toast.success(`File "${file.name}" uploaded successfully!`);
+        setIsOpen(false)
       } catch (error) {
         console.error("Error parsing JSON:", error);
         setError("Error parsing JSON.");

@@ -13,39 +13,46 @@ interface YoutubeContextType {
   setCredentails: any;
   responseRowData:any;
   setResponseRowData:any;
+  uploadedFileName:any;
+  setUploadedFileName:any;
 }
+
+
 
 const YoutubeContext = createContext<YoutubeContextType | undefined>(undefined);
 
-export const YoutubeContextProvider = ({ children }: { children: ReactNode }) => {
-  const [youtubeUrl, setYoutubeUrl] = useState<string>(() => {
-    // Check if it's a new session to potentially clear data
-    if (typeof window !== 'undefined') {
-      const isNewSession = !sessionStorage.getItem('isNewSession');
-      sessionStorage.setItem('isNewSession', 'false');
-      if (isNewSession) {
-        localStorage.removeItem('youtubeUrl'); // Clear specific local storage data when new tab opens
-      }
-      return localStorage.getItem('youtubeUrl') || '';
-    }
-    return '';
-  });
+// Helper function to get local storage item safely
+const safeGetLocalStorage = (key: string): string => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem(key) || '';
+  }
+  return '';
+};
 
-  const [dataFileName, setDataFileName] = useState('');
-  const [tokenFileName, setTokenFileName] = useState('');
+export const YoutubeContextProvider = ({ children }: { children: ReactNode }) => {
+  const [youtubeUrl, setYoutubeUrl] = useState<string>(() => safeGetLocalStorage('youtubeUrl'));
+  const [dataFileName, setDataFileName] = useState<string>(() => safeGetLocalStorage('dataFileName'));
+  const [uploadedFileName, setUploadedFileName] = useState<string>(() => safeGetLocalStorage('uploadedFileName'));
+  const [tokenFileName, setTokenFileName] = useState<string>('');
   const [rowData, setRowData] = useState<any[]>([]);
   const [responseRowData, setResponseRowData] = useState<any>(false);
-  const [Credentails, setCredentails] = useState<Object>({});
+  const [Credentails, setCredentails] = useState<Record<string, any>>({});
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (youtubeUrl === '') {
-        localStorage.removeItem('youtubeUrl'); // Clear when youtubeUrl is empty
-      } else {
-        localStorage.setItem('youtubeUrl', youtubeUrl);
+    const handleStorage = (key: string, value: string) => {
+      if (typeof window !== 'undefined') {
+        if (value === '') {
+          localStorage.removeItem(key);
+        } else {
+          localStorage.setItem(key, value);
+        }
       }
-    }
-  }, [youtubeUrl]);
+    };
+
+    handleStorage('youtubeUrl', youtubeUrl);
+    handleStorage('dataFileName', dataFileName);
+    handleStorage('uploadedFileName', uploadedFileName);
+  }, [youtubeUrl, dataFileName, uploadedFileName]);
 
   return (
     <YoutubeContext.Provider
@@ -62,6 +69,8 @@ export const YoutubeContextProvider = ({ children }: { children: ReactNode }) =>
         setCredentails,
         responseRowData,
         setResponseRowData,
+        uploadedFileName,
+        setUploadedFileName
       }}
     >
       {children}

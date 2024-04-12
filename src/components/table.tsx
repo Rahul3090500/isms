@@ -3,9 +3,12 @@ import React, { useState } from "react";
 import { useYoutubeContext } from "@/hooks/urlcontext";
 import classes from "./table.module.scss";
 import { Checkbox } from "@mui/material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const PdfUploader = () => {
-  const { rowData, setRowData } = useYoutubeContext();
+  const { rowData, setRowData,youtubeUrl,Credentails } = useYoutubeContext();
   const [selectAll, setSelectAll] = useState(false);
   const [sortDirection, setSortDirection] = useState("asc");
   const [sortField, setSortField] = useState("");
@@ -13,6 +16,7 @@ const PdfUploader = () => {
 
   const handleSelectAllChange = (event: { target: { checked: any } }) => {
     const newSelectAll = event.target.checked;
+
     setSelectAll(newSelectAll);
     const newRows = rowData.map((row:any) => ({
       ...row,
@@ -36,7 +40,48 @@ const PdfUploader = () => {
     setSortDirection(direction);
     setRowData(sortedData);
   };
+  const handleAuthClick = async () => {
+    const data = rowData.filter((it:any) => it.selected === true);
+    const payload = data.map((it:any) => ({
+      answer: it?.Response,
+      commentId: it?.commentId,
+    }));
+      //@ts-ignore
 
+    if (rowData.length > 0 && Credentails?.client_secret) {
+      try {      //@ts-ignore
+
+        const response = await axios.post("/api/get-auth-url", {
+                //@ts-ignore
+
+          client_id: Credentails?.client_id,
+                //@ts-ignore
+
+          client_secret: Credentails?.client_secret,
+          redirect_uris: ["http://localhost:3000/"], // Update with your redirect URIs
+        });
+        localStorage.setItem("Response", JSON.stringify(rowData));
+        localStorage.setItem("data", JSON.stringify({
+          payload: payload,
+                //@ts-ignore
+
+          client_id: Credentails?.client_id,
+                //@ts-ignore
+
+          client_secret: Credentails?.client_secret,
+          redirect_uris: ["http://localhost:3000/"],
+          youtubeUrl: youtubeUrl,
+        }));
+        const authUrl = response.data.authUrl;
+        window.location.href = authUrl;
+      } catch (error) {
+        console.error("Error during authentication:", error);
+        toast.error("Authentication failed.");
+      }
+    } else {
+      toast.info("No data to process or missing credentials.");
+    }
+  };
   return (
     <div className={classes.customTableContainer}>
       {rowData.length > 0 && (
@@ -168,6 +213,7 @@ const PdfUploader = () => {
             <button
               className={classes.submitButton}
               // onClick={() => setOpenCredentialsFile(true)}
+              onClick={handleAuthClick}
             >
               Submit Response
             </button>

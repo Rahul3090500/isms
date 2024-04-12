@@ -15,7 +15,7 @@ const SettingsItem = ({
 }: any) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
-  const { dataFileName } = useYoutubeContext();
+  const { dataFileName ,uploadedFileName } = useYoutubeContext();
 
   useEffect(() => {
     const shouldDisable = () => {
@@ -32,53 +32,57 @@ const SettingsItem = ({
   }, [isButtonLoading, videoSummary, item.id, item.value]);
 
   return (
-    <div className={classes.singleItem}>
-      <p className={classes.text1}>{item.text}</p>
-      {item.id === "infoDocument" ? (
-        <p className={classes.text}>{dataFileName || item.title}</p>
-      ) : (<>
-        <input
-          type="text" // or 'file' based on your specific need
-          onChange={(event) => {
-            if (item.id === "videoLink") {
-              setItems((prev: any) =>
-                prev.map((itm: any) =>
-                  itm.id === "videoLink"
-                    ? { ...itm, value: event.target.value }
-                    : itm
-                )
-              );
-              handleOnChange(event);
-            }
-          }}
-          placeholder={item.title}
-          value={item.value}
-          className={classes.text}
-          style={{border: errorMessage ?"1px solid red":""}}
-          disabled={
-            item.id === "infoDocument" || item.id === "channelCredentials"
+<div className={classes.singleItem}>
+  <p className={classes.text1}>{item.text}</p>
+  {item.id === "infoDocument" ? (
+    <p className={classes.text}>{dataFileName || item.title}</p>
+  ) : item.id === "channelCredentials" ? (
+    <p className={classes.text}>{uploadedFileName || item.title}</p>
+  ) : (
+    <>
+      <input
+        type="text" // Change 'text' to 'file' if you need a file input
+        onChange={(event) => {
+          if (item.id === "videoLink") {
+            setItems((prev: any) =>
+              prev.map((itm: any) =>
+                itm.id === "videoLink"
+                  ? { ...itm, value: event.target.value }
+                  : itm
+              )
+            );
+            handleOnChange(event); // Ensure this function is defined to handle changes
           }
-        />
-        {errorMessage && <p className={classes.error}>{errorMessage}</p>}
-        </>
-      )}
-
-      <button
-        disabled={isDisabled}
-        onClick={() => {
-          if (item.id === "channelCredentials") {
-            setOpenCredentialsFile(true)
-          } else if (item.id === "infoDocument") {
-            setIsFileOpener(true); // Open the file opener for infoDocument
-          }
-          // If you have other item IDs to handle, you can add more conditions here
         }}
-        className={classes.link}
-        style={{ cursor: isDisabled ? "not-allowed" : "pointer" }}
-      >
-        {item.action}
-      </button>
-    </div>
+        placeholder={item.title}
+        value={item.value}
+        className={classes.text}
+        style={{ border: errorMessage ? "1px solid red" : "" }}
+        disabled={
+          item.id === "infoDocument" || item.id === "channelCredentials"
+        }
+      />
+      {errorMessage && <p className={classes.error}>{errorMessage}</p>}
+    </>
+  )}
+
+  <button
+    disabled={isDisabled}
+    onClick={() => {
+      if (item.id === "channelCredentials") {
+        setOpenCredentialsFile(true);
+      } else if (item.id === "infoDocument") {
+        setIsFileOpener(true); // This should likely trigger a state that opens a file picker dialog
+      }
+      // Additional item IDs can be handled with more conditions here
+    }}
+    className={classes.link}
+    style={{ cursor: isDisabled ? "not-allowed" : "pointer" }}
+  >
+    {item.action}
+  </button>
+</div>
+
   );
 };
 
